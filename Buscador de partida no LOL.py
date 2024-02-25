@@ -14,7 +14,7 @@ tela = "game mode selection"
 Role_1 = None
 Role_2 = None
 modo_de_jogo = None
-versao_atual = "1.5"
+versao_atual = "2.0"
 
 def encontrar_e_salvar_pasta_instalacao_lol(unidade, flagPF):
     unidade=unidade+"\\"  # Adiciona uma barra invertida ao final da unidade se necessário
@@ -577,8 +577,8 @@ def LOL():
             versao.raise_for_status()
             versao = versao.json()
 
-            if versao["target_commitish"].replace("v","") != versao_atual:
-                resposta = messagebox.askquestion("Atualização Disponível", f"Versão atual: {versao_atual}\nVersão mais recente: {versao['target_commitish'].replace("v","")}\n\n\nDeseja baixar agora?")
+            if versao["tag_name"].replace("v","") != versao_atual:
+                resposta = messagebox.askquestion("Atualização Disponível", f"Versão atual: {versao_atual}\nVersão mais recente: {versao['tag_name'].replace("v","")}\n\n\nDeseja baixar agora?")
                 if resposta == "yes":
                     webbrowser.open("https://github.com/Saralapa/Buscador-de-Partida-no-LOL/releases/latest")
 
