@@ -10,7 +10,7 @@ import os
 import threading
 
 jogo_está_aberto = False
-versao_atual = "2.1"
+versao_atual = "3.0"
 
 def definir_idioma():
     global idioma, caminho_idioma
