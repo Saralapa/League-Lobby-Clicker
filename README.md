@@ -1,4 +1,4 @@
-# Buscador de Partida no LOL
+# League Lobby Clicker
 
 Este aplicativo foi desenvolvido para automatizar o processo de encontrar uma partida no jogo League of Legends.
 
