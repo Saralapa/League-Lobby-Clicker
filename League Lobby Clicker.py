@@ -202,6 +202,7 @@ def LOL():
         while True:
             if jogo_está_aberto == False:
                 return
+            time.sleep(30)
             if not [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"] and jogo_está_aberto == True:
                 if idioma == "Portugues":
                     modo_de_jogo = "Apenas auto aceitar"
@@ -355,7 +356,7 @@ def LOL():
         centralizar_janela(root, 378, altura_janela_idioma)
 
     def centralizar_janela(root, width, height):
-        global screen_width, screen_height, x, y, roles
+        global screen_width, screen_height, x, y
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight()
         x = (screen_width - width) // 2
@@ -761,6 +762,7 @@ def LOL():
         global jogo_está_aberto
         if not tela=="auto aceitar":
             return
+        chamar_funcao_encontrar_pasta_LOL()
         if  modo_de_jogo!="Apenas auto aceitar" and modo_de_jogo!="Just auto accept":
             pyautogui.hotkey('alt', 'tab')
             janela_ativa = gw.getActiveWindow()
@@ -801,7 +803,7 @@ def LOL():
                         tela_selecao_de_modo()
                         return
                 KeepSearchingImageAndClickWhenFound("Encontrar partida.png")
-                time.sleep(1)
+                time.sleep(2)
                 janela_ativa.activate()
         while True:
             if not tela=="auto aceitar":
