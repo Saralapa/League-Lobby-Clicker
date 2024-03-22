@@ -160,26 +160,26 @@ def LOL():
         frame_botoes_idiomas.place_forget()
 
         if idioma=="Portugues":
-            modos_de_jogo=["Escolha alternada", "Ranqueada solo duo", "ARAM", "Blitz do Nexus", "Arena", "URF", "Apenas auto aceitar"]
+            modos_de_jogo=["Escolha alternada", "Ranqueada solo duo", "ARAM", "Blitz do Nexus", "Arena", "URF", "Todos por um", "Apenas auto aceitar"]
         elif idioma=="English":
-            modos_de_jogo=["Draft pick", "Ranked solo duo", "ARAM", "Nexus Blitz", "Arena", "URF", "Just auto accept"]
+            modos_de_jogo=["Draft pick", "Ranked solo duo", "ARAM", "Nexus Blitz", "Arena", "URF", "One for all", "Just auto accept"]
 
         for i in range(len(botoes_modos_de_jogo)):
             botoes_modos_de_jogo[i].config(text=modos_de_jogo[i], command=lambda t=modos_de_jogo[i]: Atualizar_Modo_de_Jogo(t))
 
         botao_icone_idioma.pack()
-        botao_icone_idioma.place(relx=0.8915, rely=0.019)
+        botao_icone_idioma.place(relx=0.8915, rely=0.016)
         frame_borda_topo.pack()
-        frame_borda_topo.place(relx=0.4988888888888888, rely=0.059, anchor="center")
+        frame_borda_topo.place(relx=0.4988888888888888, rely=0.052, anchor="center")
         label_borda_topo.pack()
         frame_borda_inferior.pack()
-        frame_borda_inferior.place(relx=0.4988888888888888, rely=0.948, anchor="center")
+        frame_borda_inferior.place(relx=0.4988888888888888, rely=0.953, anchor="center")
         frame_botao_desfazer.pack()
-        frame_botao_desfazer.place(relx=0.0275, rely=0.92)
+        frame_botao_desfazer.place(relx=0.0275, rely=0.98, anchor="sw")
         frame_botao_confirmar.pack()
-        frame_botao_confirmar.place(relx=0.9745, rely=0.9775, anchor="se")
+        frame_botao_confirmar.place(relx=0.9745, rely=0.98, anchor="se")
         frame_botoes_modos_de_jogo.pack()
-        frame_botoes_modos_de_jogo.place(relx=0.0275, rely=0.1055)
+        frame_botoes_modos_de_jogo.place(relx=0.0275, rely=0.095)
         if idioma=="Portugues":
             label_borda_topo.config(text="Escolha o modo de jogo")
             texto_inferior.set("Modo de jogo\nescolhido:")
@@ -190,7 +190,7 @@ def LOL():
             texto_inferior.set("Selected game\nmode:")
             botao_desfazer.config(text="Undo")
             botao_confirmar.config(text="Confirm")
-        centralizar_janela(root, 378, 427)
+        centralizar_janela(root, 378, 476)
 
         if jogo_está_aberto == True:
             thread_jogo_aberto = threading.Thread(target=Jogo_Aberto)
@@ -392,7 +392,12 @@ def LOL():
                 if modo_de_jogo == None:
                     texto_inferior.set("Selecione um modo de jogo!")
                     root.after(2000, lambda: texto_inferior.set("Modo de jogo\nescolhido:") if modo_de_jogo == None else None)
-                root.after(0, lambda: tela_auto_aceitar() if modo_de_jogo == "ARAM" or modo_de_jogo == "Arena" or modo_de_jogo == "URF" else tela_selecao_de_role() if modo_de_jogo is not None else None)
+                root.after(0, lambda: tela_auto_aceitar()
+                           if modo_de_jogo == "ARAM"
+                           or modo_de_jogo == "Arena"
+                           or modo_de_jogo == "URF"
+                           or modo_de_jogo == "Todos por um"
+                           else tela_selecao_de_role() if modo_de_jogo is not None else None)
             elif tela == "seleção de role":
                 if (modo_de_jogo != "Blitz do Nexus" and (Role_1 != "Preencher" and Role_2 == None)):
                     texto_inferior.set("As duas roles devem\nser preenchidas!")
@@ -406,6 +411,7 @@ def LOL():
                     root.after(2000, lambda: texto_inferior.set("Posição escolhida:") if tela=="seleção de role" and Role_1 == None else None)
                 else:
                     root.after(500, lambda: tela_auto_aceitar())
+
         elif idioma=="English":
             if tela == "seleção de modo de jogo":
                 if modo_de_jogo == "Just auto accept":
@@ -416,7 +422,12 @@ def LOL():
                 if modo_de_jogo == None:
                     texto_inferior.set("Select a game mode!")
                     root.after(2000, lambda: texto_inferior.set("Selected game\nmode:") if modo_de_jogo == None else None)
-                root.after(0, lambda: tela_auto_aceitar() if modo_de_jogo == "ARAM" or modo_de_jogo == "Arena" or modo_de_jogo == "URF" else tela_selecao_de_role() if modo_de_jogo is not None else None)
+                root.after(0, lambda: tela_auto_aceitar()
+                           if modo_de_jogo == "ARAM"
+                           or modo_de_jogo == "Arena"
+                           or modo_de_jogo == "URF"
+                           or modo_de_jogo == "One for all"
+                           else tela_selecao_de_role() if modo_de_jogo is not None else None)
             elif tela == "seleção de role":
                 if (modo_de_jogo != "Nexus Blitz" and (Role_1 != "Fill" and Role_2 == None)):
                     texto_inferior.set("Both roles must\nbe selected!")
@@ -795,7 +806,7 @@ def LOL():
                     return
                 time.sleep(0.5)
                 KeepSearchingImageAndClickWhenFound("Confirmar.png")
-                if modo_de_jogo!="ARAM" and modo_de_jogo!="Arena" and modo_de_jogo!="URF":
+                if modo_de_jogo!="ARAM" and modo_de_jogo!="Arena" and modo_de_jogo!="URF" and modo_de_jogo!="One for all" and modo_de_jogo !="Todos por um":
                     if not Role_1==None:
                         if not Role1(Role_1)==23:
                             Role2(Role_2)
@@ -845,7 +856,7 @@ def LOL():
     label_borda_topo = tk.Label(frame_borda_topo, font=("Arial", 14), text="Escolha o modo de jogo", bg="#151515", fg="#f0f0f0", height=0)
     label_borda_topo.pack()
 
-    modos_de_jogo = ["Escolha alternada", "Ranqueada solo duo", "ARAM", "Blitz do Nexus", "Arena", "URF", "Apenas auto aceitar"]
+    modos_de_jogo = ["Escolha alternada", "Ranqueada solo duo", "ARAM", "Blitz do Nexus", "Arena", "URF", "Todos por um", "Apenas auto aceitar"]
 
     frame_botoes_modos_de_jogo = tk.Frame(root, bg="#151515")
 
