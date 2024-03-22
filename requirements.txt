@@ -3,3 +3,4 @@ pillow
 PyAutoGUI
 PyGetWindow
 requests
+pyinstaller

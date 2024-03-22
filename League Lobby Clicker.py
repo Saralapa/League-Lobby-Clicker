@@ -9,8 +9,9 @@ import tkinter as tk
 import os
 import threading
 
-jogo_está_aberto = False
 versao_atual = "3.1"
+
+jogo_está_aberto = False
 
 def definir_idioma():
     global idioma, caminho_idioma
@@ -31,77 +32,76 @@ def definir_idioma():
             None
 
 def encontrar_e_salvar_pasta_instalacao_lol(unidade, flagPF):
-    unidade=unidade+"\\"  # Adiciona uma barra invertida ao final da unidade se necessário
-    global pasta_instalacao  # Declara a variável como global
+    unidade=unidade+"\\"
+    global pasta_instalacao
     pasta_instalacao=None
 
-    if flagPF==1:  # Verifica a flag para determinar a abordagem a ser utilizada
-        # Verifica os possíveis diretórios padrão de instalação do League of Legends
+    if flagPF==1:
+
         pastas_padrao = rf"{unidade}\Riot Games\League of Legends"
 
-        for pasta in pastas_padrao:  # Itera sobre os possíveis diretórios padrão
-            if os.path.exists(pastas_padrao):  # Verifica se o diretório existe
-                pasta_instalacao=pastas_padrao  # Define a pasta de instalação
-                pasta_instalacao = os.path.dirname(pasta_instalacao)  # Obtém o diretório pai
-                pasta_instalacao = os.path.join(pasta_instalacao, "Riot Client", "RiotClientServices.exe")  # Junta o caminho até o executável do cliente da Riot
-                pasta_instalacao = pasta_instalacao.replace("\\\\", "\\")  # Substitui "\\" por "\"
+        for pasta in pastas_padrao:
+            if os.path.exists(pastas_padrao):
+                pasta_instalacao=pastas_padrao
+                pasta_instalacao = os.path.dirname(pasta_instalacao)
+                pasta_instalacao = os.path.join(pasta_instalacao, "Riot Client", "RiotClientServices.exe")
+                pasta_instalacao = pasta_instalacao.replace("\\\\", "\\")
 
-                LOL_path = os.path.join(os.path.expanduser("~"),"league_of_legends_path-Saralapa.txt")  # Caminho para o arquivo de texto que armazenará o caminho do League of Legends
-                LOL_path = LOL_path.replace("\\\\", "\\")  # Substitui "\\" por "\"
-                with open(LOL_path, 'w') as arquivo:  # Abre o arquivo em modo de escrita
-                    arquivo.write(pasta_instalacao)  # Escreve o caminho da pasta de instalação
+                LOL_path = os.path.join(os.path.expanduser("~"),"league_of_legends_path-Saralapa.txt")
+                LOL_path = LOL_path.replace("\\\\", "\\")
+                with open(LOL_path, 'w') as arquivo:
+                    arquivo.write(pasta_instalacao)
 
-                if pasta_instalacao:  # Verifica se a pasta de instalação foi encontrada
-                    return 23  # Retorna 23 se a pasta for encontrada
+                if pasta_instalacao:
+                    return 23
                 else:
-                    return  # Retorna vazio se não encontrou
+                    return
 
-        # Se não encontrar em nenhum dos diretórios padrão, busca recursivamente por toda a unidade
-        for pasta, subpastas, arquivos in os.walk(unidade):  # Itera por todos os diretórios e arquivos na unidade
-            if "Program Files" in pasta or "ProgramData" in pasta or "AppData" in pasta or "Windows" in pasta:  # Ignora alguns diretórios específicos
-                del subpastas[:]  # Exclui as subpastas para evitar a busca nelas
+        for pasta, subpastas, arquivos in os.walk(unidade):
+            if "Program Files" in pasta or "ProgramData" in pasta or "AppData" in pasta or "Windows" in pasta:
+                del subpastas[:]
                 continue
-            if "League of Legends" in subpastas and "Riot Games" in pasta:  # Verifica a existência do diretório "League of Legends" dentro de "Riot Games"
-                pasta_instalacao = os.path.join(pasta, "Riot Client", "RiotClientServices.exe")  # Caminho até o executável do cliente da Riot
-                pasta_instalacao = pasta_instalacao.replace(f"{unidade}",f"{unidade}\\")  # Corrige o caminho
+            if "League of Legends" in subpastas and "Riot Games" in pasta:
+                pasta_instalacao = os.path.join(pasta, "Riot Client", "RiotClientServices.exe")
+                pasta_instalacao = pasta_instalacao.replace(f"{unidade}",f"{unidade}\\")
 
-                LOL_path = os.path.join(os.path.expanduser("~"),"league_of_legends_path-Saralapa.txt")  # Caminho para o arquivo de texto que armazenará o caminho do League of Legends
-                LOL_path = LOL_path.replace("\\\\", "\\")  # Substitui "\\" por "\"
-                with open(LOL_path, 'w') as arquivo:  # Abre o arquivo em modo de escrita
-                    arquivo.write(pasta_instalacao)  # Escreve o caminho da pasta de instalação
+                LOL_path = os.path.join(os.path.expanduser("~"),"league_of_legends_path-Saralapa.txt")
+                LOL_path = LOL_path.replace("\\\\", "\\")
+                with open(LOL_path, 'w') as arquivo:
+                    arquivo.write(pasta_instalacao)
 
-                return 23  # Retorna 23 se a pasta for encontrada
+                return 23
             
-            if pasta_instalacao:  # Verifica se a pasta de instalação foi encontrada
-                return  # Retorna vazio se não encontrou
+            if pasta_instalacao:
+                return
 
-        if not pasta_instalacao:  # Se a pasta de instalação não for encontrada
-            print("A pasta de instalação do League of Legends não foi encontrada.")  # Imprime uma mensagem de aviso
+        if not pasta_instalacao:
+            print("A pasta de instalação do League of Legends não foi encontrada.")
     
-    elif flagPF==2:  # Verifica a flag para determinar a abordagem a ser utilizada
-        for pasta, subpastas, arquivos in os.walk(unidade):  # Itera por todos os diretórios e arquivos na unidade
-            print(pasta, subpastas, arquivos)  # Imprime os diretórios, subdiretórios e arquivos (utilizado para debug)
+    elif flagPF==2:
+        for pasta, subpastas, arquivos in os.walk(unidade):
+            print(pasta, subpastas, arquivos)
 
-            if "Riot Client" in subpastas and "League of Legends" in subpastas:  # Verifica a existência dos diretórios "Riot Client" e "League of Legends"
-                riot_client_index = subpastas.index("Riot Client")  # Obtém o índice do diretório "Riot Client"
-                lol_index = subpastas.index("League of Legends")  # Obtém o índice do diretório "League of Legends"
+            if "Riot Client" in subpastas and "League of Legends" in subpastas:
+                riot_client_index = subpastas.index("Riot Client")
+                lol_index = subpastas.index("League of Legends")
 
-                if lol_index == riot_client_index + 1:  # Verifica se "League of Legends" está dentro de "Riot Client"
-                    pasta_instalacao = os.path.join(pasta, "Riot Client", "RiotClientServices.exe")  # Caminho até o executável do cliente da Riot
-                    pasta_instalacao = pasta_instalacao.replace(f"{unidade}", f"{unidade}\\")  # Corrige o caminho
+                if lol_index == riot_client_index + 1:
+                    pasta_instalacao = os.path.join(pasta, "Riot Client", "RiotClientServices.exe")
+                    pasta_instalacao = pasta_instalacao.replace(f"{unidade}", f"{unidade}\\")
 
-                    LOL_path = os.path.join(os.path.expanduser("~"),"league_of_legends_path-Saralapa.txt")  # Caminho para o arquivo de texto que armazenará o caminho do League of Legends
-                    LOL_path = LOL_path.replace("\\\\", "\\")  # Substitui "\\" por "\"
-                    with open(LOL_path, 'w') as arquivo:  # Abre o arquivo em modo de escrita
-                        arquivo.write(pasta_instalacao)  # Escreve o caminho da pasta de instalação
+                    LOL_path = os.path.join(os.path.expanduser("~"),"league_of_legends_path-Saralapa.txt")
+                    LOL_path = LOL_path.replace("\\\\", "\\")
+                    with open(LOL_path, 'w') as arquivo:
+                        arquivo.write(pasta_instalacao)
 
-                    return 23  # Retorna 23 se a pasta for encontrada
+                    return 23
             
-            if pasta_instalacao:  # Verifica se a pasta de instalação foi encontrada
-                return  # Retorna vazio se não encontrou
+            if pasta_instalacao:
+                return
 
-        if not pasta_instalacao:  # Se a pasta de instalação não for encontrada
-            print("A pasta de instalação do League of Legends não foi encontrada.")  # Imprime uma mensagem de aviso
+        if not pasta_instalacao:
+            print("A pasta de instalação do League of Legends não foi encontrada.")
 
 def chamar_funcao_encontrar_pasta_LOL():
     unidades = [f"{disco}:" for disco in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" if os.path.exists(f"{disco}:")]
@@ -236,7 +236,7 @@ def LOL():
 
         if modo_de_jogo == "Blitz do Nexus" or modo_de_jogo== "Nexus Blitz":
             frame_botoes_roles.place(relx=0.0275, rely=0.2075)
-            frame_botao_desfazer.place(rely=0.85475)
+            frame_botao_desfazer.place(rely=0.9564)
             frame_botao_confirmar.place(rely=0.9564)
             frame_borda_topo.place(relx=0.4988888888888888, rely=0.115, anchor="center")
             frame_borda_inferior.place(relx=0.4988888888888888, rely=0.902, anchor="center")
@@ -261,7 +261,7 @@ def LOL():
             centralizar_janela(root, 378, 235)
         else:
             frame_botoes_roles.place(relx=0.0275, rely=0.1235)
-            frame_botao_desfazer.place(rely=0.911)
+            frame_botao_desfazer.place(rely=0.974)
             frame_botao_confirmar.place(rely=0.974)
             frame_borda_inferior.place(relx=0.4988888888888888, rely=0.943, anchor="center")
             frame_borda_topo.place(relx=0.4988888888888888, rely=0.068, anchor="center")
@@ -594,7 +594,6 @@ def LOL():
                 image_path_image = os.path.join("languages", idioma, "Images"+f" {lol_window.width}x{lol_window.height}", image)
                 image_position_image = pyautogui.locateOnScreen(image_path_image, confidence=0.8)
 
-                # If the image is found, click on it
                 if image_position_image:
                     print(image)
                     if image=="Aceitar.png":
@@ -609,7 +608,6 @@ def LOL():
                         pyautogui.click(image_center.x, image_center.y) 
                     break
 
-                # Wait a short time before trying again
                 time.sleep(0.5)
 
             except: None
@@ -619,7 +617,7 @@ def LOL():
             return
         start_time = time.time()
      
-        while (time.time() - start_time) < seconds:  # Keep searching for X seconds tops
+        while (time.time() - start_time) < seconds:  
             if not tela=="auto aceitar":
                 return
             try:
@@ -627,14 +625,12 @@ def LOL():
                 image_path_image = os.path.join("languages", idioma, "Images"+f" {lol_window.width}x{lol_window.height}", image)
                 image_position_image = pyautogui.locateOnScreen(image_path_image, confidence=0.8)
 
-                # If the image is found, click on it
                 if image_position_image:
                     print(image)
                     image_center = pyautogui.center(image_position_image)
                     pyautogui.click(image_center.x, image_center.y)
                     return 23
 
-                # Wait a short time before trying again
                 time.sleep(0.5)
 
             except: None
@@ -656,23 +652,21 @@ def LOL():
                 image_path_Encontrar_partida = os.path.join("languages", idioma, "Images"+f" {lol_window.width}x{lol_window.height}", "Encontrar partida.png")
                 image_position_Encontrar_partida = pyautogui.locateOnScreen(image_path_Encontrar_partida, confidence=0.8)
 
-                # If the image is found, click on it with x adjusted
                 if image_position_Encontrar_partida:
                     print(image_position_Encontrar_partida)
                     image_center = pyautogui.center(image_position_Encontrar_partida)
                     if lol_window.width==1600:
-                        x_adjusted = image_center.x + 155  # Ajuste a coordenada x aqui\
+                        x_adjusted = image_center.x + 155  
                     elif lol_window.width==1280:
-                        x_adjusted = image_center.x + 124  # Ajuste a coordenada x aqui\
+                        x_adjusted = image_center.x + 124  
                     elif lol_window.width==1024:
-                        x_adjusted = image_center.x + 99   # Ajuste a coordenada x aqui\
+                        x_adjusted = image_center.x + 99   
                     else:
                         root.destroy()
                         exit()
                     pyautogui.click(x_adjusted, image_center.y)
                     break
 
-                # Wait a short time before trying again
                 time.sleep(0.5)
 
             except: None
@@ -689,14 +683,12 @@ def LOL():
                 image_path_image = os.path.join("languages", idioma, "Images"+f" {lol_window.width}x{lol_window.height}", image+".png")
                 image_position_image = pyautogui.locateOnScreen(image_path_image, confidence=0.8)
 
-                # If the image is found, click on it
                 if image_position_image:
                     print(image)
                     image_center = pyautogui.center(image_position_image)
                     pyautogui.click(image_center.x, image_center.y)
                     break
 
-                # Wait a short time before trying again
                 time.sleep(0.5)
 
             except: None
@@ -722,23 +714,21 @@ def LOL():
                 image_path_Encontrar_partida = os.path.join("languages", idioma, "Images"+f" {lol_window.width}x{lol_window.height}", "Encontrar partida.png")
                 image_position_Encontrar_partida = pyautogui.locateOnScreen(image_path_Encontrar_partida, confidence=0.8)
 
-                # If the image is found, click on it with x adjusted
                 if image_position_Encontrar_partida:
                     print(image_position_Encontrar_partida)
                     image_center = pyautogui.center(image_position_Encontrar_partida)
                     if lol_window.width==1600:
-                        x_adjusted = image_center.x + 200  # Ajuste a coordenada x aqui
+                        x_adjusted = image_center.x + 200  
                     elif lol_window.width==1280:
-                        x_adjusted = image_center.x + 160  # Ajuste a coordenada x aqui
+                        x_adjusted = image_center.x + 160  
                     elif lol_window.width==1024:
-                        x_adjusted = image_center.x + 128  # Ajuste a coordenada x aqui
+                        x_adjusted = image_center.x + 128  
                     else:
                         root.destroy()
                         exit()
                     pyautogui.click(x_adjusted, image_center.y)
                     break
 
-                # Wait a short time before trying again
                 time.sleep(0.5)
 
             except: None
@@ -755,14 +745,12 @@ def LOL():
                 image_path_image = os.path.join("Languages", idioma, "Images"+f" {lol_window.width}x{lol_window.height}", image+".png")
                 image_position_image = pyautogui.locateOnScreen(image_path_image, confidence=0.8)
 
-                # If the image is found, click on it
                 if image_position_image:
                     print(image)
                     image_center = pyautogui.center(image_position_image)
                     pyautogui.click(image_center.x, image_center.y)
                     break
 
-                # Wait a short time before trying again
                 time.sleep(0.5)
                 
             except: None
@@ -779,7 +767,7 @@ def LOL():
             janela_ativa = gw.getActiveWindow()
             pyautogui.hotkey('alt', 'tab')
             if not [window for window in gw.getWindowsWithTitle("League of Legends") if window.title == "League of Legends"]:
-                # Wait until the window is fully open
+                
                 while not [window for window in gw.getWindowsWithTitle("League of Legends") if window.title == "League of Legends"]:
                     time.sleep(1)
             if not [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"]:
