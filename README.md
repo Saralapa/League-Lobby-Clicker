@@ -30,7 +30,7 @@ O aplicativo é uma ferramenta simples que cria uma interface para solicitar ao 
 
 ## Observações
 
-Este aplicativo apenas busca por imagens na tela e clica em suas respectivas posições apenas no cliente do jogo. Utilizar este aplicativo não resultará em penalidades.
+Este aplicativo apenas busca por imagens na tela e clica em suas respectivas posições apenas no cliente do jogo. Utilizar este aplicativo **NÃO** resultará em penalidades e/ou banimentos.
 
 ## Autor
 
