@@ -17,6 +17,18 @@ O aplicativo é uma ferramenta simples que cria uma interface para solicitar ao 
 - Automatização do processo de iniciar o jogo e entrar na fila de espera.
 - Aceitação automática da partida quando estiver disponível.
 
+## Screenshots
+
+![Menu de seleção de idioma](https://i.imgur.com/PgesFQH.png)ㅤㅤㅤ![Menu de seleção de idioma INGLES](https://i.imgur.com/x0Cg6B6.png)
+
+![Menu de seleção de modo de jogo](https://i.imgur.com/8tWhyHq.png)ㅤㅤㅤ![Menu de seleção de modo de jogo INGLES](https://i.imgur.com/Pog3PgH.png)
+
+![Menu de seeleção de posição](https://i.imgur.com/CSxjo7n.png)ㅤㅤㅤ![Menu de seeleção de posição INGLES](https://i.imgur.com/bICBVve.png)
+
+![Menu de seeleção de posição BLITZ DO NEXUS](https://i.imgur.com/j4Z4mKm.png)ㅤㅤㅤ![Menu de seeleção de posição BLITZ DO NEXUS INGLES](https://i.imgur.com/UT6fLGG.png)
+
+![Encontrando partida](https://i.imgur.com/QsUabq0.png)ㅤㅤㅤ![Encontrando partida INGLES](https://i.imgur.com/Dc1bW2v.png)
+
 ## Como utilizar
 
 1. Baixe e instale o aplicativo em seu sistema operacional.
