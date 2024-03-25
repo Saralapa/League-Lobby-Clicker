@@ -2,13 +2,13 @@
 
 Este aplicativo foi desenvolvido para automatizar o processo de encontrar uma partida no jogo League of Legends.
 
-## Descrição
-
-O aplicativo é uma ferramenta simples que cria uma interface para solicitar ao usuário o modo de jogo desejado e a posição em que ele deseja jogar. Em seguida, o aplicativo automatiza o processo de abrir o cliente do League of Legends, clicar nos botões necessários para encontrar uma partida e aceitá-la automaticamente quando estiver disponível.
-
 ## Instalação
 
 Vá para [releases](https://github.com/Saralapa/League-Lobby-Clicker/releases) e clique para baixar o instalador (setup) da última versão
+
+## Descrição
+
+O aplicativo é uma ferramenta simples que cria uma interface para solicitar ao usuário o modo de jogo desejado e a posição em que ele deseja jogar. Em seguida, o aplicativo automatiza o processo de abrir o cliente do League of Legends, clicar nos botões necessários para encontrar uma partida e aceitá-la automaticamente quando estiver disponível.
 
 ## Funcionalidades
 
