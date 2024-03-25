@@ -8,7 +8,7 @@ O aplicativo é uma ferramenta simples que cria uma interface para solicitar ao 
 
 ## Instalação
 
-Vá para [releases](https://github.com/Saralapa/League-Lobby-Clicker/releases) e clique para baixar o instalador da última versão
+Vá para [releases](https://github.com/Saralapa/League-Lobby-Clicker/releases) e clique para baixar o instalador (setup) da última versão
 
 ## Funcionalidades
 
