@@ -907,10 +907,6 @@ def LOL():
     label_auto_aceitar = tk.Label(root, font=("Arial", 18), bg="#151515", fg="#f0f0f0")
     label_auto_aceitar.pack()
 
-    x=378
-    y=410
-    root.geometry(f"{x}x{y}+{(root.winfo_screenwidth() - x) // 2}+{(root.winfo_screenheight() - y) // 2}")
-
     tela_selecao_de_modo()
     Verificar_Atualizacoes()
     root.mainloop()
