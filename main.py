@@ -8,31 +8,11 @@ import tkinter as tk
 import os
 import threading
 from utils.Encontrar_Pasta import *
+from utils.Idioma import definir_idioma
 
 versao_atual = "3.1"
 
 jogo_está_aberto = False
-
-def definir_idioma():
-    global idioma, caminho_idioma
-    caminho_idioma = os.path.join(os.path.expanduser("~"),"League_Lobby_Clicker_idioma-Saralapa.txt")
-    if os.path.exists(caminho_idioma):
-        try:
-            with open(caminho_idioma, "r") as file:
-                idioma = file.read()
-        except:
-            None
-    else:
-        try:
-            with open(caminho_idioma, "w") as file:
-                file.write("Portugues")
-            with open(caminho_idioma, "r") as file:
-                idioma = file.read()
-        except:
-            None
-
-
-
 
 def tela_selecao_de_modo():
     global tela, Role_1, Role_2, modo_de_jogo, roles, jogo_está_aberto
@@ -795,7 +775,7 @@ botao_icone_idioma.pack()
 label_auto_aceitar = tk.Label(root, font=("Arial", 18), bg="#151515", fg="#f0f0f0")
 label_auto_aceitar.pack()
 
-definir_idioma()
+idioma = definir_idioma()
 chamar_funcao_encontrar_pasta_LOL()
 tela_selecao_de_modo()
 Verificar_Atualizacoes()
