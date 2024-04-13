@@ -9,6 +9,7 @@ import os
 import threading
 from utils.Encontrar_Pasta import *
 from utils.Idioma import definir_idioma
+from utils.Jogo_Esta_Aberto import Jogo_Aberto
 
 versao_atual = "3.1"
 
@@ -35,8 +36,10 @@ def tela_selecao_de_modo():
     for i in range(len(botoes_modos_de_jogo)):
         botoes_modos_de_jogo[i].config(text=modos_de_jogo[i], command=lambda t=modos_de_jogo[i]: Atualizar_Modo_de_Jogo(t))
 
-    botao_icone_idioma.pack()
-    botao_icone_idioma.place(relx=0.8915, rely=0.016)
+    try:
+        botao_icone_idioma.pack()
+        botao_icone_idioma.place(relx=0.8915, rely=0.016)
+    except: None
     frame_borda_topo.pack()
     frame_borda_topo.place(relx=0.4988888888888888, rely=0.052, anchor="center")
     label_borda_topo.pack()
@@ -65,20 +68,7 @@ def tela_selecao_de_modo():
         thread_jogo_aberto.daemon = True
         thread_jogo_aberto.start()
 
-def Jogo_Aberto():
-    global modo_de_jogo, jogo_está_aberto
-    while True:
-        if jogo_está_aberto == False:
-            return
-        time.sleep(30)
-        if not [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"] and jogo_está_aberto == True:
-            if idioma == "Portugues":
-                modo_de_jogo = "Apenas auto aceitar"
-            elif idioma == "English":
-                modo_de_jogo = "Just auto accept"
-            jogo_está_aberto = False
-            tela_auto_aceitar() 
-            return
+
 
 def tela_selecao_de_role():
     global tela, botoes_roles, roles
@@ -769,8 +759,10 @@ botao_confirmar = tk.Button(frame_botao_confirmar, text="Confirmar", command=lam
 botao_confirmar.pack()
 
 imagem_idioma = tk.PhotoImage(file="Language.png")
-botao_icone_idioma = tk.Button(root, image=imagem_idioma, command=tela_alterar_idioma, bd=0, bg="#151515", width=31, height=31)
-botao_icone_idioma.pack()
+try:
+    botao_icone_idioma = tk.Button(root, image=imagem_idioma, command=tela_alterar_idioma, bd=0, bg="#151515", width=31, height=31)
+    botao_icone_idioma.pack()
+except: None
 
 label_auto_aceitar = tk.Label(root, font=("Arial", 18), bg="#151515", fg="#f0f0f0")
 label_auto_aceitar.pack()
