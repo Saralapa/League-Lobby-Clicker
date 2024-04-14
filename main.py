@@ -1,6 +1,3 @@
-from tkinter import messagebox
-import webbrowser
-import requests
 import pyautogui
 import pygetwindow as gw
 import time
@@ -11,6 +8,7 @@ from utils.Encontrar_Pasta import *
 from utils.Idioma import definir_idioma
 from utils.Centralizar_Janela import centralizar_janela
 from utils.Atualizacoes import Verificar_Atualizacoes
+from utils.Fechar_Janela import fechar_janela
 
 jogo_está_aberto = False
 
@@ -434,10 +432,6 @@ def Atualizar_Idioma(valor):
         botao_desfazer.config(text="Confirm")
         texto_inferior.set(f"Selected language: {valor}")
 
-def fechar_janela():
-    root.destroy()
-    exit()
-
 def KeepSearchingImageAndClickWhenFound(image):
     global jogo_está_aberto
     if not tela=="auto aceitar":
@@ -681,7 +675,7 @@ root.title("League Lobby Clicker - Saralapa")
 root.iconbitmap('icon.ico')
 root.config(bg="#151515")
 root.resizable(False, False)
-root.protocol("WM_DELETE_WINDOW", fechar_janela)
+root.protocol("WM_DELETE_WINDOW", lambda: fechar_janela(root))
 
 frame_borda_topo = tk.LabelFrame(root, bg="#151515", width=210, height=30, bd=0)
 frame_borda_topo.pack(side="top", anchor="center", pady=5)
