@@ -9,7 +9,7 @@ import os
 import threading
 from utils.Encontrar_Pasta import *
 from utils.Idioma import definir_idioma
-from utils.Jogo_Esta_Aberto import Jogo_Aberto
+from utils.Centralizar_Janela import centralizar_janela
 
 versao_atual = "3.1"
 
@@ -68,7 +68,20 @@ def tela_selecao_de_modo():
         thread_jogo_aberto.daemon = True
         thread_jogo_aberto.start()
 
-
+def Jogo_Aberto():
+    global modo_de_jogo, jogo_está_aberto
+    while True:
+        if jogo_está_aberto == False:
+            return
+        #time.sleep(30)
+        if not [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"] and jogo_está_aberto == True:
+            if idioma == "Portugues":
+                modo_de_jogo = "Apenas auto aceitar"
+            elif idioma == "English":
+                modo_de_jogo = "Just auto accept"
+            jogo_está_aberto = False
+            tela_auto_aceitar() 
+            return
 
 def tela_selecao_de_role():
     global tela, botoes_roles, roles
@@ -212,14 +225,6 @@ def tela_alterar_idioma():
 
     altura_janela_idioma = 78 + len(lista_idiomas) * 49
     centralizar_janela(root, 378, altura_janela_idioma)
-
-def centralizar_janela(root, width, height):
-    global screen_width, screen_height, x, y
-    screen_width = root.winfo_screenwidth()
-    screen_height = root.winfo_screenheight()
-    x = (screen_width - width) // 2
-    y = (screen_height - height) // 2
-    root.geometry(f"{width}x{height}+{x}+{y}")
 
 def atualizar_mensagem():
     if idioma=="Portugues":
