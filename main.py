@@ -10,8 +10,7 @@ import threading
 from utils.Encontrar_Pasta import *
 from utils.Idioma import definir_idioma
 from utils.Centralizar_Janela import centralizar_janela
-
-versao_atual = "3.1"
+from utils.Atualizacoes import Verificar_Atualizacoes
 
 jogo_está_aberto = False
 
@@ -62,26 +61,25 @@ def tela_selecao_de_modo():
         botao_desfazer.config(text="Undo")
         botao_confirmar.config(text="Confirm")
     centralizar_janela(root, 378, 476)
+    def Jogo_Aberto():
+        global modo_de_jogo, jogo_está_aberto
+        while True:
+            if jogo_está_aberto == False:
+                return
+            #time.sleep(30)
+            if not [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"] and jogo_está_aberto == True:
+                if idioma == "Portugues":
+                    modo_de_jogo = "Apenas auto aceitar"
+                elif idioma == "English":
+                    modo_de_jogo = "Just auto accept"
+                jogo_está_aberto = False
+                tela_auto_aceitar() 
+                return
 
     if jogo_está_aberto == True:
         thread_jogo_aberto = threading.Thread(target=Jogo_Aberto)
         thread_jogo_aberto.daemon = True
         thread_jogo_aberto.start()
-
-def Jogo_Aberto():
-    global modo_de_jogo, jogo_está_aberto
-    while True:
-        if jogo_está_aberto == False:
-            return
-        #time.sleep(30)
-        if not [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"] and jogo_está_aberto == True:
-            if idioma == "Portugues":
-                modo_de_jogo = "Apenas auto aceitar"
-            elif idioma == "English":
-                modo_de_jogo = "Just auto accept"
-            jogo_está_aberto = False
-            tela_auto_aceitar() 
-            return
 
 def tela_selecao_de_role():
     global tela, botoes_roles, roles
@@ -621,7 +619,6 @@ def Role2(image):
     time.sleep(0.5)
 
 def WhereToClick():
-    global jogo_está_aberto
     if not tela=="auto aceitar":
         return
     chamar_funcao_encontrar_pasta_LOL()
@@ -677,22 +674,7 @@ def WhereToClick():
             tela_selecao_de_modo()
             return
 
-def Verificar_Atualizacoes():
-    try:
-        versao = requests.get("https://api.github.com/repos/Saralapa/League-Lobby-Clicker/releases/latest")
-        versao.raise_for_status()
-        versao = versao.json()
 
-        if versao["tag_name"].replace("v","") != versao_atual:
-            if idioma=="Portugues":
-                resposta = messagebox.askquestion("Atualização Disponível", f"Versão atual: {versao_atual}\nVersão mais recente: {versao['tag_name'].replace("v","")}\n\n\nDeseja baixar agora?")
-            elif idioma=="English":
-                resposta = messagebox.askquestion("Update Available", f"Current version: {versao_atual}\nLatest Version: {versao['tag_name'].replace("v","")}\n\n\nDownload now?")
-            if resposta == "yes":
-                webbrowser.open("https://github.com/Saralapa/League-Lobby-Clicker/releases/latest")
-
-    except requests.exceptions.RequestException as e:
-        pass
 root =tk.Tk()
 
 root.title("League Lobby Clicker - Saralapa")

@@ -1,7 +1,6 @@
 import os
 
 def definir_idioma():
-    global idioma, caminho_idioma
     caminho_idioma = os.path.join(os.path.expanduser("~"),"League_Lobby_Clicker_idioma-Saralapa.txt")
     if os.path.exists(caminho_idioma):
         try:
