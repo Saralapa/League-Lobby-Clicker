@@ -4,7 +4,7 @@ import time
 import tkinter as tk
 import os
 import threading
-from utils.Encontrar_Pasta import *
+from utils.Encontrar_Pasta import chamar_funcao_encontrar_pasta_LOL
 from utils.Idioma import definir_idioma
 from utils.Centralizar_Janela import centralizar_janela
 from utils.Atualizacoes import Verificar_Atualizacoes

@@ -19,6 +19,4 @@ def Verificar_Atualizacoes():
                 resposta = messagebox.askquestion("Update Available", f"Current version: {versao_atual}\nLatest Version: {versao['tag_name'].replace("v","")}\n\n\nDownload now?")
             if resposta == "yes":
                 webbrowser.open("https://github.com/Saralapa/League-Lobby-Clicker/releases/latest")
-
-    except requests.exceptions.RequestException as e:
-        pass
+    except: None
