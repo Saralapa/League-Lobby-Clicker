@@ -3,7 +3,7 @@ import webbrowser
 from tkinter import messagebox
 from utils.Idioma import definir_idioma
 
-versao_atual = "3.0"
+versao_atual = "3.2"
 
 def Verificar_Atualizacoes():
     try:
