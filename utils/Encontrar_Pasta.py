@@ -26,8 +26,7 @@ def encontrar_e_salvar_pasta_instalacao_lol(unidade, flagPF):
 
                 if pasta_instalacao:
                     return 23
-                else:
-                    return
+                return
 
         for pasta, subpastas, arquivos in os.walk(unidade):
             if "Program Files" in pasta or "ProgramData" in pasta or "AppData" in pasta or "Windows" in pasta:
