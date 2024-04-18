@@ -6,7 +6,7 @@ import time
 from utils.Centralizar_Janela import centralizar_janela
 from utils.Fechar_Janela import fechar_janela
 from utils.Idioma import definir_idioma
-from utils.Onde_Clicar import WhereToClick
+from utils.Cliques import WhereToClick
 
 def tela_selecao_de_modo():
     global tela, Role_1, Role_2, modo_de_jogo, roles, jogo_está_aberto
@@ -436,7 +436,7 @@ def Criar_Janela():
     root = tk.Tk()
 
     root.title("League Lobby Clicker - Saralapa")
-    root.iconbitmap('icon.ico')
+    root.iconbitmap('Images/icon.ico')
     root.config(bg="#151515")
     root.resizable(False, False)
     root.attributes("-topmost", True)
@@ -505,7 +505,7 @@ def Criar_Janela():
     botao_confirmar = tk.Button(frame_botao_confirmar, text="Confirmar", command=lambda: confirmar(), bg="#1f1f1f", fg="#f0f0f0", bd=1)
     botao_confirmar.pack()
 
-    imagem_idioma = tk.PhotoImage(file="Language.png")
+    imagem_idioma = tk.PhotoImage(file="Images/Language.png")
     try:
         botao_icone_idioma = tk.Button(root, image=imagem_idioma, command=tela_alterar_idioma, bd=0, bg="#151515", width=31, height=31)
         botao_icone_idioma.pack()
