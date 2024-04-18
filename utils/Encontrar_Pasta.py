@@ -94,7 +94,7 @@ def chamar_funcao_encontrar_pasta_LOL():
             
         try:
             with open(LOL_path, "r") as file:
-                subprocess.Popen([file.read().strip(), '--launch-product=league_of_legends', '--launch-patchline=live'])
+                pass#subprocess.Popen([file.read().strip(), '--launch-product=league_of_legends', '--launch-patchline=live'])
         except:
             try:
                 os.remove(LOL_path)
@@ -110,6 +110,6 @@ def chamar_funcao_encontrar_pasta_LOL():
             time.sleep(0.5)
             try:
                 with open(LOL_path, "r") as file:
-                    subprocess.Popen([file.read().strip(), '--launch-product=league_of_legends', '--launch-patchline=live'])
+                    pass#subprocess.Popen([file.read().strip(), '--launch-product=league_of_legends', '--launch-patchline=live'])
             except:
                 None
