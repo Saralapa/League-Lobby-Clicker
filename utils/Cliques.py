@@ -7,7 +7,7 @@ from utils.Encontrar_Pasta import chamar_funcao_encontrar_pasta_LOL
 aux = False
 def KeepSearchingImageAndClickWhenFound(image):
     global jogo_está_aberto, aux
-    from utils.Janela import tela_selecao_de_modo, idioma, tela_auto_aceitar
+    from utils.Janela import tela_selecao_de_modo, idioma
     if not tela == "auto aceitar" or aux == True:
         return
     print("Procurando:", image)
@@ -76,7 +76,7 @@ def SearchImageForXSecondsAndClickWhenFound(image, seconds):
 
 def Role1(image):
     global jogo_está_aberto, aux
-    from utils.Janela import tela_selecao_de_modo, idioma, root, tela_auto_aceitar
+    from utils.Janela import tela_selecao_de_modo, idioma, root
     if not tela == "auto aceitar" or aux == True:
         return
     print("Procurando:", image)
@@ -154,7 +154,7 @@ def Role1(image):
 
 def Role2(image):
     global jogo_está_aberto, aux
-    from utils.Janela import tela_selecao_de_modo, idioma, root, tela_auto_aceitar
+    from utils.Janela import tela_selecao_de_modo, idioma, root
     if not tela == "auto aceitar" or aux == True:
         return
     print("Procurando:", image)
