@@ -50,4 +50,4 @@ Este aplicativo apenas busca por imagens na tela e clica em suas respectivas pos
 
 ## Autor
 
-Saralapa
+[Saralapa](https://github.com/Saralapa)
