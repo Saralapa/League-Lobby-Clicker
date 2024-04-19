@@ -8,8 +8,8 @@ from utils.Fechar_Janela import fechar_janela
 from utils.Idioma import definir_idioma
 from utils.Cliques import WhereToClick
 
-def tela_selecao_de_modo():
-    global tela, Role_1, Role_2, modo_de_jogo, roles, jogo_está_aberto
+def tela_selecao_de_modo(jogo_está_aberto):
+    global tela, Role_1, Role_2, modo_de_jogo, roles
     tela = "seleção de modo de jogo"
     modo_de_jogo=None
     Role_1=None
@@ -55,13 +55,17 @@ def tela_selecao_de_modo():
         botao_desfazer.config(text="Undo")
         botao_confirmar.config(text="Confirm")
     centralizar_janela(root, 378, 476)
-    def Jogo_Aberto():
-        global modo_de_jogo, jogo_está_aberto
+    def Jogo_Aberto(jogo_está_aberto):
+        global modo_de_jogo
+        print("função jogo aberto")
         while True:
+            print("while true função jogo aberto")
             if jogo_está_aberto == False:
+                print("jogo aberto false")
                 return
-            time.sleep(5)
+            time.sleep(30)
             if not [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"] and jogo_está_aberto == True:
+                print("jogo fechado e jogo aberto true")
                 if idioma == "Portugues":
                     modo_de_jogo = "Apenas auto aceitar"
                 elif idioma == "English":
@@ -71,7 +75,7 @@ def tela_selecao_de_modo():
                 return
 
     if jogo_está_aberto == True:
-        thread_jogo_aberto = threading.Thread(target=Jogo_Aberto)
+        thread_jogo_aberto = threading.Thread(target=Jogo_Aberto(jogo_está_aberto))
         thread_jogo_aberto.daemon = True
         thread_jogo_aberto.start()
 
@@ -318,18 +322,18 @@ def desfazer():
             else:
                 modo_de_jogo = None
                 jogo_está_aberto = False
-                tela_selecao_de_modo()
+                tela_selecao_de_modo(jogo_está_aberto)
         elif tela=="auto aceitar":
             modo_de_jogo=None
             Role_1=None
             Role_2=None
             jogo_está_aberto = False
-            tela_selecao_de_modo()
+            tela_selecao_de_modo(jogo_está_aberto)
         elif tela=="alterar idioma":
             modo_de_jogo=None
             Role_1=None
             Role_2=None
-            tela_selecao_de_modo()
+            tela_selecao_de_modo(jogo_está_aberto)
     elif idioma=="English":
         if tela == "seleção de modo de jogo":
             modo_de_jogo = None
@@ -349,18 +353,18 @@ def desfazer():
             else:
                 modo_de_jogo = None
                 jogo_está_aberto = False
-                tela_selecao_de_modo()
+                tela_selecao_de_modo(jogo_está_aberto)
         elif tela=="auto aceitar":
             modo_de_jogo=None
             Role_1=None
             Role_2=None
             jogo_está_aberto = False
-            tela_selecao_de_modo()
+            tela_selecao_de_modo(jogo_está_aberto)
         elif tela=="alterar idioma":
             modo_de_jogo=None
             Role_1=None
             Role_2=None
-            tela_selecao_de_modo()
+            tela_selecao_de_modo(jogo_está_aberto)
 
 def Atualizar_Modo_de_Jogo(valor):
     global modo_de_jogo, roles
@@ -514,5 +518,5 @@ def Criar_Janela():
     label_auto_aceitar = tk.Label(root, font=("Arial", 18), bg="#151515", fg="#f0f0f0")
     label_auto_aceitar.pack()
     root.after(1000, lambda: [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].activate())
-    tela_selecao_de_modo()
+    tela_selecao_de_modo(jogo_está_aberto)
     root.mainloop()
