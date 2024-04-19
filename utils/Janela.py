@@ -60,7 +60,7 @@ def tela_selecao_de_modo():
         while True:
             if jogo_está_aberto == False:
                 return
-            time.sleep(30)
+            time.sleep(5)
             if not [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"] and jogo_está_aberto == True:
                 if idioma == "Portugues":
                     modo_de_jogo = "Apenas auto aceitar"
@@ -513,6 +513,6 @@ def Criar_Janela():
 
     label_auto_aceitar = tk.Label(root, font=("Arial", 18), bg="#151515", fg="#f0f0f0")
     label_auto_aceitar.pack()
-    
+    root.after(1000, lambda: [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].activate())
     tela_selecao_de_modo()
     root.mainloop()
