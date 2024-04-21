@@ -276,7 +276,7 @@ def WhereToClick():
                 time.sleep(5)
             else:
                 tela_selecao_de_modo(jogo_está_aberto)
-                return Exception("tela seleção de modo")
+                return
     except Exception as e:
         if e.args[0] == "tela seleção de modo":
             return
