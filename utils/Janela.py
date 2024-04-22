@@ -10,28 +10,6 @@ from utils.Fechar_Janela import fechar_janela
 from utils.Idioma import definir_idioma
 from utils.Cliques import WhereToClick
 
-def Cor_Idioma():
-    def Alterar_Cor(image):
-        image = image.convert("RGBA")
-        
-        pixel_data = list(image.getdata())
-
-        for i, pixel in enumerate(pixel_data):
-            if pixel[0] > 200 and pixel[1] > 200 and pixel[2] > 200:
-                pixel_data[i] = (144, 68, 255, pixel[3])
-
-        image.putdata(pixel_data)
-        
-        return image
-
-    imagem_original = Image.open("Images/Language.png")
-
-    imagem_modificada = imagem_original.copy()
-
-    imagem_modificada = Alterar_Cor(imagem_modificada)
-
-    return imagem_modificada
-
 def tela_selecao_de_modo(jogo_está_aberto):
     global tela, Role_1, Role_2, modo_de_jogo, roles
     tela = "seleção de modo de jogo"
@@ -170,8 +148,7 @@ def tela_selecao_de_role():
             i+=1
 
         centralizar_janela(root, 378, 235)
-    else:
-        
+    else:   
         frame_botao_desfazer.place(rely=0.9775)
         frame_botao_confirmar.place(rely=0.9775)
         frame_borda_inferior.place(relx=0.4988888888888888, rely=0.943, anchor="center")
@@ -200,6 +177,47 @@ def tela_selecao_de_role():
             i+=1
 
         centralizar_janela(root, 378, 380)            
+
+def tela_alterar_idioma():
+    global tela
+    tela="alterar idioma"
+    frame_borda_topo.pack_forget()
+    frame_borda_topo.place_forget()
+    for botao in botoes_modos_de_jogo:
+        botao.pack_forget()
+        botao.place_forget()
+    for frame in frame_botoes_modos_de_jogo:
+        frame.pack_forget()
+        frame.place_forget()
+    for frame in frame_botoes_roles:
+        frame.pack_forget()
+        frame.place_forget()
+    frame_botao_confirmar.pack_forget()
+    frame_botao_confirmar.place_forget()
+    botao_icone_idioma.pack_forget()
+    botao_icone_idioma.place_forget()
+
+    i = 0
+    for botao in botoes_idiomas:
+        frame_botoes_idiomas[i].pack()
+        frame_botoes_idiomas[i].place(relx=0.0245, rely=0.0525 + i * 0.2775)
+        botao.pack()
+        botao.place(relx=0.0275, rely=0.058 + i * 0.2795)
+        i+=1
+
+    frame_borda_inferior.pack()
+    frame_borda_inferior.place(relx=0.4988888888888888, rely=0.678, anchor="center")
+    if idioma=="Portugues":
+        texto_inferior.set("Idioma selecionado: Português")
+        botao_desfazer.config(text="Confirmar")
+    elif idioma=="English":
+        texto_inferior.set(f"Selected language: {idioma}")
+        botao_desfazer.config(text="Confirm")
+
+    frame_botao_desfazer.place(relx=0.4988888888888888, rely=0.873, anchor="center")
+
+    altura_janela_idioma = 78 + len(lista_idiomas) * 49
+    centralizar_janela(root, 378, altura_janela_idioma)
 
 def tela_auto_aceitar():
     global tela, jogo_está_aberto
@@ -245,46 +263,23 @@ def tela_auto_aceitar():
     thread_mensagem.daemon = True
     thread_mensagem.start()
 
-def tela_alterar_idioma():
-    global tela
-    tela="alterar idioma"
-    frame_borda_topo.pack_forget()
-    frame_borda_topo.place_forget()
-    for botao in botoes_modos_de_jogo:
-        botao.pack_forget()
-        botao.place_forget()
-    for frame in frame_botoes_modos_de_jogo:
-        frame.pack_forget()
-        frame.place_forget()
-    for frame in frame_botoes_roles:
-        frame.pack_forget()
-        frame.place_forget()
-    frame_botao_confirmar.pack_forget()
-    frame_botao_confirmar.place_forget()
-    botao_icone_idioma.pack_forget()
-    botao_icone_idioma.place_forget()
+def Cor_Idioma():
+    def Alterar_Cor(image):
+        image = image.convert("RGBA")
+        pixel_data = list(image.getdata())
 
-    i = 0
-    for botao in botoes_idiomas:
-        frame_botoes_idiomas[i].pack()
-        frame_botoes_idiomas[i].place(relx=0.0245, rely=0.0525 + i * 0.2775)
-        botao.pack()
-        botao.place(relx=0.0275, rely=0.058 + i * 0.2795)
-        i+=1
+        for i, pixel in enumerate(pixel_data):
+            if pixel[0] > 200 and pixel[1] > 200 and pixel[2] > 200:
+                pixel_data[i] = (144, 68, 255, pixel[3])
 
-    frame_borda_inferior.pack()
-    frame_borda_inferior.place(relx=0.4988888888888888, rely=0.678, anchor="center")
-    if idioma=="Portugues":
-        texto_inferior.set("Idioma selecionado: Português")
-        botao_desfazer.config(text="Confirmar")
-    elif idioma=="English":
-        texto_inferior.set(f"Selected language: {idioma}")
-        botao_desfazer.config(text="Confirm")
+        image.putdata(pixel_data)
+        return image
 
-    frame_botao_desfazer.place(relx=0.4988888888888888, rely=0.873, anchor="center")
+    imagem_original = Image.open("Images/Language.png")
+    imagem_modificada = imagem_original.copy()
+    imagem_modificada = Alterar_Cor(imagem_modificada)
 
-    altura_janela_idioma = 78 + len(lista_idiomas) * 49
-    centralizar_janela(root, 378, altura_janela_idioma)
+    return imagem_modificada
 
 def atualizar_mensagem():
     if idioma=="Portugues":
