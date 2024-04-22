@@ -3,10 +3,34 @@ import pygetwindow as gw
 import tkinter as tk
 import os
 import time
+from ctypes import windll, byref, sizeof, c_int
+from PIL import Image, ImageTk
 from utils.Centralizar_Janela import centralizar_janela
 from utils.Fechar_Janela import fechar_janela
 from utils.Idioma import definir_idioma
 from utils.Cliques import WhereToClick
+
+def Cor_Idioma():
+    def Alterar_Cor(image):
+        image = image.convert("RGBA")
+        
+        pixel_data = list(image.getdata())
+
+        for i, pixel in enumerate(pixel_data):
+            if pixel[0] > 200 and pixel[1] > 200 and pixel[2] > 200:
+                pixel_data[i] = (144, 68, 255, pixel[3])
+
+        image.putdata(pixel_data)
+        
+        return image
+
+    imagem_original = Image.open("Images/Language.png")
+
+    imagem_modificada = imagem_original.copy()
+
+    imagem_modificada = Alterar_Cor(imagem_modificada)
+
+    return imagem_modificada
 
 def tela_selecao_de_modo(jogo_está_aberto):
     global tela, Role_1, Role_2, modo_de_jogo, roles
@@ -14,12 +38,20 @@ def tela_selecao_de_modo(jogo_está_aberto):
     modo_de_jogo=None
     Role_1=None
     Role_2=None
-    frame_botoes_roles.pack_forget()
-    frame_botoes_roles.place_forget()
+    for frame in frame_botoes_roles:
+        frame.pack_forget()
+        frame.place_forget()
+    for botao in botoes_roles:
+        botao.pack_forget()
+        botao.place_forget()
     label_auto_aceitar.pack_forget()
     label_auto_aceitar.place_forget()
-    frame_botoes_idiomas.pack_forget()
-    frame_botoes_idiomas.place_forget()
+    for frame in frame_botoes_idiomas:
+        frame.pack_forget()
+        frame.place_forget()
+    for botao in botoes_idiomas:
+        botao.pack_forget()
+        botao.place_forget()
 
     if idioma=="Portugues":
         modos_de_jogo=["Escolha alternada", "Ranqueada solo duo", "ARAM", "Blitz do Nexus", "Arena", "URF", "Todos por um", "Apenas auto aceitar"]
@@ -39,11 +71,16 @@ def tela_selecao_de_modo(jogo_está_aberto):
     frame_borda_inferior.pack()
     frame_borda_inferior.place(relx=0.4988888888888888, rely=0.953, anchor="center")
     frame_botao_desfazer.pack()
-    frame_botao_desfazer.place(relx=0.0275, rely=0.98, anchor="sw")
+    frame_botao_desfazer.place(relx=0.025, rely=0.9815, anchor="sw")
     frame_botao_confirmar.pack()
-    frame_botao_confirmar.place(relx=0.9745, rely=0.98, anchor="se")
-    frame_botoes_modos_de_jogo.pack()
-    frame_botoes_modos_de_jogo.place(relx=0.0275, rely=0.095)
+    frame_botao_confirmar.place(relx=0.975, rely=0.9815, anchor="se")
+    i=0
+    for botao in botoes_modos_de_jogo:
+        frame_botoes_modos_de_jogo[i].pack()
+        frame_botoes_modos_de_jogo[i].place(relx=0.0245, rely=0.102 + i * 0.103225)
+        botao.pack()
+        botao.place(relx=0.0275, rely=0.105 + i * 0.1028)
+        i+=1
     if idioma=="Portugues":
         label_borda_topo.config(text="Escolha o modo de jogo")
         texto_inferior.set("Modo de jogo\nescolhido:")
@@ -82,12 +119,15 @@ def tela_selecao_de_modo(jogo_está_aberto):
 def tela_selecao_de_role():
     global tela, botoes_roles, roles
     tela = "seleção de role"
-    frame_botoes_modos_de_jogo.pack_forget()
-    frame_botoes_modos_de_jogo.place_forget()
+    for botao in botoes_modos_de_jogo:
+        botao.pack_forget()
+        botao.place_forget()
+    for frame in frame_botoes_modos_de_jogo:
+        frame.pack_forget()
+        frame.place_forget()
     botao_icone_idioma.pack_forget()
     botao_icone_idioma.place_forget()
 
-    frame_botoes_roles.pack()
     if idioma=="Portugues":
         label_borda_topo.config(text="Escolha em que posição você vai jogar")
         if Role_1 == None:
@@ -102,9 +142,8 @@ def tela_selecao_de_role():
             botao_desfazer.config(text="Undo")
 
     if modo_de_jogo == "Blitz do Nexus" or modo_de_jogo== "Nexus Blitz":
-        frame_botoes_roles.place(relx=0.0275, rely=0.2075)
-        frame_botao_desfazer.place(rely=0.9564)
-        frame_botao_confirmar.place(rely=0.9564)
+        frame_botao_desfazer.place(rely=0.96)
+        frame_botao_confirmar.place(rely=0.96)
         frame_borda_topo.place(relx=0.4988888888888888, rely=0.115, anchor="center")
         frame_borda_inferior.place(relx=0.4988888888888888, rely=0.902, anchor="center")
         if idioma=="Portugues":
@@ -120,16 +159,21 @@ def tela_selecao_de_role():
         elif idioma == "English":
             roles = ["Jungle", "Lane", "Fill"]
 
-        botoes_roles = [tk.Button(frame_botoes_roles, text=texto2, command=lambda t=texto2: Atualizar_Roles(t)) for texto2 in roles]
+        botoes_roles = [tk.Button(root, text=texto2, command=lambda t=texto2: Atualizar_Roles(t)) for texto2 in roles]
+        i=0
         for botao in botoes_roles:
-            botao.config(width=50, height=2, bg="#1f1f1f", fg="#f0f0f0", bd=1)
-            botao.pack(pady=5)
+            frame_botoes_roles[i].pack()
+            frame_botoes_roles[i].place(relx=0.0245, rely=0.225 + i * 0.20875)
+            botao.config(width=50, height=2, bg="#1f1f1f", fg="#9044ff", bd=1)
+            botao.pack()
+            botao.place(relx=0.0275, rely=0.22775 + i * 0.20875)
+            i+=1
 
         centralizar_janela(root, 378, 235)
     else:
-        frame_botoes_roles.place(relx=0.0275, rely=0.1235)
-        frame_botao_desfazer.place(rely=0.974)
-        frame_botao_confirmar.place(rely=0.974)
+        
+        frame_botao_desfazer.place(rely=0.9775)
+        frame_botao_confirmar.place(rely=0.9775)
         frame_borda_inferior.place(relx=0.4988888888888888, rely=0.943, anchor="center")
         frame_borda_topo.place(relx=0.4988888888888888, rely=0.068, anchor="center")
         if idioma=="Portugues":
@@ -144,11 +188,16 @@ def tela_selecao_de_role():
             roles = ["Top", "Jungle", "Mid", "ADC", "Suporte", "Preencher"]
         elif idioma=="English":
             roles = ["Top", "Jungle", "Mid", "ADC", "Support", "Fill"]
-        botoes_roles = [tk.Button(frame_botoes_roles, text=texto2, command=lambda t=texto2: Atualizar_Roles(t)) for texto2 in roles]
+        botoes_roles = [tk.Button(root, text=texto2, command=lambda t=texto2: Atualizar_Roles(t)) for texto2 in roles]
 
+        i=0
         for botao in botoes_roles:
-            botao.config(width=50, height=2, bg="#1f1f1f", fg="#f0f0f0", bd=1)
-            botao.pack(pady=5)
+            frame_botoes_roles[i].pack()
+            frame_botoes_roles[i].place(relx=0.0245, rely=0.135 + i * 0.12875)
+            botao.config(width=50, height=2, bg="#1f1f1f", fg="#9044ff", bd=1)
+            botao.pack()
+            botao.place(relx=0.0275, rely=0.1375 + i * 0.12875)
+            i+=1
 
         centralizar_janela(root, 378, 380)            
 
@@ -161,10 +210,15 @@ def tela_auto_aceitar():
     tela="auto aceitar"
     frame_borda_topo.pack_forget()
     frame_borda_topo.place_forget()
-    frame_botoes_modos_de_jogo.pack_forget()
-    frame_botoes_modos_de_jogo.place_forget()
-    frame_botoes_roles.pack_forget()
-    frame_botoes_roles.place_forget()
+    for botao in botoes_modos_de_jogo:
+        botao.pack_forget()
+        botao.place_forget()
+    for frame in frame_botoes_modos_de_jogo:
+        frame.pack_forget()
+        frame.place_forget()
+    for frame in frame_botoes_roles:
+        frame.pack_forget()
+        frame.place_forget()
     frame_botao_confirmar.pack_forget()
     frame_botao_confirmar.place_forget()
     frame_borda_inferior.pack_forget()
@@ -196,17 +250,27 @@ def tela_alterar_idioma():
     tela="alterar idioma"
     frame_borda_topo.pack_forget()
     frame_borda_topo.place_forget()
-    frame_botoes_modos_de_jogo.pack_forget()
-    frame_botoes_modos_de_jogo.place_forget()
-    frame_botoes_roles.pack_forget()
-    frame_botoes_roles.place_forget()
+    for botao in botoes_modos_de_jogo:
+        botao.pack_forget()
+        botao.place_forget()
+    for frame in frame_botoes_modos_de_jogo:
+        frame.pack_forget()
+        frame.place_forget()
+    for frame in frame_botoes_roles:
+        frame.pack_forget()
+        frame.place_forget()
     frame_botao_confirmar.pack_forget()
     frame_botao_confirmar.place_forget()
     botao_icone_idioma.pack_forget()
     botao_icone_idioma.place_forget()
 
-    frame_botoes_idiomas.pack()
-    frame_botoes_idiomas.place(relx=0.0275, rely=0.03)
+    i = 0
+    for botao in botoes_idiomas:
+        frame_botoes_idiomas[i].pack()
+        frame_botoes_idiomas[i].place(relx=0.0245, rely=0.0525 + i * 0.2775)
+        botao.pack()
+        botao.place(relx=0.0275, rely=0.058 + i * 0.2795)
+        i+=1
 
     frame_borda_inferior.pack()
     frame_borda_inferior.place(relx=0.4988888888888888, rely=0.678, anchor="center")
@@ -395,8 +459,8 @@ def Atualizar_Roles(valor):
             if Role_1 == Role_2:
                 Role_2 = None
                 texto_inferior.set(f"A primeira e a segunda\nposição não podem ser iguais!")
-                root.after(2000, lambda: texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role:") if tela=="seleção de role" and Role_2==None else None if Role_1 != None and Role_2==None else None)
-                root.after(2000, lambda: texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role: {Role_2}") if tela=="seleção de role" else None if Role_1 != None and Role_2!=None else None)
+                root.after(2000, lambda: texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role:") if tela=="seleção de role" and Role_2==None and Role_1 != None else None)
+                root.after(2000, lambda: texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role: {Role_2}") if tela=="seleção de role" and Role_1 != None and Role_2!=None else None)
     elif idioma=="English":
         if Role_1 == None or modo_de_jogo == "Nexus Blitz":
             Role_1 = valor
@@ -416,8 +480,8 @@ def Atualizar_Roles(valor):
             if Role_1 == Role_2:
                 Role_2 = None
                 texto_inferior.set(f"The first and second\nroles cannot be the same!")
-                root.after(2000, lambda: texto_inferior.set(f"First role: {Role_1}\nSecond role:") if tela=="seleção de role" and Role_2==None else None if Role_1 != None and Role_2==None else None)
-                root.after(2000, lambda: texto_inferior.set(f"First role: {Role_1}\nSecond role: {Role_2}") if tela=="seleção de role" else None if Role_1 != None and Role_2!=None else None)
+                root.after(2000, lambda: texto_inferior.set(f"First role: {Role_1}\nSecond role:") if tela=="seleção de role" and Role_2==None and Role_1 != None else None)
+                root.after(2000, lambda: texto_inferior.set(f"First role: {Role_1}\nSecond role: {Role_2}") if tela=="seleção de role" and Role_1 != None and Role_2!=None else None)
     
 def Atualizar_Idioma(valor):
     global idioma
@@ -433,7 +497,7 @@ def Atualizar_Idioma(valor):
         texto_inferior.set(f"Selected language: {valor}")
 
 def Criar_Janela():
-    global frame_botoes_roles, label_auto_aceitar, frame_botoes_idiomas, botoes_modos_de_jogo, botao_icone_idioma, frame_borda_topo, label_borda_topo, frame_borda_inferior, frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, botoes_roles
+    global frame_botoes_roles, label_auto_aceitar, frame_botoes_idiomas, botoes_modos_de_jogo, botao_icone_idioma, frame_borda_topo, label_borda_topo, frame_borda_inferior, frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, botoes_roles, botoes_idiomas
     
     idioma = definir_idioma()
     jogo_está_aberto = False
@@ -441,81 +505,87 @@ def Criar_Janela():
 
     root.title("League Lobby Clicker - Saralapa")
     root.iconbitmap('Images/icon.ico')
-    root.config(bg="#151515")
+    root.config(bg="#191919")
     root.resizable(False, False)
     root.attributes("-topmost", True)
     root.attributes("-topmost", False)
     root.protocol("WM_DELETE_WINDOW", lambda: fechar_janela(root))
+    HWND = windll.user32.GetParent(root.winfo_id())
+    windll.dwmapi.DwmSetWindowAttribute(HWND, 35, byref(c_int(0x001f1f1f)), sizeof(c_int))
+    windll.dwmapi.DwmSetWindowAttribute(HWND, 36, byref(c_int(0x00ff4490)), sizeof(c_int))
 
-    frame_borda_topo = tk.LabelFrame(root, bg="#151515", width=210, height=30, bd=0)
+    frame_borda_topo = tk.LabelFrame(root, bg="#191919", width=210, height=30, bd=0)
     frame_borda_topo.pack(side="top", anchor="center", pady=5)
 
-    label_borda_topo = tk.Label(frame_borda_topo, font=("Arial", 14), text="Escolha o modo de jogo", bg="#151515", fg="#f0f0f0", height=0)
+    label_borda_topo = tk.Label(frame_borda_topo, font=("Arial", 14), text="Escolha o modo de jogo", bg="#191919", fg="#9044ff", height=0)
     label_borda_topo.pack()
 
     modos_de_jogo = ["Escolha alternada", "Ranqueada solo duo", "ARAM", "Blitz do Nexus", "Arena", "URF", "Todos por um", "Apenas auto aceitar"]
 
-    frame_botoes_modos_de_jogo = tk.Frame(root, bg="#151515")
+    frame_botoes_modos_de_jogo = [tk.Frame(root, bg="#9044ff") for _ in modos_de_jogo]
 
-    botoes_modos_de_jogo = [tk.Button(frame_botoes_modos_de_jogo, text=texto1, command=lambda t=texto1: Atualizar_Modo_de_Jogo(t)) for texto1 in modos_de_jogo]
+    botoes_modos_de_jogo = [tk.Button(root, text=texto1, command=lambda t=texto1: Atualizar_Modo_de_Jogo(t)) for texto1 in modos_de_jogo]
 
     for botao in botoes_modos_de_jogo:
-        botao.config(width=50, height=2, bg="#1f1f1f", fg="#f0f0f0", bd=1)
+        botao.config(width=50, height=2, bg="#1f1f1f", fg="#9044ff", bd=1)
         botao.pack(pady=5)
 
-    frame_botoes_modos_de_jogo.pack()
+    for frame in frame_botoes_modos_de_jogo:
+        frame.config(width=360, height=41, bd=0)
 
     roles = ["Top", "Jungle", "Mid", "ADC", "Suporte", "Preencher"]
 
-    frame_botoes_roles = tk.Frame(root, bg="#151515")
+    frame_botoes_roles = [tk.Frame(root, bg="#9044ff") for _ in roles]
 
-    botoes_roles = [tk.Button(frame_botoes_roles, text=texto2, command=lambda t=texto2: Atualizar_Roles(t)) for texto2 in roles]
+    botoes_roles = [tk.Button(root, text=texto2, command=lambda t=texto2: Atualizar_Roles(t)) for texto2 in roles]
 
     for botao in botoes_roles:
-        botao.config(width=50, height=2, bg="#1f1f1f", fg="#f0f0f0", bd=1)
+        botao.config(width=50, height=2, bg="#1f1f1f", fg="#9044ff", bd=1)
         botao.pack(pady=5)
 
-    frame_botoes_roles.pack()
+    for frame in frame_botoes_roles:
+        frame.config(width=360, height=41, bd=0)
 
     lista_idiomas = ["Português", "English"]
 
-    frame_botoes_idiomas = tk.Frame(root, bg="#151515")
+    frame_botoes_idiomas = [tk.Frame(root, bg="#9044ff") for _ in lista_idiomas]
 
-    botoes_idiomas = [tk.Button(frame_botoes_idiomas,text=texto3, command=lambda t=texto3: Atualizar_Idioma(t)) for texto3 in lista_idiomas]
+    botoes_idiomas = [tk.Button(root,text=texto3, command=lambda t=texto3: Atualizar_Idioma(t)) for texto3 in lista_idiomas]
 
     for botao in botoes_idiomas:
-        botao.config(width=50, height=2, bg="#1f1f1f", fg="#f0f0f0", bd=1)
+        botao.config(width=50, height=2, bg="#1f1f1f", fg="#9044ff", bd=1)
         botao.pack(pady=5)
 
-    frame_botoes_idiomas.pack()
+    for frame in frame_botoes_idiomas:
+        frame.config(width=360, height=41, bd=0)
 
-    frame_borda_inferior = tk.LabelFrame(root, bg="#151515", width=210, height=30, bd=0)
+    frame_borda_inferior = tk.LabelFrame(root, bg="#191919", width=210, height=30, bd=0)
 
     texto_inferior = tk.StringVar(frame_borda_inferior)
     texto_inferior.set("Modo de jogo\nescolhido:")
 
-    label_borda_inferior = tk.Label(frame_borda_inferior, textvariable=texto_inferior, bg="#151515", fg="#f0f0f0")
+    label_borda_inferior = tk.Label(frame_borda_inferior, textvariable=texto_inferior, bg="#191919", fg="#9044ff")
     label_borda_inferior.pack()
 
-    frame_botao_desfazer = tk.Frame(root, bg="#151515", width=85, height=24, bd=0)
+    frame_botao_desfazer = tk.Frame(root, bg="#9044ff", width=85, height=24, bd=1)
     frame_botao_desfazer.pack()
 
-    botao_desfazer = tk.Button(frame_botao_desfazer, text="Desfazer", command=lambda: desfazer(), bg="#1f1f1f", fg="#f0f0f0", bd=1)
+    botao_desfazer = tk.Button(frame_botao_desfazer, text="Desfazer", command=lambda: desfazer(), bg="#1f1f1f", fg="#9044ff", bd=1)
     botao_desfazer.pack()
 
-    frame_botao_confirmar = tk.Frame(root, bg="#151515", width=65, height=24, bd=0)
+    frame_botao_confirmar = tk.Frame(root, bg="#9044ff", width=65, height=24, bd=1)
     frame_botao_confirmar.pack()
 
-    botao_confirmar = tk.Button(frame_botao_confirmar, text="Confirmar", command=lambda: confirmar(), bg="#1f1f1f", fg="#f0f0f0", bd=1)
+    botao_confirmar = tk.Button(frame_botao_confirmar, text="Confirmar", command=lambda: confirmar(), bg="#1f1f1f", fg="#9044ff", bd=1)
     botao_confirmar.pack()
 
-    imagem_idioma = tk.PhotoImage(file="Images/Language.png")
+    imagem_idioma = ImageTk.PhotoImage(Cor_Idioma())
     try:
-        botao_icone_idioma = tk.Button(root, image=imagem_idioma, command=tela_alterar_idioma, bd=0, bg="#151515", width=31, height=31)
+        botao_icone_idioma = tk.Button(root, image=imagem_idioma, command=tela_alterar_idioma, bd=0, bg="#191919", width=31, height=31)
         botao_icone_idioma.pack()
     except: None
 
-    label_auto_aceitar = tk.Label(root, font=("Arial", 18), bg="#151515", fg="#f0f0f0")
+    label_auto_aceitar = tk.Label(root, font=("Arial", 18), bg="#191919", fg="#9044ff")
     label_auto_aceitar.pack()
     root.after(1000, lambda: [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].activate())
     tela_selecao_de_modo(jogo_está_aberto)
