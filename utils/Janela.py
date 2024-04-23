@@ -259,10 +259,12 @@ def tela_selecao_de_cor():
     frame_borda_inferior.place_forget()
 
     botao_desfazer.config(text="Confirmar")
-    for botao in botoes_cores:
-        botao.pack()
+    for i in range(len(botoes_cores)):
+        botoes_cores[i].config(width=13, height=6)
+        botoes_cores[i].pack()
+        botoes_cores[i].place(relx=0.03125 + i * 0.34 , rely=0.02085)
     botao_cor_personalizada.pack()
-    centralizar_janela(root, 378, 476)
+    centralizar_janela(root, 331, 476)
 
 def tela_auto_aceitar():
     global tela, jogo_está_aberto
@@ -563,7 +565,6 @@ def Atualizar_Cor(valor):
         imagem_idioma = ImageTk.PhotoImage(Alterar_Cor("Images/Language.png", "#ffffff", cor))
         botao_icone_idioma.config(image=imagem_idioma)
 
-
 def Criar_Janela():
     global frame_botoes_roles, label_auto_aceitar, frame_botoes_idiomas, botoes_modos_de_jogo, botao_icone_idioma, frame_borda_topo, label_borda_topo, frame_borda_inferior, frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, botoes_roles, botoes_idiomas, botao_icone_cor, cor, botoes_cores, label_borda_inferior, botao_icone_cor, imagem_cor, imagem_idioma, botao_cor_personalizada, modo_de_jogo
     idioma = definir_idioma()
@@ -583,7 +584,8 @@ def Criar_Janela():
     cor_hex = cor.removeprefix("#")
     cor_hex = "0x00" + cor_hex[4:] + cor_hex[2:4] + cor_hex[:2]
     cor_hex = int(cor_hex, 16)
-    windll.dwmapi.DwmSetWindowAttribute(HWND, 35, byref(c_int(0x001f1f1f)), sizeof(c_int))
+    #0x001f1f1f
+    windll.dwmapi.DwmSetWindowAttribute(HWND, 35, byref(c_int(cor_hex)), sizeof(c_int))
     windll.dwmapi.DwmSetWindowAttribute(HWND, 36, byref(c_int(cor_hex)), sizeof(c_int))
 
     frame_borda_topo = tk.LabelFrame(root, bg="#191919", width=210, height=30, bd=0)
@@ -662,7 +664,7 @@ def Criar_Janela():
     botao_icone_cor.pack()
     
     cores_padrao = ["#ff0000", "#ffff00", "#ff00ff", "#ffffff", "#00ffff", "#0000ff", "#00ff00", "#ff7f00", "#9044ff"]
-    botoes_cores = [tk.Button(root, bg="#ff0000", text=texto4, command=lambda t=texto4: Atualizar_Cor(t)) for texto4 in cores_padrao]
+    botoes_cores = [tk.Button(root, bg="#ff0000", text=texto4, command=lambda t=texto4: Atualizar_Cor(t), bd=1) for texto4 in cores_padrao]
 
     botao_cor_personalizada = tk.Button(root, text="Cor personalizada", command=lambda: Atualizar_Cor(colorchooser.askcolor()[1]), bg="#1f1f1f", fg=cor)
     botao_cor_personalizada.pack()
