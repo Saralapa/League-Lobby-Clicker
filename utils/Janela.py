@@ -4,7 +4,7 @@ import tkinter as tk
 import os
 import time
 from ctypes import windll, byref, sizeof, c_int
-from PIL import ImageTk
+from PIL import ImageTk, Image
 from utils.Centralizar_Janela import centralizar_janela
 from utils.Fechar_Janela import fechar_janela
 from utils.Idioma import definir_idioma
@@ -40,15 +40,10 @@ def tela_selecao_de_modo(jogo_está_aberto):
     elif idioma=="English":
         modos_de_jogo=["Draft pick", "Ranked solo duo", "ARAM", "Nexus Blitz", "Arena", "URF", "One for all", "Just auto accept"]
 
-    for i in range(len(botoes_modos_de_jogo)):
-        botoes_modos_de_jogo[i].config(text=modos_de_jogo[i], command=lambda t=modos_de_jogo[i]: Atualizar_Modo_de_Jogo(t))
-
-    try:
-        botao_icone_idioma.pack()
-        botao_icone_idioma.place(relx=0.8915, rely=0.016)
-        botao_icone_cor.pack()
-        botao_icone_cor.place(relx=0.0195, rely=0.015)
-    except: None
+    botao_icone_idioma.pack()
+    botao_icone_idioma.place(relx=0.8915, rely=0.016)
+    botao_icone_cor.pack()
+    botao_icone_cor.place(relx=0.0195, rely=0.015)
     frame_borda_topo.pack()
     frame_borda_topo.place(relx=0.4988888888888888, rely=0.052, anchor="center")
     label_borda_topo.pack()
@@ -58,13 +53,16 @@ def tela_selecao_de_modo(jogo_está_aberto):
     frame_botao_desfazer.place(relx=0.025, rely=0.9815, anchor="sw")
     frame_botao_confirmar.pack()
     frame_botao_confirmar.place(relx=0.975, rely=0.9815, anchor="se")
+
     i=0
     for botao in botoes_modos_de_jogo:
         frame_botoes_modos_de_jogo[i].pack()
         frame_botoes_modos_de_jogo[i].place(relx=0.0245, rely=0.102 + i * 0.103225)
+        botao.config(text=modos_de_jogo[i], command=lambda t=modos_de_jogo[i]: Atualizar_Modo_de_Jogo(t))
         botao.pack()
         botao.place(relx=0.0275, rely=0.105 + i * 0.1028)
         i+=1
+    
     if idioma=="Portugues":
         label_borda_topo.config(text="Escolha o modo de jogo")
         texto_inferior.set("Modo de jogo\nescolhido:")
@@ -75,6 +73,7 @@ def tela_selecao_de_modo(jogo_está_aberto):
         texto_inferior.set("Selected game\nmode:")
         botao_desfazer.config(text="Undo")
         botao_confirmar.config(text="Confirm")
+
     centralizar_janela(root, 378, 476)
     def Jogo_Aberto(jogo_está_aberto):
         global modo_de_jogo
@@ -511,21 +510,50 @@ def Atualizar_Idioma(valor):
         botao_desfazer.config(text="Confirm")
         texto_inferior.set(f"Selected language: {valor}")
 
-def Atualizar_cor(valor):
-    global cor
+def Atualizar_Cor(valor):
+    global cor, botao_icone_cor
+    cor_atual = cor
     cor = valor
     caminho_cor = os.path.join(os.path.expanduser("~"),"League_Lobby_Clicker_cor-Saralapa.txt")
     with open(caminho_cor, "w") as file:
         file.write(cor)
-    if cor == "Portugues":
-        botao_desfazer.config(text="Confirmar")
-        texto_inferior.set(f"Idioma selecionado: {valor}")
-    elif cor == "English":
-        botao_desfazer.config(text="Confirm")
-        texto_inferior.set(f"Selected language: {valor}")
+
+    HWND = windll.user32.GetParent(root.winfo_id())
+    cor_hex = "0x00" + cor[::-1].replace("#","")
+    cor_hex = int(cor_hex, 16)
+    windll.dwmapi.DwmSetWindowAttribute(HWND, 35, byref(c_int(0x001f1f1f)), sizeof(c_int))
+    windll.dwmapi.DwmSetWindowAttribute(HWND, 36, byref(c_int(cor_hex)), sizeof(c_int))
+
+    frame_botao_desfazer.config(bg=cor)
+    botao_desfazer.config(fg=cor)
+    label_borda_topo.config(fg=cor)
+    label_borda_inferior.config(fg=cor)
+    botao_desfazer.config(fg=cor)
+    frame_botao_desfazer.config(bg=cor)
+    botao_confirmar.config(fg=cor)
+    frame_botao_confirmar.config(bg=cor)
+    for frame in frame_botoes_modos_de_jogo:
+        frame.config(bg=cor)
+    for botao in botoes_modos_de_jogo:
+        botao.config(fg=cor)
+    for frame in frame_botoes_roles:
+        frame.config(bg=cor)
+    for botao in botoes_roles:
+        botao.config(fg=cor)
+    label_auto_aceitar.config(fg=cor)
+    botao_icone_cor.destroy()
+    imagem_cor = ImageTk.PhotoImage(Alterar_Cor("Images/Color-change.png", "#000000", cor))
+    botao_icone_cor = tk.Button(root, image=imagem_cor, command=tela_selecao_de_cor, bd=0, bg=cor, width=31, height=31)
+    botao_icone_cor.pack()
+    botao_icone_cor.place(relx=0.0195, rely=0.015)
+    imagem_idioma = ImageTk.PhotoImage(Alterar_Cor("Images/Language.png", "#ffffff", cor))
+    botao_icone_idioma = tk.Button(root, image=imagem_idioma, command=tela_alterar_idioma, bd=0, bg=cor, width=31, height=31)
+    botao_icone_idioma.pack()
+    botao_icone_idioma.place(relx=0.8915, rely=0.016)
+
 
 def Criar_Janela():
-    global frame_botoes_roles, label_auto_aceitar, frame_botoes_idiomas, botoes_modos_de_jogo, botao_icone_idioma, frame_borda_topo, label_borda_topo, frame_borda_inferior, frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, botoes_roles, botoes_idiomas, botao_icone_cor, cor, botoes_cores    
+    global frame_botoes_roles, label_auto_aceitar, frame_botoes_idiomas, botoes_modos_de_jogo, botao_icone_idioma, frame_borda_topo, label_borda_topo, frame_borda_inferior, frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, botoes_roles, botoes_idiomas, botao_icone_cor, cor, botoes_cores, label_borda_inferior, botao_icone_cor
     idioma = definir_idioma()
     cor = Definir_Cor()
     jogo_está_aberto = False
@@ -539,8 +567,10 @@ def Criar_Janela():
     root.attributes("-topmost", False)
     root.protocol("WM_DELETE_WINDOW", lambda: fechar_janela(root))
     HWND = windll.user32.GetParent(root.winfo_id())
-    windll.dwmapi.DwmSetWindowAttribute(HWND, 35, byref(c_int(0x00ff4490)), sizeof(c_int))
-    windll.dwmapi.DwmSetWindowAttribute(HWND, 36, byref(c_int(0x00ff4490)), sizeof(c_int))
+    cor_hex = "0x00" + cor[::-1].replace("#","")
+    cor_hex = int(cor_hex, 16)
+    windll.dwmapi.DwmSetWindowAttribute(HWND, 35, byref(c_int(0x001f1f1f)), sizeof(c_int))
+    windll.dwmapi.DwmSetWindowAttribute(HWND, 36, byref(c_int(cor_hex)), sizeof(c_int))
 
     frame_borda_topo = tk.LabelFrame(root, bg="#191919", width=210, height=30, bd=0)
     frame_borda_topo.pack(side="top", anchor="center", pady=5)
@@ -618,7 +648,7 @@ def Criar_Janela():
     botao_icone_cor.pack()
     
     cores_padrao = ["#ff0000", "#ffff00", "#ff00ff", "#ffffff", "#00ffff", "#0000ff", "#00ff00", "#000000", "#9044ff"]
-    botoes_cores = [tk.Button(root, bg="#ff0000", text=texto4, command=lambda t=texto4: Atualizar_cor(t)) for texto4 in cores_padrao]
+    botoes_cores = [tk.Button(root, bg="#ff0000", text=texto4, command=lambda t=texto4: Atualizar_Cor(t)) for texto4 in cores_padrao]
     i=0
     for botao in botoes_cores:
         botao.config(bg=cores_padrao[i], fg=cores_padrao[i])
