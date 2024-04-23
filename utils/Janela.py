@@ -1,6 +1,7 @@
 import threading
 import pygetwindow as gw
 import tkinter as tk
+from tkinter import colorchooser
 import os
 import time
 from ctypes import windll, byref, sizeof, c_int
@@ -14,7 +15,6 @@ from utils.Cor import Alterar_Cor, Definir_Cor
 def tela_selecao_de_modo(jogo_está_aberto):
     global tela, Role_1, Role_2, modo_de_jogo, roles
     tela = "seleção de modo de jogo"
-    modo_de_jogo=None
     Role_1=None
     Role_2=None
     for frame in frame_botoes_roles:
@@ -34,6 +34,7 @@ def tela_selecao_de_modo(jogo_está_aberto):
     for botao in botoes_cores:
         botao.pack_forget()
         botao.place_forget()
+    botao_cor_personalizada.pack_forget()
 
     if idioma=="Portugues":
         modos_de_jogo=["Escolha alternada", "Ranqueada solo duo", "ARAM", "Blitz do Nexus", "Arena", "URF", "Todos por um", "Apenas auto aceitar"]
@@ -65,12 +66,18 @@ def tela_selecao_de_modo(jogo_está_aberto):
     
     if idioma=="Portugues":
         label_borda_topo.config(text="Escolha o modo de jogo")
-        texto_inferior.set("Modo de jogo\nescolhido:")
+        if modo_de_jogo == None:
+            texto_inferior.set("Modo de jogo\nescolhido:")
+        else:
+            texto_inferior.set(f"Modo de jogo\nescolhido: {modo_de_jogo}")
         botao_desfazer.config(text="Desfazer")
         botao_confirmar.config(text="Confirmar")
     elif idioma=="English":
         label_borda_topo.config(text="Select game mode")
-        texto_inferior.set("Selected game\nmode:")
+        if modo_de_jogo == None:
+            texto_inferior.set("Selected game\nmode:")
+        else:
+            texto_inferior.set(f"Selected game\nmode: {modo_de_jogo}")
         botao_desfazer.config(text="Undo")
         botao_confirmar.config(text="Confirm")
 
@@ -230,7 +237,7 @@ def tela_alterar_idioma():
 
 def tela_selecao_de_cor():
     global tela
-    tela="alterar idioma"
+    tela = "seleção de cor"
     frame_borda_topo.pack_forget()
     frame_borda_topo.place_forget()
     for botao in botoes_modos_de_jogo:
@@ -248,10 +255,13 @@ def tela_selecao_de_cor():
     botao_icone_idioma.place_forget()
     botao_icone_cor.pack_forget()
     botao_icone_cor.place_forget()
+    frame_borda_inferior.pack_forget()
+    frame_borda_inferior.place_forget()
 
-    
+    botao_desfazer.config(text="Confirmar")
     for botao in botoes_cores:
         botao.pack()
+    botao_cor_personalizada.pack()
     centralizar_janela(root, 378, 476)
 
 def tela_auto_aceitar():
@@ -398,7 +408,6 @@ def desfazer():
                     texto_inferior.set(f"Primeira role:\nSegunda role:")
                 else: texto_inferior.set("Posição escolhida:")
             else:
-                modo_de_jogo = None
                 jogo_está_aberto = False
                 tela_selecao_de_modo(jogo_está_aberto)
         elif tela=="auto aceitar":
@@ -408,9 +417,8 @@ def desfazer():
             jogo_está_aberto = False
             tela_selecao_de_modo(jogo_está_aberto)
         elif tela=="alterar idioma":
-            modo_de_jogo=None
-            Role_1=None
-            Role_2=None
+            tela_selecao_de_modo(jogo_está_aberto)
+        elif tela == "seleção de cor":
             tela_selecao_de_modo(jogo_está_aberto)
     elif idioma=="English":
         if tela == "seleção de modo de jogo":
@@ -511,51 +519,56 @@ def Atualizar_Idioma(valor):
         texto_inferior.set(f"Selected language: {valor}")
 
 def Atualizar_Cor(valor):
-    global cor, botao_icone_cor
-    cor_atual = cor
-    cor = valor
-    caminho_cor = os.path.join(os.path.expanduser("~"),"League_Lobby_Clicker_cor-Saralapa.txt")
-    with open(caminho_cor, "w") as file:
-        file.write(cor)
+    global cor, botao_icone_cor, botao_icone_idioma, imagem_cor, imagem_idioma
+    if valor != None:
+        cor = valor
+        caminho_cor = os.path.join(os.path.expanduser("~"),"League_Lobby_Clicker_cor-Saralapa.txt")
+        with open(caminho_cor, "w") as file:
+            file.write(cor)
 
-    HWND = windll.user32.GetParent(root.winfo_id())
-    cor_hex = "0x00" + cor[::-1].replace("#","")
-    cor_hex = int(cor_hex, 16)
-    windll.dwmapi.DwmSetWindowAttribute(HWND, 35, byref(c_int(0x001f1f1f)), sizeof(c_int))
-    windll.dwmapi.DwmSetWindowAttribute(HWND, 36, byref(c_int(cor_hex)), sizeof(c_int))
+        HWND = windll.user32.GetParent(root.winfo_id())
+        cor_hex = cor.removeprefix("#")
+        cor_hex = "0x00" + cor_hex[4:] + cor_hex[2:4] + cor_hex[:2]
+        cor_hex = int(cor_hex, 16)
+        print(cor_hex)
+        windll.dwmapi.DwmSetWindowAttribute(HWND, 35, byref(c_int(0x001f1f1f)), sizeof(c_int))
+        windll.dwmapi.DwmSetWindowAttribute(HWND, 36, byref(c_int(cor_hex)), sizeof(c_int))
 
-    frame_botao_desfazer.config(bg=cor)
-    botao_desfazer.config(fg=cor)
-    label_borda_topo.config(fg=cor)
-    label_borda_inferior.config(fg=cor)
-    botao_desfazer.config(fg=cor)
-    frame_botao_desfazer.config(bg=cor)
-    botao_confirmar.config(fg=cor)
-    frame_botao_confirmar.config(bg=cor)
-    for frame in frame_botoes_modos_de_jogo:
-        frame.config(bg=cor)
-    for botao in botoes_modos_de_jogo:
-        botao.config(fg=cor)
-    for frame in frame_botoes_roles:
-        frame.config(bg=cor)
-    for botao in botoes_roles:
-        botao.config(fg=cor)
-    label_auto_aceitar.config(fg=cor)
-    botao_icone_cor.destroy()
-    imagem_cor = ImageTk.PhotoImage(Alterar_Cor("Images/Color-change.png", "#000000", cor))
-    botao_icone_cor = tk.Button(root, image=imagem_cor, command=tela_selecao_de_cor, bd=0, bg=cor, width=31, height=31)
-    botao_icone_cor.pack()
-    botao_icone_cor.place(relx=0.0195, rely=0.015)
-    imagem_idioma = ImageTk.PhotoImage(Alterar_Cor("Images/Language.png", "#ffffff", cor))
-    botao_icone_idioma = tk.Button(root, image=imagem_idioma, command=tela_alterar_idioma, bd=0, bg=cor, width=31, height=31)
-    botao_icone_idioma.pack()
-    botao_icone_idioma.place(relx=0.8915, rely=0.016)
+        frame_botao_desfazer.config(bg=cor)
+        botao_desfazer.config(fg=cor)
+        label_borda_topo.config(fg=cor)
+        label_borda_inferior.config(fg=cor)
+        botao_desfazer.config(fg=cor)
+        frame_botao_desfazer.config(bg=cor)
+        botao_confirmar.config(fg=cor)
+        frame_botao_confirmar.config(bg=cor)
+        for frame in frame_botoes_idiomas:
+            frame.config(bg=cor)
+        for botao in botoes_idiomas:
+            botao.config(fg=cor)
+        for frame in frame_botoes_modos_de_jogo:
+            frame.config(bg=cor)
+        for botao in botoes_modos_de_jogo:
+            botao.config(fg=cor)
+        for frame in frame_botoes_roles:
+            frame.config(bg=cor)
+        for botao in botoes_roles:
+            botao.config(fg=cor)
+        label_auto_aceitar.config(fg=cor)
+        botao_cor_personalizada.config(fg=cor)
+
+        imagem_cor = ImageTk.PhotoImage(Alterar_Cor("Images/Color-change.png", "#000000", cor))
+        botao_icone_cor.config(image=imagem_cor)
+
+        imagem_idioma = ImageTk.PhotoImage(Alterar_Cor("Images/Language.png", "#ffffff", cor))
+        botao_icone_idioma.config(image=imagem_idioma)
 
 
 def Criar_Janela():
-    global frame_botoes_roles, label_auto_aceitar, frame_botoes_idiomas, botoes_modos_de_jogo, botao_icone_idioma, frame_borda_topo, label_borda_topo, frame_borda_inferior, frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, botoes_roles, botoes_idiomas, botao_icone_cor, cor, botoes_cores, label_borda_inferior, botao_icone_cor
+    global frame_botoes_roles, label_auto_aceitar, frame_botoes_idiomas, botoes_modos_de_jogo, botao_icone_idioma, frame_borda_topo, label_borda_topo, frame_borda_inferior, frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, botoes_roles, botoes_idiomas, botao_icone_cor, cor, botoes_cores, label_borda_inferior, botao_icone_cor, imagem_cor, imagem_idioma, botao_cor_personalizada, modo_de_jogo
     idioma = definir_idioma()
     cor = Definir_Cor()
+    modo_de_jogo = None
     jogo_está_aberto = False
     root = tk.Tk()
 
@@ -567,7 +580,8 @@ def Criar_Janela():
     root.attributes("-topmost", False)
     root.protocol("WM_DELETE_WINDOW", lambda: fechar_janela(root))
     HWND = windll.user32.GetParent(root.winfo_id())
-    cor_hex = "0x00" + cor[::-1].replace("#","")
+    cor_hex = cor.removeprefix("#")
+    cor_hex = "0x00" + cor_hex[4:] + cor_hex[2:4] + cor_hex[:2]
     cor_hex = int(cor_hex, 16)
     windll.dwmapi.DwmSetWindowAttribute(HWND, 35, byref(c_int(0x001f1f1f)), sizeof(c_int))
     windll.dwmapi.DwmSetWindowAttribute(HWND, 36, byref(c_int(cor_hex)), sizeof(c_int))
@@ -647,8 +661,12 @@ def Criar_Janela():
     botao_icone_cor = tk.Button(root, image=imagem_cor, command=tela_selecao_de_cor, bd=0, bg="#191919", width=31, height=31)
     botao_icone_cor.pack()
     
-    cores_padrao = ["#ff0000", "#ffff00", "#ff00ff", "#ffffff", "#00ffff", "#0000ff", "#00ff00", "#000000", "#9044ff"]
+    cores_padrao = ["#ff0000", "#ffff00", "#ff00ff", "#ffffff", "#00ffff", "#0000ff", "#00ff00", "#ff7f00", "#9044ff"]
     botoes_cores = [tk.Button(root, bg="#ff0000", text=texto4, command=lambda t=texto4: Atualizar_Cor(t)) for texto4 in cores_padrao]
+
+    botao_cor_personalizada = tk.Button(root, text="Cor personalizada", command=lambda: Atualizar_Cor(colorchooser.askcolor()[1]), bg="#1f1f1f", fg=cor)
+    botao_cor_personalizada.pack()
+
     i=0
     for botao in botoes_cores:
         botao.config(bg=cores_padrao[i], fg=cores_padrao[i])
@@ -657,6 +675,12 @@ def Criar_Janela():
 
     label_auto_aceitar = tk.Label(root, font=("Arial", 18), bg="#191919", fg=cor)
     label_auto_aceitar.pack()
-    root.after(1000, lambda: [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].activate())
+
+    def AbrirJanela():
+        [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].minimize()
+        [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].restore()
+        [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].activate()
+    root.after(10, lambda: AbrirJanela())
+
     tela_selecao_de_modo(jogo_está_aberto)
     root.mainloop()

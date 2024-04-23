@@ -7,6 +7,8 @@ def Definir_Cor():
         try:
             with open(caminho_cor, "r") as file:
                 cor = file.read()
+                if cor == "":
+                    cor = "#9044ff"
         except:
             None
     else:
