@@ -34,7 +34,8 @@ def tela_selecao_de_modo(jogo_está_aberto):
     for botao in botoes_cores:
         botao.pack_forget()
         botao.place_forget()
-    botao_cor_personalizada.pack_forget()
+    frame_botao_cor_personalizada.pack_forget()
+    frame_botao_cor_personalizada.place_forget()
 
     if idioma=="Portugues":
         modos_de_jogo=["Escolha alternada", "Ranqueada solo duo", "ARAM", "Blitz do Nexus", "Arena", "URF", "Todos por um", "Apenas auto aceitar"]
@@ -80,6 +81,7 @@ def tela_selecao_de_modo(jogo_está_aberto):
             texto_inferior.set(f"Selected game\nmode: {modo_de_jogo}")
         botao_desfazer.config(text="Undo")
         botao_confirmar.config(text="Confirm")
+    botao_desfazer.config(height=0)
 
     centralizar_janela(root, 378, 476)
     def Jogo_Aberto(jogo_está_aberto):
@@ -258,13 +260,30 @@ def tela_selecao_de_cor():
     frame_borda_inferior.pack_forget()
     frame_borda_inferior.place_forget()
 
-    botao_desfazer.config(text="Confirmar")
+    if idioma == "Portugues":
+        botao_desfazer.config(text="Confirmar")
+        botao_cor_personalizada.config(text="Cor personalizada")
+    elif idioma == "English":
+        botao_desfazer.config(text="Confirm")
+        botao_cor_personalizada.config(text="Custom color")
+    botao_desfazer.config(height=2)
+    frame_botao_desfazer.config(bd=2)
+    frame_botao_desfazer.place(relx=0.4988888888888888, rely=0.8975, anchor="center")
+    botao_cor_personalizada.config(height=2)
+    frame_botao_cor_personalizada.pack()
+    frame_botao_cor_personalizada.place(relx=0.4988888888888888, rely=0.1025, anchor="center")
+    j = 0
+    k = 0
     for i in range(len(botoes_cores)):
-        botoes_cores[i].config(width=13, height=6)
+        if k==2:
+            k=0
+        if i%2==0 and i!=0:
+            j+=1
+        botoes_cores[i].config(width=17, height=2, bd=2)
         botoes_cores[i].pack()
-        botoes_cores[i].place(relx=0.03125 + i * 0.34 , rely=0.02085)
-    botao_cor_personalizada.pack()
-    centralizar_janela(root, 331, 476)
+        botoes_cores[i].place(relx=0.04875 + k * 0.47725 , rely=0.2085 + j * 0.1565)
+        k+=1
+    centralizar_janela(root, 303, 358)
 
 def tela_auto_aceitar():
     global tela, jogo_está_aberto
@@ -439,7 +458,6 @@ def desfazer():
                     texto_inferior.set(f"First role:\nSecond role:")
                 else: texto_inferior.set("Selected role:")
             else:
-                modo_de_jogo = None
                 jogo_está_aberto = False
                 tela_selecao_de_modo(jogo_está_aberto)
         elif tela=="auto aceitar":
@@ -449,9 +467,8 @@ def desfazer():
             jogo_está_aberto = False
             tela_selecao_de_modo(jogo_está_aberto)
         elif tela=="alterar idioma":
-            modo_de_jogo=None
-            Role_1=None
-            Role_2=None
+            tela_selecao_de_modo(jogo_está_aberto)
+        elif tela == "seleção de cor":
             tela_selecao_de_modo(jogo_está_aberto)
 
 def Atualizar_Modo_de_Jogo(valor):
@@ -557,6 +574,7 @@ def Atualizar_Cor(valor):
         for botao in botoes_roles:
             botao.config(fg=cor)
         label_auto_aceitar.config(fg=cor)
+        frame_botao_cor_personalizada.config(bg=cor)
         botao_cor_personalizada.config(fg=cor)
 
         imagem_cor = ImageTk.PhotoImage(Alterar_Cor("Images/Color-change.png", "#000000", cor))
@@ -566,7 +584,7 @@ def Atualizar_Cor(valor):
         botao_icone_idioma.config(image=imagem_idioma)
 
 def Criar_Janela():
-    global frame_botoes_roles, label_auto_aceitar, frame_botoes_idiomas, botoes_modos_de_jogo, botao_icone_idioma, frame_borda_topo, label_borda_topo, frame_borda_inferior, frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, botoes_roles, botoes_idiomas, botao_icone_cor, cor, botoes_cores, label_borda_inferior, botao_icone_cor, imagem_cor, imagem_idioma, botao_cor_personalizada, modo_de_jogo
+    global frame_botoes_roles, label_auto_aceitar, frame_botoes_idiomas, botoes_modos_de_jogo, botao_icone_idioma, frame_borda_topo, label_borda_topo, frame_borda_inferior, frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, botoes_roles, botoes_idiomas, botao_icone_cor, cor, botoes_cores, label_borda_inferior, botao_icone_cor, imagem_cor, imagem_idioma, botao_cor_personalizada, modo_de_jogo, frame_botao_cor_personalizada
     idioma = definir_idioma()
     cor = Definir_Cor()
     modo_de_jogo = None
@@ -584,8 +602,8 @@ def Criar_Janela():
     cor_hex = cor.removeprefix("#")
     cor_hex = "0x00" + cor_hex[4:] + cor_hex[2:4] + cor_hex[:2]
     cor_hex = int(cor_hex, 16)
-    #0x001f1f1f
-    windll.dwmapi.DwmSetWindowAttribute(HWND, 35, byref(c_int(cor_hex)), sizeof(c_int))
+    
+    windll.dwmapi.DwmSetWindowAttribute(HWND, 35, byref(c_int(0x001f1f1f)), sizeof(c_int))
     windll.dwmapi.DwmSetWindowAttribute(HWND, 36, byref(c_int(cor_hex)), sizeof(c_int))
 
     frame_borda_topo = tk.LabelFrame(root, bg="#191919", width=210, height=30, bd=0)
@@ -663,10 +681,15 @@ def Criar_Janela():
     botao_icone_cor = tk.Button(root, image=imagem_cor, command=tela_selecao_de_cor, bd=0, bg="#191919", width=31, height=31)
     botao_icone_cor.pack()
     
-    cores_padrao = ["#ff0000", "#ffff00", "#ff00ff", "#ffffff", "#00ffff", "#0000ff", "#00ff00", "#ff7f00", "#9044ff"]
+    cores_padrao = ["#ff0000", "#00ff00",
+                    "#00ffff", "#ffff00",
+                    "#ff7f00", "#ff00ff",
+                    "#9044ff", "#ffffff"]
     botoes_cores = [tk.Button(root, bg="#ff0000", text=texto4, command=lambda t=texto4: Atualizar_Cor(t), bd=1) for texto4 in cores_padrao]
 
-    botao_cor_personalizada = tk.Button(root, text="Cor personalizada", command=lambda: Atualizar_Cor(colorchooser.askcolor()[1]), bg="#1f1f1f", fg=cor)
+    frame_botao_cor_personalizada = tk.Frame(root, bg=cor, bd=2)
+    frame_botao_cor_personalizada.pack()
+    botao_cor_personalizada = tk.Button(frame_botao_cor_personalizada, text="Cor personalizada", command=lambda: Atualizar_Cor(colorchooser.askcolor()[1]), bg="#1f1f1f", fg=cor)
     botao_cor_personalizada.pack()
 
     i=0
