@@ -303,6 +303,9 @@ def tela_auto_aceitar():
     for frame in frame_botoes_roles:
         frame.pack_forget()
         frame.place_forget()
+    for botao in botoes_roles:
+        botao.pack_forget()
+        botao.place_forget()
     frame_botao_confirmar.pack_forget()
     frame_botao_confirmar.place_forget()
     frame_borda_inferior.pack_forget()
