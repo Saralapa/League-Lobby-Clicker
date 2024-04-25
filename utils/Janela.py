@@ -685,7 +685,7 @@ def Criar_Janela():
                     "#00ffff", "#ffff00",
                     "#ff7f00", "#ff00ff",
                     "#9044ff", "#ffffff"]
-    botoes_cores = [tk.Button(root, bg="#ff0000", text=texto4, command=lambda t=texto4: Atualizar_Cor(t), bd=1) for texto4 in cores_padrao]
+    botoes_cores = [tk.Button(root, text=texto4, command=lambda t=texto4: Atualizar_Cor(t)) for texto4 in cores_padrao]
 
     frame_botao_cor_personalizada = tk.Frame(root, bg=cor, bd=2)
     frame_botao_cor_personalizada.pack()
