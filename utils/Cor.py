@@ -2,19 +2,19 @@ from PIL import Image
 import os
 
 def Definir_Cor():
-    caminho_cor = os.path.join(os.path.expanduser("~"),"League_Lobby_Clicker_cor-Saralapa.txt")
+    caminho_cor = os.path.join(os.path.expanduser("~"),"League Lobby Clicker - Saralapa", "League_Lobby_Clicker_cor-Saralapa.txt")
     if os.path.exists(caminho_cor):
         try:
             with open(caminho_cor, "r") as file:
                 cor = file.read()
                 if cor == "":
-                    cor = "#9044ff"
+                    cor = "#ffffff"
         except:
             None
     else:
         try:
             with open(caminho_cor, "w") as file:
-                file.write("#9044ff")
+                file.write("#ffffff")
             with open(caminho_cor, "r") as file:
                 cor = file.read()
         except:

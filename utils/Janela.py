@@ -530,7 +530,7 @@ def Atualizar_Roles(valor):
 def Atualizar_Idioma(valor):
     global idioma
     idioma = valor.replace("ê", "e")
-    caminho_idioma = os.path.join(os.path.expanduser("~"),"League_Lobby_Clicker_idioma-Saralapa.txt")
+    caminho_idioma = os.path.join(os.path.expanduser("~"),"League Lobby Clicker - Saralapa", "League_Lobby_Clicker_idioma-Saralapa.txt")
     with open(caminho_idioma, "w") as file:
         file.write(idioma)
     if idioma == "Portugues":
@@ -544,7 +544,7 @@ def Atualizar_Cor(valor):
     global cor, botao_icone_cor, botao_icone_idioma, imagem_cor, imagem_idioma
     if valor != None:
         cor = valor
-        caminho_cor = os.path.join(os.path.expanduser("~"),"League_Lobby_Clicker_cor-Saralapa.txt")
+        caminho_cor = os.path.join(os.path.expanduser("~"),"League Lobby Clicker - Saralapa", "League_Lobby_Clicker_cor-Saralapa.txt")
         with open(caminho_cor, "w") as file:
             file.write(cor)
 

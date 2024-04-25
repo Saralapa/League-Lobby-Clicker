@@ -19,7 +19,7 @@ def encontrar_e_salvar_pasta_instalacao_lol(unidade, flagPF):
                 pasta_instalacao = os.path.join(pasta_instalacao, "Riot Client", "RiotClientServices.exe")
                 pasta_instalacao = pasta_instalacao.replace("\\\\", "\\")
 
-                LOL_path = os.path.join(os.path.expanduser("~"),"league_of_legends_path-Saralapa.txt")
+                LOL_path = os.path.join(os.path.expanduser("~"),"League Lobby Clicker - Saralapa", "League_Lobby_Clicker_LOL_path-Saralapa.txt")
                 LOL_path = LOL_path.replace("\\\\", "\\")
                 with open(LOL_path, 'w') as arquivo:
                     arquivo.write(pasta_instalacao)
@@ -36,7 +36,7 @@ def encontrar_e_salvar_pasta_instalacao_lol(unidade, flagPF):
                 pasta_instalacao = os.path.join(pasta, "Riot Client", "RiotClientServices.exe")
                 pasta_instalacao = pasta_instalacao.replace(f"{unidade}",f"{unidade}\\")
 
-                LOL_path = os.path.join(os.path.expanduser("~"),"league_of_legends_path-Saralapa.txt")
+                LOL_path = os.path.join(os.path.expanduser("~"), "League Lobby Clicker - Saralapa", "League_Lobby_Clicker_LOL_path-Saralapa.txt")
                 LOL_path = LOL_path.replace("\\\\", "\\")
                 with open(LOL_path, 'w') as arquivo:
                     arquivo.write(pasta_instalacao)
@@ -61,7 +61,7 @@ def encontrar_e_salvar_pasta_instalacao_lol(unidade, flagPF):
                     pasta_instalacao = os.path.join(pasta, "Riot Client", "RiotClientServices.exe")
                     pasta_instalacao = pasta_instalacao.replace(f"{unidade}", f"{unidade}\\")
 
-                    LOL_path = os.path.join(os.path.expanduser("~"),"league_of_legends_path-Saralapa.txt")
+                    LOL_path = os.path.join(os.path.expanduser("~"), "League Lobby Clicker - Saralapa", "League_Lobby_Clicker_LOL_path-Saralapa.txt")
                     LOL_path = LOL_path.replace("\\\\", "\\")
                     with open(LOL_path, 'w') as arquivo:
                         arquivo.write(pasta_instalacao)
@@ -75,9 +75,11 @@ def encontrar_e_salvar_pasta_instalacao_lol(unidade, flagPF):
             print("A pasta de instalação do League of Legends não foi encontrada.")
 
 def chamar_funcao_encontrar_pasta_LOL():
+    if not os.path.exists(os.path.join(os.path.expanduser("~"), "League Lobby Clicker - Saralapa")):
+        os.mkdir(os.path.join(os.path.expanduser("~"), "League Lobby Clicker - Saralapa"))
     unidades = [f"{disco}:" for disco in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" if os.path.exists(f"{disco}:")]
     if not [window for window in gw.getWindowsWithTitle("League of Legends") if window.title == "League of Legends"]:
-        LOL_path = os.path.join(os.path.expanduser("~"),"league_of_legends_path-Saralapa.txt")
+        LOL_path = os.path.join(os.path.expanduser("~"), "League Lobby Clicker - Saralapa", "League_Lobby_Clicker_LOL_path-Saralapa.txt")
         LOL_path = LOL_path.replace("\\\\", "\\")
 
         if os.path.exists(LOL_path):
