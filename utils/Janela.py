@@ -14,6 +14,8 @@ from utils.Cor import Alterar_Cor, Definir_Cor
 
 def tela_selecao_de_modo(jogo_está_aberto):
     global tela, Role_1, Role_2, modo_de_jogo, roles
+    centralizar_janela(root, 378, 506)
+    frame_barra_de_titulo.config(height=30, width=root.winfo_width())
     tela = "seleção de modo de jogo"
     Role_1=None
     Role_2=None
@@ -84,7 +86,6 @@ def tela_selecao_de_modo(jogo_está_aberto):
         botao_confirmar.config(text="Confirm")
     botao_desfazer.config(height=0)
 
-    centralizar_janela(root, 378, 506)
     def Jogo_Aberto(jogo_está_aberto):
         global modo_de_jogo
         print("função jogo aberto")
@@ -197,6 +198,8 @@ def tela_selecao_de_role():
 
 def tela_alterar_idioma():
     global tela
+    altura_janela_idioma = 108 + len(lista_idiomas) * 49
+    centralizar_janela(root, 378, altura_janela_idioma)
     tela="alterar idioma"
     frame_borda_topo.pack_forget()
     frame_borda_topo.place_forget()
@@ -219,13 +222,13 @@ def tela_alterar_idioma():
     i = 0
     for botao in botoes_idiomas:
         frame_botoes_idiomas[i].pack()
-        frame_botoes_idiomas[i].place(relx=0.0245, rely=0.0525 + i * 0.2775)
+        frame_botoes_idiomas[i].place(relx=0.0245, y=39 + i * 49)
         botao.pack()
-        botao.place(relx=0.0275, rely=0.058 + i * 0.2795)
+        botao.place(x=(root.winfo_width()-botao.winfo_reqwidth())//2, y=40 + i * 49)
         i+=1
 
     frame_borda_inferior.pack()
-    frame_borda_inferior.place(relx=0.4988888888888888, rely=0.678, anchor="center")
+    frame_borda_inferior.place(relx=0.4988888888888888, y=149, anchor="center")
     if idioma=="Portugues":
         texto_inferior.set("Idioma selecionado: Português")
         botao_desfazer.config(text="Confirmar")
@@ -233,10 +236,8 @@ def tela_alterar_idioma():
         texto_inferior.set(f"Selected language: {idioma}")
         botao_desfazer.config(text="Confirm")
 
-    frame_botao_desfazer.place(relx=0.4988888888888888, rely=0.873, anchor="center")
+    frame_botao_desfazer.place(relx=0.4988888888888888, y=-19, anchor="center")
 
-    altura_janela_idioma = 108 + len(lista_idiomas) * 49
-    centralizar_janela(root, 378, altura_janela_idioma)
 
 def tela_selecao_de_cor():
     global tela
@@ -588,7 +589,7 @@ def Atualizar_Cor(valor):
         botao_icone_idioma.config(image=imagem_idioma)
 
 def Criar_Janela():
-    global frame_botoes_roles, label_auto_aceitar, frame_botoes_idiomas, botoes_modos_de_jogo, botao_icone_idioma, frame_borda_topo, label_borda_topo, frame_borda_inferior, frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, botoes_roles, botoes_idiomas, botao_icone_cor, cor, botoes_cores, label_borda_inferior, botao_icone_cor, imagem_cor, imagem_idioma, botao_cor_personalizada, modo_de_jogo, frame_botao_cor_personalizada
+    global frame_botoes_roles, label_auto_aceitar, frame_botoes_idiomas, botoes_modos_de_jogo, botao_icone_idioma, frame_borda_topo, label_borda_topo, frame_borda_inferior, frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, botoes_roles, botoes_idiomas, botao_icone_cor, cor, botoes_cores, label_borda_inferior, botao_icone_cor, imagem_cor, imagem_idioma, botao_cor_personalizada, modo_de_jogo, frame_botao_cor_personalizada, frame_barra_de_titulo
     idioma = definir_idioma()
     cor = Definir_Cor()
     modo_de_jogo = None
@@ -598,7 +599,7 @@ def Criar_Janela():
     root.title("League Lobby Clicker - Saralapa")
     root.iconbitmap('Images/icon.ico')
     root.config(bg="#ffffff")#191919")
-    #root.overrideredirect(True)
+    root.overrideredirect(True)
     root.resizable(False, False)
     root.protocol("WM_DELETE_WINDOW", lambda: fechar_janela(root))
     root.protocol("WM_ICONIFY", lambda: print("Oi"))#root.wm_withdraw())
@@ -716,5 +717,7 @@ def Criar_Janela():
         [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].activate()
     #root.after(10, lambda: AbrirJanela())
 
+    frame_barra_de_titulo = tk.Frame(root, bg="#ff0000")
+    frame_barra_de_titulo.pack()
     tela_selecao_de_modo(jogo_está_aberto)
     root.mainloop()
