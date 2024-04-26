@@ -43,14 +43,15 @@ def tela_selecao_de_modo(jogo_está_aberto):
         modos_de_jogo=["Draft pick", "Ranked solo duo", "ARAM", "Nexus Blitz", "Arena", "URF", "One for all", "Just auto accept"]
 
     botao_icone_idioma.pack()
-    botao_icone_idioma.place(relx=0.8915, rely=0.016)
+    botao_icone_idioma.place(relx=0.8915, rely=0.075375)
     botao_icone_cor.pack()
-    botao_icone_cor.place(relx=0.0195, rely=0.015)
+    botao_icone_cor.place(relx=0.0195, rely=0.072375)
     frame_borda_topo.pack()
-    frame_borda_topo.place(relx=0.4988888888888888, rely=0.052, anchor="center")
+    frame_borda_topo.place(relx=0.4988888888888888, rely=0.1095, anchor="center")
     label_borda_topo.pack()
     frame_borda_inferior.pack()
-    frame_borda_inferior.place(relx=0.4988888888888888, rely=0.953, anchor="center")
+    frame_borda_inferior.place(relx=0.4988888888888888, rely=0.956, anchor="center")
+    frame_botao_desfazer.config(bd=1)
     frame_botao_desfazer.pack()
     frame_botao_desfazer.place(relx=0.025, rely=0.9815, anchor="sw")
     frame_botao_confirmar.pack()
@@ -59,10 +60,10 @@ def tela_selecao_de_modo(jogo_está_aberto):
     i=0
     for botao in botoes_modos_de_jogo:
         frame_botoes_modos_de_jogo[i].pack()
-        frame_botoes_modos_de_jogo[i].place(relx=0.0245, rely=0.102 + i * 0.103225)
+        frame_botoes_modos_de_jogo[i].place(relx=0.0245, rely=0.1565 + i * 0.09675)
         botao.config(text=modos_de_jogo[i], command=lambda t=modos_de_jogo[i]: Atualizar_Modo_de_Jogo(t))
         botao.pack()
-        botao.place(relx=0.0275, rely=0.105 + i * 0.1028)
+        botao.place(relx=0.0275, rely=0.158 + i * 0.0968)
         i+=1
     
     if idioma=="Portugues":
@@ -83,7 +84,7 @@ def tela_selecao_de_modo(jogo_está_aberto):
         botao_confirmar.config(text="Confirm")
     botao_desfazer.config(height=0)
 
-    centralizar_janela(root, 378, 476)
+    centralizar_janela(root, 378, 506)
     def Jogo_Aberto(jogo_está_aberto):
         global modo_de_jogo
         print("função jogo aberto")
@@ -163,7 +164,7 @@ def tela_selecao_de_role():
             botao.place(relx=0.0275, rely=0.22775 + i * 0.20875)
             i+=1
 
-        centralizar_janela(root, 378, 235)
+        centralizar_janela(root, 378, 265)
     else:   
         frame_botao_desfazer.place(rely=0.9775)
         frame_botao_confirmar.place(rely=0.9775)
@@ -192,7 +193,7 @@ def tela_selecao_de_role():
             botao.place(relx=0.0275, rely=0.1375 + i * 0.12875)
             i+=1
 
-        centralizar_janela(root, 378, 380)            
+        centralizar_janela(root, 378, 410)            
 
 def tela_alterar_idioma():
     global tela
@@ -234,7 +235,7 @@ def tela_alterar_idioma():
 
     frame_botao_desfazer.place(relx=0.4988888888888888, rely=0.873, anchor="center")
 
-    altura_janela_idioma = 78 + len(lista_idiomas) * 49
+    altura_janela_idioma = 108 + len(lista_idiomas) * 49
     centralizar_janela(root, 378, altura_janela_idioma)
 
 def tela_selecao_de_cor():
@@ -283,7 +284,7 @@ def tela_selecao_de_cor():
         botoes_cores[i].pack()
         botoes_cores[i].place(relx=0.04875 + k * 0.47725 , rely=0.2085 + j * 0.1565)
         k+=1
-    centralizar_janela(root, 303, 358)
+    centralizar_janela(root, 303, 388)
 
 def tela_auto_aceitar():
     global tela, jogo_está_aberto
@@ -324,7 +325,7 @@ def tela_auto_aceitar():
         botao_desfazer.config(text="Main menu")
     frame_botao_desfazer.place(relx=0.4988888888888888, rely=0.735, anchor="center")
 
-    centralizar_janela(root, 375, 100)
+    centralizar_janela(root, 375, 130)
 
     thread_imagem = threading.Thread(target=WhereToClick)
     thread_imagem.daemon = True
@@ -596,17 +597,22 @@ def Criar_Janela():
 
     root.title("League Lobby Clicker - Saralapa")
     root.iconbitmap('Images/icon.ico')
-    root.config(bg="#191919")
+    root.config(bg="#ffffff")#191919")
+    #root.overrideredirect(True)
     root.resizable(False, False)
-    root.attributes("-topmost", True)
-    root.attributes("-topmost", False)
     root.protocol("WM_DELETE_WINDOW", lambda: fechar_janela(root))
+    root.protocol("WM_ICONIFY", lambda: print("Oi"))#root.wm_withdraw())
     HWND = windll.user32.GetParent(root.winfo_id())
+    
+    windll.user32.SetWindowLongW(HWND, -20, windll.user32.GetWindowLongW(HWND, -20) & ~0x00000080 | 0x00040000)
+    root.wm_withdraw()
+    root.after(10, lambda: root.wm_deiconify())
+
     cor_hex = cor.removeprefix("#")
     cor_hex = "0x00" + cor_hex[4:] + cor_hex[2:4] + cor_hex[:2]
     cor_hex = int(cor_hex, 16)
     
-    windll.dwmapi.DwmSetWindowAttribute(HWND, 35, byref(c_int(0x001f1f1f)), sizeof(c_int))
+    #windll.dwmapi.DwmSetWindowAttribute(HWND, 35, byref(c_int(0x001f1f1f)), sizeof(c_int))
     windll.dwmapi.DwmSetWindowAttribute(HWND, 36, byref(c_int(cor_hex)), sizeof(c_int))
 
     frame_borda_topo = tk.LabelFrame(root, bg="#191919", width=210, height=30, bd=0)
@@ -708,7 +714,7 @@ def Criar_Janela():
         [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].minimize()
         [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].restore()
         [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].activate()
-    root.after(10, lambda: AbrirJanela())
+    #root.after(10, lambda: AbrirJanela())
 
     tela_selecao_de_modo(jogo_está_aberto)
     root.mainloop()
