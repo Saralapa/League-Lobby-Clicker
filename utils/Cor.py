@@ -45,3 +45,36 @@ def Alterar_Cor(image, cor_original, cor_nova):
 
     imagem_modificada.putdata(pixel_data)
     return imagem_modificada
+
+def Botoes_Cores(root, botoes_cores):
+    from utils.Fechar_Janela import fechar_janela
+    global botao_cor_pressionado
+    botao_cor_pressionado = False
+
+    def MouseSobreBotaoCor(event, botao_cor, i):
+        global mouse_sobre_botao_cor
+        mouse_sobre_botao_cor = True
+    
+    def MouseForaBotaoCor(event, botao_cor, i):
+        global mouse_sobre_botao_cor
+        mouse_sobre_botao_cor = False
+
+    def BotaoCorPressionado(event, botao_cor, i):
+        global botao_cor_pressionado, cor_atual
+        cor_atual = botao_cor[i].cget("text")
+        botao_cor_pressionado = True
+        botao_cor[i].config(bg="#f0f0f0", fg="#f0f0f0", relief="sunken")
+
+    def BotaoCorSolto(event, botao_cor, i):
+        global botao_cor_pressionado
+        botao_cor_pressionado = False
+        if mouse_sobre_botao_cor:
+            from utils.Janela import Atualizar_Cor
+            Atualizar_Cor(botao_cor[i].cget("text"))
+        botao_cor[i].config(bg=cor_atual, fg=cor_atual, relief="raised")
+
+    for i in range(len(botoes_cores)):
+        botoes_cores[i].bind("<Enter>", lambda event, i=i: MouseSobreBotaoCor(event, botoes_cores, i))
+        botoes_cores[i].bind("<Leave>", lambda event, i=i: MouseForaBotaoCor(event, botoes_cores, i))
+        botoes_cores[i].bind("<ButtonPress-1>", lambda event, i=i: BotaoCorPressionado(event, botoes_cores, i))
+        botoes_cores[i].bind("<ButtonRelease-1>", lambda event, i=i: BotaoCorSolto(event, botoes_cores, i))
