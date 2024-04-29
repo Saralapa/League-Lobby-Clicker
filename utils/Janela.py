@@ -15,7 +15,17 @@ from utils.Cor import Alterar_Cor, Definir_Cor
 def tela_selecao_de_modo(jogo_está_aberto):
     global tela, Role_1, Role_2, modo_de_jogo, roles
     centralizar_janela(root, 378, 506)
-    frame_barra_de_titulo.config(height=30, width=root.winfo_width())
+    frame_barra_de_titulo.config(width=root.winfo_width())
+    botao_fechar.place(x=root.winfo_width()-45)
+    botao_minimizar.place(x=root.winfo_width()-45*2)
+
+    frame_topo_janela.config(width=root.winfo_width())
+    frame_esquerda_janela.config(height=root.winfo_height())
+    frame_direita_janela.config(height=root.winfo_height())
+    frame_direita_janela.place(x=root.winfo_width()-1)
+    frame_base_janela.config(width=root.winfo_width())
+    frame_base_janela.place(y=root.winfo_height()-1)
+
     tela = "seleção de modo de jogo"
     Role_1=None
     Role_2=None
@@ -88,15 +98,11 @@ def tela_selecao_de_modo(jogo_está_aberto):
 
     def Jogo_Aberto(jogo_está_aberto):
         global modo_de_jogo
-        print("função jogo aberto")
         while True:
-            print("while true função jogo aberto")
             if jogo_está_aberto == False:
-                print("jogo aberto false")
                 return
             time.sleep(30)
             if not [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"] and jogo_está_aberto == True:
-                print("jogo fechado e jogo aberto true")
                 if idioma == "Portugues":
                     modo_de_jogo = "Apenas auto aceitar"
                 elif idioma == "English":
@@ -138,10 +144,19 @@ def tela_selecao_de_role():
             botao_desfazer.config(text="Undo")
 
     if modo_de_jogo == "Blitz do Nexus" or modo_de_jogo== "Nexus Blitz":
-        frame_botao_desfazer.place(rely=0.96)
-        frame_botao_confirmar.place(rely=0.96)
-        frame_borda_topo.place(relx=0.4988888888888888, rely=0.115, anchor="center")
-        frame_borda_inferior.place(relx=0.4988888888888888, rely=0.902, anchor="center")
+        centralizar_janela(root, 378, 265)
+        frame_barra_de_titulo.config(width=root.winfo_width())
+        frame_topo_janela.config(width=root.winfo_width())
+        frame_esquerda_janela.config(height=root.winfo_height())
+        frame_direita_janela.config(height=root.winfo_height())
+        frame_direita_janela.place(x=root.winfo_width()-1)
+        frame_base_janela.config(width=root.winfo_width())
+        frame_base_janela.place(y=root.winfo_height()-1)
+
+        frame_botao_desfazer.place(rely=0.966)
+        frame_botao_confirmar.place(rely=0.966)
+        frame_borda_topo.place(relx=0.4988888888888888, y=28, anchor="center")
+        frame_borda_inferior.place(relx=0.4988888888888888, rely=0.914, anchor="center")
         if idioma=="Portugues":
             texto_inferior.set("Posição escolhida:")
         elif idioma=="English":
@@ -159,18 +174,26 @@ def tela_selecao_de_role():
         i=0
         for botao in botoes_roles:
             frame_botoes_roles[i].pack()
-            frame_botoes_roles[i].place(relx=0.0245, rely=0.225 + i * 0.20875)
+            frame_botoes_roles[i].place(relx=0.0245, y=83 + i * 49)
             botao.config(width=50, height=2, bg="#1f1f1f", fg=cor, bd=1)
             botao.pack()
-            botao.place(relx=0.0275, rely=0.22775 + i * 0.20875)
+            botao.place(relx=0.0275, y=84 + i * 49)
             i+=1
 
-        centralizar_janela(root, 378, 265)
     else:   
+        centralizar_janela(root, 378, 410)
+        frame_barra_de_titulo.config(width=root.winfo_width())
+        frame_topo_janela.config(width=root.winfo_width())
+        frame_esquerda_janela.config(height=root.winfo_height())
+        frame_direita_janela.config(height=root.winfo_height())
+        frame_direita_janela.place(x=root.winfo_width()-1)
+        frame_base_janela.config(width=root.winfo_width())
+        frame_base_janela.place(y=root.winfo_height()-1)
+
         frame_botao_desfazer.place(rely=0.9775)
         frame_botao_confirmar.place(rely=0.9775)
-        frame_borda_inferior.place(relx=0.4988888888888888, rely=0.943, anchor="center")
-        frame_borda_topo.place(relx=0.4988888888888888, rely=0.068, anchor="center")
+        frame_borda_inferior.place(relx=0.4988888888888888, rely=0.946, anchor="center")
+        frame_borda_topo.place(relx=0.4988888888888888, y=11, anchor="center")
         if idioma=="Portugues":
             texto_inferior.set(f"Primeira role:\nSegunda role:")
         elif idioma=="English":
@@ -188,18 +211,24 @@ def tela_selecao_de_role():
         i=0
         for botao in botoes_roles:
             frame_botoes_roles[i].pack()
-            frame_botoes_roles[i].place(relx=0.0245, rely=0.135 + i * 0.12875)
+            frame_botoes_roles[i].place(relx=0.0245, y=81 + i * 49)
             botao.config(width=50, height=2, bg="#1f1f1f", fg=cor, bd=1)
             botao.pack()
-            botao.place(relx=0.0275, rely=0.1375 + i * 0.12875)
+            botao.place(relx=0.0275, y=82 + i * 49)
             i+=1
-
-        centralizar_janela(root, 378, 410)            
 
 def tela_alterar_idioma():
     global tela
     altura_janela_idioma = 108 + len(lista_idiomas) * 49
     centralizar_janela(root, 378, altura_janela_idioma)
+    frame_barra_de_titulo.config(width=root.winfo_width())
+    frame_topo_janela.config(width=root.winfo_width())
+    frame_esquerda_janela.config(height=root.winfo_height())
+    frame_direita_janela.config(height=root.winfo_height())
+    frame_direita_janela.place(x=root.winfo_width()-1)
+    frame_base_janela.config(width=root.winfo_width())
+    frame_base_janela.place(y=root.winfo_height()-1)
+
     tela="alterar idioma"
     frame_borda_topo.pack_forget()
     frame_borda_topo.place_forget()
@@ -238,9 +267,19 @@ def tela_alterar_idioma():
 
     frame_botao_desfazer.place(relx=0.4988888888888888, y=-19, anchor="center")
 
-
 def tela_selecao_de_cor():
     global tela
+    centralizar_janela(root, 303, 388)
+    frame_barra_de_titulo.config(width=root.winfo_width())
+    botao_fechar.place(x=root.winfo_width()-45)
+    botao_minimizar.place(x=root.winfo_width()-45*2)
+    frame_topo_janela.config(width=root.winfo_width())
+    frame_esquerda_janela.config(height=root.winfo_height())
+    frame_direita_janela.config(height=root.winfo_height())
+    frame_direita_janela.place(x=root.winfo_width()-1)
+    frame_base_janela.config(width=root.winfo_width())
+    frame_base_janela.place(y=root.winfo_height()-1)
+
     tela = "seleção de cor"
     frame_borda_topo.pack_forget()
     frame_borda_topo.place_forget()
@@ -270,10 +309,10 @@ def tela_selecao_de_cor():
         botao_cor_personalizada.config(text="Custom color")
     botao_desfazer.config(height=2)
     frame_botao_desfazer.config(bd=2)
-    frame_botao_desfazer.place(relx=0.4988888888888888, rely=0.8975, anchor="center")
+    frame_botao_desfazer.place(relx=0.4988888888888888, y=-30, anchor="center")
     botao_cor_personalizada.config(height=2)
     frame_botao_cor_personalizada.pack()
-    frame_botao_cor_personalizada.place(relx=0.4988888888888888, rely=0.1025, anchor="center")
+    frame_botao_cor_personalizada.place(relx=0.4988888888888888, y=67, anchor="center")
     j = 0
     k = 0
     for i in range(len(botoes_cores)):
@@ -283,12 +322,21 @@ def tela_selecao_de_cor():
             j+=1
         botoes_cores[i].config(width=17, height=2, bd=2)
         botoes_cores[i].pack()
-        botoes_cores[i].place(relx=0.04875 + k * 0.47725 , rely=0.2085 + j * 0.1565)
+        botoes_cores[i].place(relx=0.04875 + k * 0.47725 , y=105 + j * 56)
         k+=1
-    centralizar_janela(root, 303, 388)
 
 def tela_auto_aceitar():
     global tela, jogo_está_aberto
+    centralizar_janela(root, 375, 130)
+    frame_barra_de_titulo.config(width=root.winfo_width())
+    botao_fechar.place(x=root.winfo_width()-45)
+    botao_minimizar.place(x=root.winfo_width()-45*2)
+    frame_topo_janela.config(width=root.winfo_width())
+    frame_esquerda_janela.config(height=root.winfo_height())
+    frame_direita_janela.config(height=root.winfo_height())
+    frame_direita_janela.place(x=root.winfo_width()-1)
+    frame_base_janela.config(width=root.winfo_width())
+    frame_base_janela.place(y=root.winfo_height()-1)
 
     if [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"]:
         jogo_está_aberto = True
@@ -318,15 +366,13 @@ def tela_auto_aceitar():
     botao_icone_cor.place_forget()
 
     label_auto_aceitar.pack()
-    label_auto_aceitar.place(relx=0.4988888888888888, rely=0.315, anchor="center")
+    label_auto_aceitar.place(relx=0.4988888888888888, y=62, anchor="center")
     
     if idioma=="Portugues":
         botao_desfazer.config(text="Menu principal")
     elif idioma=="English":
         botao_desfazer.config(text="Main menu")
-    frame_botao_desfazer.place(relx=0.4988888888888888, rely=0.735, anchor="center")
-
-    centralizar_janela(root, 375, 130)
+    frame_botao_desfazer.place(relx=0.4988888888888888, y=-24, anchor="center")
 
     thread_imagem = threading.Thread(target=WhereToClick)
     thread_imagem.daemon = True
@@ -549,15 +595,7 @@ def Atualizar_Cor(valor):
         caminho_cor = os.path.join(os.path.expanduser("~"),"League Lobby Clicker - Saralapa", "League_Lobby_Clicker_cor-Saralapa.txt")
         with open(caminho_cor, "w") as file:
             file.write(cor)
-
-        HWND = windll.user32.GetParent(root.winfo_id())
-        cor_hex = cor.removeprefix("#")
-        cor_hex = "0x00" + cor_hex[4:] + cor_hex[2:4] + cor_hex[:2]
-        cor_hex = int(cor_hex, 16)
-        print(cor_hex)
-        windll.dwmapi.DwmSetWindowAttribute(HWND, 35, byref(c_int(0x001f1f1f)), sizeof(c_int))
-        windll.dwmapi.DwmSetWindowAttribute(HWND, 36, byref(c_int(cor_hex)), sizeof(c_int))
-
+        
         frame_botao_desfazer.config(bg=cor)
         botao_desfazer.config(fg=cor)
         label_borda_topo.config(fg=cor)
@@ -581,6 +619,7 @@ def Atualizar_Cor(valor):
         label_auto_aceitar.config(fg=cor)
         frame_botao_cor_personalizada.config(bg=cor)
         botao_cor_personalizada.config(fg=cor)
+        label_titulo.config(fg=cor)
 
         imagem_cor = ImageTk.PhotoImage(Alterar_Cor("Images/Color-change.png", "#000000", cor))
         botao_icone_cor.config(image=imagem_cor)
@@ -589,7 +628,7 @@ def Atualizar_Cor(valor):
         botao_icone_idioma.config(image=imagem_idioma)
 
 def Criar_Janela():
-    global frame_botoes_roles, label_auto_aceitar, frame_botoes_idiomas, botoes_modos_de_jogo, botao_icone_idioma, frame_borda_topo, label_borda_topo, frame_borda_inferior, frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, botoes_roles, botoes_idiomas, botao_icone_cor, cor, botoes_cores, label_borda_inferior, botao_icone_cor, imagem_cor, imagem_idioma, botao_cor_personalizada, modo_de_jogo, frame_botao_cor_personalizada, frame_barra_de_titulo
+    global frame_botoes_roles, label_auto_aceitar, frame_botoes_idiomas, botoes_modos_de_jogo, botao_icone_idioma, frame_borda_topo, label_borda_topo, frame_borda_inferior, frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, botoes_roles, botoes_idiomas, botao_icone_cor, cor, botoes_cores, label_borda_inferior, botao_icone_cor, imagem_cor, imagem_idioma, botao_cor_personalizada, modo_de_jogo, frame_botao_cor_personalizada, frame_barra_de_titulo, frame_topo_janela, frame_esquerda_janela, label_titulo, frame_direita_janela, frame_base_janela
     idioma = definir_idioma()
     cor = Definir_Cor()
     modo_de_jogo = None
@@ -598,23 +637,15 @@ def Criar_Janela():
 
     root.title("League Lobby Clicker - Saralapa")
     root.iconbitmap('Images/icon.ico')
-    root.config(bg="#ffffff")#191919")
+    root.config(bg="#191919")
     root.overrideredirect(True)
     root.resizable(False, False)
     root.protocol("WM_DELETE_WINDOW", lambda: fechar_janela(root))
-    root.protocol("WM_ICONIFY", lambda: print("Oi"))#root.wm_withdraw())
     HWND = windll.user32.GetParent(root.winfo_id())
     
     windll.user32.SetWindowLongW(HWND, -20, windll.user32.GetWindowLongW(HWND, -20) & ~0x00000080 | 0x00040000)
     root.wm_withdraw()
     root.after(10, lambda: root.wm_deiconify())
-
-    cor_hex = cor.removeprefix("#")
-    cor_hex = "0x00" + cor_hex[4:] + cor_hex[2:4] + cor_hex[:2]
-    cor_hex = int(cor_hex, 16)
-    
-    #windll.dwmapi.DwmSetWindowAttribute(HWND, 35, byref(c_int(0x001f1f1f)), sizeof(c_int))
-    windll.dwmapi.DwmSetWindowAttribute(HWND, 36, byref(c_int(cor_hex)), sizeof(c_int))
 
     frame_borda_topo = tk.LabelFrame(root, bg="#191919", width=210, height=30, bd=0)
     frame_borda_topo.pack(side="top", anchor="center", pady=5)
@@ -715,9 +746,142 @@ def Criar_Janela():
         [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].minimize()
         [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].restore()
         [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].activate()
-    #root.after(10, lambda: AbrirJanela())
+    root.after(10, lambda: AbrirJanela())
 
-    frame_barra_de_titulo = tk.Frame(root, bg="#ff0000")
+    frame_barra_de_titulo = tk.Frame(root, bg="#1f1f1f", height=30)
     frame_barra_de_titulo.pack()
+    frame_barra_de_titulo.pack_propagate(0)
+    frame_barra_de_titulo.place(x=0)
+
+    icone = Image.open("Images/icon.ico")
+    icone = icone.resize((16, 16))
+    foto = ImageTk.PhotoImage(icone)
+    label_icone = tk.Label(frame_barra_de_titulo, image=foto, bg=frame_barra_de_titulo.cget("background"))
+    label_icone.place(x=6, y=4)
+
+    label_titulo = tk.Label(frame_barra_de_titulo, text=root.title(), bg=frame_barra_de_titulo.cget("background"), fg=cor)
+    label_titulo.place(x=26, y=4)
+
+    global botao_fechar
+    botao_fechar = tk.Label(frame_barra_de_titulo, text="X", bg=frame_barra_de_titulo.cget("background"), fg="#f1f1f1", relief="flat")
+    botao_fechar.place(width=45, height=frame_barra_de_titulo.winfo_reqheight())
+
+    global botao_fechar_pressionado
+    botao_fechar_pressionado = False
+
+    def MouseSobreBotaoFechar():
+        global mouse_sobre_botao_fechar
+        mouse_sobre_botao_fechar = True
+        if not botao_fechar_pressionado:
+            botao_fechar.config(bg="#c42b1c")
+    
+    def MouseForaBotaoFechar():
+        global mouse_sobre_botao_fechar
+        mouse_sobre_botao_fechar = False
+        if botao_fechar_pressionado:
+            pass
+        else:
+            botao_fechar.config(bg=frame_barra_de_titulo.cget("background"))
+
+    def BotaoFecharPressionado():
+        global botao_fechar_pressionado
+        botao_fechar_pressionado = True
+        botao_fechar.config(bg="#d8534e")
+
+    def BotaoFecharSolto():
+        global botao_fechar_pressionado
+        botao_fechar_pressionado = False
+        if mouse_sobre_botao_fechar:
+            fechar_janela(root)
+        botao_fechar.config(bg=frame_barra_de_titulo.cget("background"))
+
+    botao_fechar.bind("<Enter>", lambda event: MouseSobreBotaoFechar())
+    botao_fechar.bind("<Leave>", lambda event: MouseForaBotaoFechar())
+    botao_fechar.bind("<ButtonPress-1>", lambda event: BotaoFecharPressionado())
+    botao_fechar.bind("<ButtonRelease-1>", lambda event: BotaoFecharSolto())
+
+    global botao_minimizar
+    botao_minimizar = tk.Label(frame_barra_de_titulo, text="-", font=("Arial", 16), bg=frame_barra_de_titulo.cget("background"), fg="#f1f1f1")
+    botao_minimizar.place(width=45, height=frame_barra_de_titulo.winfo_reqheight())
+
+    global botao_minimizar_pressionado
+    botao_minimizar_pressionado = False
+
+    def MouseSobreBotaoMinimizar():
+        global mouse_sobre_botao_minimizar
+        mouse_sobre_botao_minimizar = True
+        if not botao_minimizar_pressionado:
+            botao_minimizar.config(bg="#2a2a2a")
+    
+    def MouseForaBotaoMinimizar():
+        global mouse_sobre_botao_minimizar
+        mouse_sobre_botao_minimizar = False
+        if botao_minimizar_pressionado:
+            pass
+        else:
+            botao_minimizar.config(bg=frame_barra_de_titulo.cget("background"))
+    
+    def BotaoMinimizarPressionado():
+        global botao_minimizar_pressionado
+        botao_minimizar_pressionado = True
+        botao_minimizar.config(bg="#2f2f2f")
+    
+    def BotaoMinimizarSolto():
+        global botao_minimizar_pressionado
+        botao_minimizar_pressionado = False
+        if mouse_sobre_botao_minimizar:
+            [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].minimize()
+        botao_minimizar.config(bg=frame_barra_de_titulo.cget("background"))
+
+    botao_minimizar.bind("<Enter>", lambda event: MouseSobreBotaoMinimizar())
+    botao_minimizar.bind("<Leave>", lambda event: MouseForaBotaoMinimizar())
+    botao_minimizar.bind("<ButtonPress-1>", lambda event: BotaoMinimizarPressionado())
+    botao_minimizar.bind("<ButtonRelease-1>", lambda event: BotaoMinimizarSolto())
+
+    '''def MudarPosicaoJanela(event):
+        root.geometry(f'+{event.x_root + clique_x}+{event.y_root + clique_y}')
+
+    def MoverJanela(event):
+        global clique_x, clique_y, evento
+        clique_x = root.winfo_x() - event.x_root
+        clique_y = root.winfo_y() - event.y_root
+        root.geometry(f'+{event.x_root + clique_x}+{event.y_root + clique_y}')
+        #frame_barra_de_titulo.bind('<B1-Motion>', lambda evento=event: MudarPosicaoJanela(evento))
+        #label_titulo.bind('<B1-Motion>', lambda evento=event: MudarPosicaoJanela(evento))'''
+
+    def PosicaoCliqueBarraDeTitulo(event):
+        global posicao_clique_barra_de_titulo_x, posicao_clique_barra_de_titulo_y
+        posicao_clique_barra_de_titulo_x = event.x_root
+        posicao_clique_barra_de_titulo_y = event.y_root
+
+    def MoverJanela(event):
+        global posicao_clique_barra_de_titulo_x, posicao_clique_barra_de_titulo_y
+        nova_posicao_x = root.winfo_x() + (event.x_root - posicao_clique_barra_de_titulo_x)
+        nova_posicao_y = root.winfo_y() + (event.y_root - posicao_clique_barra_de_titulo_y)
+        
+        root.geometry(f'+{nova_posicao_x}+{nova_posicao_y}')
+        posicao_clique_barra_de_titulo_x = event.x_root
+        posicao_clique_barra_de_titulo_y = event.y_root
+
+    frame_barra_de_titulo.bind('<Button-1>', PosicaoCliqueBarraDeTitulo)
+    frame_barra_de_titulo.bind('<B1-Motion>', MoverJanela)
+    label_titulo.bind('<Button-1>', PosicaoCliqueBarraDeTitulo)
+    label_titulo.bind('<B1-Motion>', MoverJanela)
+    label_icone.bind('<Button-1>', PosicaoCliqueBarraDeTitulo)
+    label_icone.bind('<B1-Motion>', MoverJanela)
+
+    frame_topo_janela = tk.Frame(root, bg="#404040", height=1)
+    frame_topo_janela.place(x=0, y=0)
+
+    frame_esquerda_janela = tk.Frame(root, bg="#404040", width=1)
+    frame_esquerda_janela.place(x=0, y=0)
+
+    frame_direita_janela = tk.Frame(root, bg="#404040", width=1)
+    frame_direita_janela.place(y=0)
+
+    frame_base_janela = tk.Frame(root, bg="#404040", height=1)
+    frame_base_janela.place(x=0)
+
+    ##root.overrideredirect(0)
     tela_selecao_de_modo(jogo_está_aberto)
     root.mainloop()
