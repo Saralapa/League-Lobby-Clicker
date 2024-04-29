@@ -93,7 +93,7 @@ def chamar_funcao_encontrar_pasta_LOL():
                 for unidade in unidades:
                     if encontrar_e_salvar_pasta_instalacao_lol(unidade, 2) == 23:
                         break
-            
+
         try:
             with open(LOL_path, "r") as file:
                 subprocess.Popen([file.read().strip(), '--launch-product=league_of_legends', '--launch-patchline=live'])

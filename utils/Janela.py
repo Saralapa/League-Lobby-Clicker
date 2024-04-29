@@ -726,7 +726,100 @@ def Criar_Janela():
                     "#00ffff", "#ffff00",
                     "#ff7f00", "#ff00ff",
                     "#9044ff", "#ffffff"]
-    botoes_cores = [tk.Button(root, text=texto4, command=lambda t=texto4: Atualizar_Cor(t)) for texto4 in cores_padrao]
+    botoes_cores = [tk.Label(root, text=texto4) for texto4 in cores_padrao]
+
+    global botao_cor_pressionado
+    botao_cor_pressionado = False
+
+    def MouseSobreBotaoCor(event, botao_cor):
+        global mouse_sobre_botao_cor
+        mouse_sobre_botao_cor = True
+        if not botao_cor_pressionado:
+            botao_cor.config(bg="#c42b1c")
+    
+    def MouseForaBotaoCor(event, botao_cor):
+        global mouse_sobre_botao_cor
+        mouse_sobre_botao_cor = False
+        if not botao_cor_pressionado:
+            botao_cor.config(bg=frame_barra_de_titulo.cget("background"))
+
+    def BotaoCorPressionado(event, botao_cor):
+        global botao_cor_pressionado
+        botao_cor_pressionado = True
+        botao_cor.config(bg="#d8534e")
+
+    def BotaoCorSolto(event, botao_cor):
+        global botao_cor_pressionado
+        botao_cor_pressionado = False
+        if mouse_sobre_botao_cor:
+            fechar_janela(root)
+        botao_cor.config(bg=frame_barra_de_titulo.cget("background"))
+        
+    botoes_cores[0].bind("<Enter>", lambda event: MouseSobreBotaoCor(event, botoes_cores[0]))
+    botoes_cores[0].bind("<Leave>", lambda event: MouseForaBotaoCor(event, botoes_cores[0]))
+    botoes_cores[0].bind("<ButtonPress-1>", lambda event: BotaoCorPressionado(event, botoes_cores[0]))
+    botoes_cores[0].bind("<ButtonRelease-1>", lambda event: BotaoCorSolto(event, botoes_cores[0]))
+
+    botoes_cores[1].bind("<Enter>", lambda event: MouseSobreBotaoCor(event, botoes_cores[1]))
+    botoes_cores[1].bind("<Leave>", lambda event: MouseForaBotaoCor(event, botoes_cores[1]))
+    botoes_cores[1].bind("<ButtonPress-1>", lambda event: BotaoCorPressionado(event, botoes_cores[1]))
+    botoes_cores[1].bind("<ButtonRelease-1>", lambda event: BotaoCorSolto(event, botoes_cores[1]))
+
+    botoes_cores[2].bind("<Enter>", lambda event: MouseSobreBotaoCor(event, botoes_cores[2]))
+    botoes_cores[2].bind("<Leave>", lambda event: MouseForaBotaoCor(event, botoes_cores[2]))
+    botoes_cores[2].bind("<ButtonPress-1>", lambda event: BotaoCorPressionado(event, botoes_cores[2]))
+    botoes_cores[2].bind("<ButtonRelease-1>", lambda event: BotaoCorSolto(event, botoes_cores[2]))
+
+    botoes_cores[3].bind("<Enter>", lambda event: MouseSobreBotaoCor(event, botoes_cores[3]))
+    botoes_cores[3].bind("<Leave>", lambda event: MouseForaBotaoCor(event, botoes_cores[3]))
+    botoes_cores[3].bind("<ButtonPress-1>", lambda event: BotaoCorPressionado(event, botoes_cores[3]))
+    botoes_cores[3].bind("<ButtonRelease-1>", lambda event: BotaoCorSolto(event, botoes_cores[3]))
+
+    botoes_cores[4].bind("<Enter>", lambda event: MouseSobreBotaoCor(event, botoes_cores[4]))
+    botoes_cores[4].bind("<Leave>", lambda event: MouseForaBotaoCor(event, botoes_cores[4]))
+    botoes_cores[4].bind("<ButtonPress-1>", lambda event: BotaoCorPressionado(event, botoes_cores[4]))
+    botoes_cores[4].bind("<ButtonRelease-1>", lambda event: BotaoCorSolto(event, botoes_cores[4]))
+
+    botoes_cores[5].bind("<Enter>", lambda event: MouseSobreBotaoCor(event, botoes_cores[5]))
+    botoes_cores[5].bind("<Leave>", lambda event: MouseForaBotaoCor(event, botoes_cores[5]))
+    botoes_cores[5].bind("<ButtonPress-1>", lambda event: BotaoCorPressionado(event, botoes_cores[5]))
+    botoes_cores[5].bind("<ButtonRelease-1>", lambda event: BotaoCorSolto(event, botoes_cores[5]))
+
+    botoes_cores[6].bind("<Enter>", lambda event: MouseSobreBotaoCor(event, botoes_cores[6]))
+    botoes_cores[6].bind("<Leave>", lambda event: MouseForaBotaoCor(event, botoes_cores[6]))
+    botoes_cores[6].bind("<ButtonPress-1>", lambda event: BotaoCorPressionado(event, botoes_cores[6]))
+    botoes_cores[6].bind("<ButtonRelease-1>", lambda event: BotaoCorSolto(event, botoes_cores[6]))
+
+    botoes_cores[7].bind("<Enter>", lambda event: MouseSobreBotaoCor(event, botoes_cores[7]))
+    botoes_cores[7].bind("<Leave>", lambda event: MouseForaBotaoCor(event, botoes_cores[7]))
+    botoes_cores[7].bind("<ButtonPress-1>", lambda event: BotaoCorPressionado(event, botoes_cores[7]))
+    botoes_cores[7].bind("<ButtonRelease-1>", lambda event: BotaoCorSolto(event, botoes_cores[7]))
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     frame_botao_cor_personalizada = tk.Frame(root, bg=cor, bd=2)
     frame_botao_cor_personalizada.pack()
@@ -778,9 +871,7 @@ def Criar_Janela():
     def MouseForaBotaoFechar():
         global mouse_sobre_botao_fechar
         mouse_sobre_botao_fechar = False
-        if botao_fechar_pressionado:
-            pass
-        else:
+        if not botao_fechar_pressionado:
             botao_fechar.config(bg=frame_barra_de_titulo.cget("background"))
 
     def BotaoFecharPressionado():
@@ -816,9 +907,7 @@ def Criar_Janela():
     def MouseForaBotaoMinimizar():
         global mouse_sobre_botao_minimizar
         mouse_sobre_botao_minimizar = False
-        if botao_minimizar_pressionado:
-            pass
-        else:
+        if not botao_minimizar_pressionado:
             botao_minimizar.config(bg=frame_barra_de_titulo.cget("background"))
     
     def BotaoMinimizarPressionado():
@@ -837,17 +926,6 @@ def Criar_Janela():
     botao_minimizar.bind("<Leave>", lambda event: MouseForaBotaoMinimizar())
     botao_minimizar.bind("<ButtonPress-1>", lambda event: BotaoMinimizarPressionado())
     botao_minimizar.bind("<ButtonRelease-1>", lambda event: BotaoMinimizarSolto())
-
-    '''def MudarPosicaoJanela(event):
-        root.geometry(f'+{event.x_root + clique_x}+{event.y_root + clique_y}')
-
-    def MoverJanela(event):
-        global clique_x, clique_y, evento
-        clique_x = root.winfo_x() - event.x_root
-        clique_y = root.winfo_y() - event.y_root
-        root.geometry(f'+{event.x_root + clique_x}+{event.y_root + clique_y}')
-        #frame_barra_de_titulo.bind('<B1-Motion>', lambda evento=event: MudarPosicaoJanela(evento))
-        #label_titulo.bind('<B1-Motion>', lambda evento=event: MudarPosicaoJanela(evento))'''
 
     def PosicaoCliqueBarraDeTitulo(event):
         global posicao_clique_barra_de_titulo_x, posicao_clique_barra_de_titulo_y
