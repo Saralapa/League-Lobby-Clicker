@@ -882,6 +882,5 @@ def Criar_Janela():
     frame_base_janela = tk.Frame(root, bg="#404040", height=1)
     frame_base_janela.place(x=0)
 
-    ##root.overrideredirect(0)
     tela_selecao_de_modo(jogo_está_aberto)
     root.mainloop()
