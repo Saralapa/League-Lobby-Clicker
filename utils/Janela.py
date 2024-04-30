@@ -15,6 +15,8 @@ from utils.Cor import Alterar_Cor, Definir_Cor, Botoes_Cores
 def tela_selecao_de_modo(jogo_está_aberto):
     global tela, Role_1, Role_2, modo_de_jogo, roles
     centralizar_janela(root, 378, 506)
+    root.title("League Lobby Clicker - Saralapa")
+    label_titulo.config(text=root.title())
     frame_barra_de_titulo.config(width=root.winfo_width())
     botao_fechar.place(x=root.winfo_width()-45)
     botao_minimizar.place(x=root.winfo_width()-45*2)
@@ -271,6 +273,8 @@ def tela_alterar_idioma():
 def tela_selecao_de_cor():
     global tela
     centralizar_janela(root, 303, 388)
+    root.title("League Lobby Clicker - S...")
+    label_titulo.config(text=root.title())
     frame_barra_de_titulo.config(width=root.winfo_width())
     botao_fechar.place(x=root.winfo_width()-45)
     botao_minimizar.place(x=root.winfo_width()-45*2)
