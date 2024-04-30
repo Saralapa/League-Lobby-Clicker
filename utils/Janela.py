@@ -843,8 +843,9 @@ def Criar_Janela():
     botao_minimizar.bind("<ButtonPress-1>", lambda event: BotaoMinimizarPressionado())
     botao_minimizar.bind("<ButtonRelease-1>", lambda event: BotaoMinimizarSolto())
 
+    imagem_doacao = ImageTk.PhotoImage(Alterar_Cor("Images/Doacao.png", "#ef9ba0", "#f1f1f1"))
     global botao_doacao
-    botao_doacao = tk.Label(frame_barra_de_titulo, text="$", font=("Arial", 14), bg=frame_barra_de_titulo.cget("background"), fg="#f1f1f1")
+    botao_doacao = tk.Label(frame_barra_de_titulo, image=imagem_doacao, bg=frame_barra_de_titulo.cget("background"), fg="#f1f1f1")
     botao_doacao.place(width=45,height=frame_barra_de_titulo.winfo_reqheight(), x=0, y=1)
 
     global botao_doacao_pressionado
