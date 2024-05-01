@@ -11,6 +11,9 @@ from utils.Fechar_Janela import fechar_janela
 from utils.Idioma import definir_idioma
 from utils.Cliques import WhereToClick
 from utils.Cor import Alterar_Cor, Definir_Cor, Botoes_Cores
+from utils.Texto_Tela_Auto_Aceitar import atualizar_mensagem
+from utils.Botao_Confirmar import confirmar
+from utils.Barra_de_Titulo import *
 
 def tela_selecao_de_modo(jogo_está_aberto):
     global tela, Role_1, Role_2, modo_de_jogo, roles
@@ -104,7 +107,7 @@ def tela_selecao_de_modo(jogo_está_aberto):
         while True:
             if jogo_está_aberto == False:
                 return
-            time.sleep(30)
+            time.sleep(1)
             if not [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"] and jogo_está_aberto == True:
                 if idioma == "Portugues":
                     modo_de_jogo = "Apenas auto aceitar"
@@ -232,7 +235,7 @@ def tela_alterar_idioma():
     frame_base_janela.config(width=root.winfo_width())
     frame_base_janela.place(y=root.winfo_height()-1)
 
-    tela="alterar idioma"
+    tela = "alterar idioma"
     frame_borda_topo.pack_forget()
     frame_borda_topo.place_forget()
     for botao in botoes_modos_de_jogo:
@@ -348,7 +351,7 @@ def tela_auto_aceitar():
     if [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"]:
         jogo_está_aberto = True
 
-    tela="auto aceitar"
+    tela = "auto aceitar"
     frame_borda_topo.pack_forget()
     frame_borda_topo.place_forget()
     for botao in botoes_modos_de_jogo:
@@ -388,85 +391,6 @@ def tela_auto_aceitar():
     thread_mensagem = threading.Thread(target=atualizar_mensagem)
     thread_mensagem.daemon = True
     thread_mensagem.start()
-
-def atualizar_mensagem():
-    if idioma=="Portugues":
-        mensagens = "Encontrando partida"
-        mensagens = [f"{mensagens}", f"{mensagens}"+".", f"{mensagens}"+"..", f"{mensagens}"+"..."]
-    elif idioma=="English":
-        mensagens = "Finding match"
-        mensagens = [f"{mensagens}", f"{mensagens}"+".", f"{mensagens}"+"..", f"{mensagens}"+"..."]
-    index = 0
-    while True:
-        if not tela=="auto aceitar":
-            return
-        try:
-            label_auto_aceitar.config(text=mensagens[index])
-            index = (index + 1) % len(mensagens)
-            time.sleep(0.5)
-        except:
-            None
-
-def confirmar():
-    if idioma=="Portugues":
-        if tela == "seleção de modo de jogo":
-            if modo_de_jogo == "Apenas auto aceitar":
-                root.after(500, lambda: tela_auto_aceitar() if modo_de_jogo == "Apenas auto aceitar" else None)
-                if modo_de_jogo == "Apenas auto aceitar":
-                    return
-
-            if modo_de_jogo == None:
-                texto_inferior.set("Selecione um modo de jogo!")
-                root.after(2000, lambda: texto_inferior.set("Modo de jogo\nescolhido:") if modo_de_jogo == None else None)
-            root.after(0, lambda: tela_auto_aceitar()
-                        if modo_de_jogo == "ARAM"
-                        or modo_de_jogo == "Arena"
-                        or modo_de_jogo == "URF"
-                        or modo_de_jogo == "Todos por um"
-                        else tela_selecao_de_role() if modo_de_jogo is not None else None)
-        elif tela == "seleção de role":
-            if (modo_de_jogo != "Blitz do Nexus" and (Role_1 != "Preencher" and Role_2 == None)):
-                texto_inferior.set("As duas roles devem\nser preenchidas!")
-                if modo_de_jogo!="Blitz do Nexus":
-                    root.after(2000, lambda: texto_inferior.set("Primeira role:\nSegunda role:") if tela=="seleção de role" and Role_1 == None else None)
-                    root.after(2000, lambda: texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role:") if tela=="seleção de role" and Role_2==None and Role_1 != None and Role_1 != "Preencher" else None)
-                    root.after(2000, lambda: texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role: {Role_2}") if tela=="seleção de role" and Role_1 != None and Role_2!=None else None)
-                else: root.after(2000, lambda: texto_inferior.set("Posição escolhida:") if tela=="seleção de role" and Role_1 == None else None)
-            elif modo_de_jogo== "Blitz do Nexus" and Role_1==None:
-                texto_inferior.set("A role deve\nser preenchida!")
-                root.after(2000, lambda: texto_inferior.set("Posição escolhida:") if tela=="seleção de role" and Role_1 == None else None)
-            else:
-                root.after(500, lambda: tela_auto_aceitar())
-
-    elif idioma=="English":
-        if tela == "seleção de modo de jogo":
-            if modo_de_jogo == "Just auto accept":
-                root.after(500, lambda: tela_auto_aceitar() if modo_de_jogo == "Just auto accept" else None)
-                if modo_de_jogo == "Just auto accept":
-                    return
-
-            if modo_de_jogo == None:
-                texto_inferior.set("Select a game mode!")
-                root.after(2000, lambda: texto_inferior.set("Selected game\nmode:") if modo_de_jogo == None else None)
-            root.after(0, lambda: tela_auto_aceitar()
-                        if modo_de_jogo == "ARAM"
-                        or modo_de_jogo == "Arena"
-                        or modo_de_jogo == "URF"
-                        or modo_de_jogo == "One for all"
-                        else tela_selecao_de_role() if modo_de_jogo is not None else None)
-        elif tela == "seleção de role":
-            if (modo_de_jogo != "Nexus Blitz" and (Role_1 != "Fill" and Role_2 == None)):
-                texto_inferior.set("Both roles must\nbe selected!")
-                if modo_de_jogo!="Nexus Blitz":
-                    root.after(2000, lambda: texto_inferior.set("First role:\nSecond role:") if tela=="seleção de role" and Role_1 == None else None)
-                    root.after(2000, lambda: texto_inferior.set(f"First role: {Role_1}\nSecond role:") if tela=="seleção de role" and Role_2==None and Role_1 != None and Role_1 != "Fill" else None)
-                    root.after(2000, lambda: texto_inferior.set(f"First role: {Role_1}\nSecond role: {Role_2}") if tela=="seleção de role" and Role_1 != None and Role_2!=None else None)
-                else: root.after(2000, lambda: texto_inferior.set("Selected role:") if tela=="seleção de role" and Role_1 == None else None)
-            elif modo_de_jogo== "Nexus Blitz" and Role_1==None:
-                texto_inferior.set("The role must\nbe selected!")
-                root.after(2000, lambda: texto_inferior.set("Selected role:") if tela=="seleção de role" and Role_1 == None else None)
-            else:
-                root.after(500, lambda: tela_auto_aceitar())
 
 def desfazer():
     global modo_de_jogo, tela, Role_1, Role_2, roles, jogo_está_aberto
@@ -635,7 +559,7 @@ def Atualizar_Cor(valor):
         botao_icone_idioma.config(image=imagem_idioma)
 
 def Criar_Janela():
-    global frame_botoes_roles, label_auto_aceitar, frame_botoes_idiomas, botoes_modos_de_jogo, botao_icone_idioma, frame_borda_topo, label_borda_topo, frame_borda_inferior, frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, botoes_roles, botoes_idiomas, botao_icone_cor, cor, botoes_cores, label_borda_inferior, botao_icone_cor, imagem_cor, imagem_idioma, botao_cor_personalizada, modo_de_jogo, frame_botao_cor_personalizada, frame_barra_de_titulo, frame_topo_janela, frame_esquerda_janela, label_titulo, frame_direita_janela, frame_base_janela
+    global frame_botoes_roles, label_auto_aceitar, frame_botoes_idiomas, botoes_modos_de_jogo, botao_icone_idioma, frame_borda_topo, label_borda_topo, frame_borda_inferior, frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, botoes_roles, botoes_idiomas, botao_icone_cor, cor, botoes_cores, label_borda_inferior, botao_icone_cor, imagem_cor, imagem_idioma, botao_cor_personalizada, modo_de_jogo, frame_botao_cor_personalizada, frame_barra_de_titulo, frame_topo_janela, frame_esquerda_janela, label_titulo, frame_direita_janela, frame_base_janela, label_icone
     idioma = definir_idioma()
     cor = Definir_Cor()
     modo_de_jogo = None
@@ -726,27 +650,8 @@ def Criar_Janela():
     except: None
 
     imagem_cor = ImageTk.PhotoImage(Alterar_Cor("Images/Color-change.png", "#000000", cor))
-    botao_icone_cor = tk.Button(root, image=imagem_cor, command=tela_selecao_de_cor, bd=0, bg="#191919", width=31, height=31)
-    botao_icone_cor.pack()
-    
-    cores_padrao = ["#ff0000", "#00ff00",
-                    "#00ffff", "#ffff00",
-                    "#ff7f00", "#ff00ff",
-                    "#9044ff", "#ffffff"]
-    botoes_cores = [tk.Label(root, text=texto4, relief="raised") for texto4 in cores_padrao]
 
-    Botoes_Cores(root, botoes_cores)
-
-    frame_botao_cor_personalizada = tk.Frame(root, bg=cor, bd=2)
-    frame_botao_cor_personalizada.pack()
-    botao_cor_personalizada = tk.Button(frame_botao_cor_personalizada, text="Cor personalizada", command=lambda: Atualizar_Cor(colorchooser.askcolor()[1]), bg="#1f1f1f", fg=cor)
-    botao_cor_personalizada.pack()
-
-    i=0
-    for botao in botoes_cores:
-        botao.config(bg=cores_padrao[i], fg=cores_padrao[i])
-        botao.pack()
-        i+=1
+    botao_icone_cor, botoes_cores, frame_botao_cor_personalizada, botao_cor_personalizada = Botoes_Cores(imagem_cor)
 
     label_auto_aceitar = tk.Label(root, font=("Arial", 18), bg="#191919", fg=cor)
     label_auto_aceitar.pack()
@@ -755,164 +660,26 @@ def Criar_Janela():
         [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].minimize()
         [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].restore()
         [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].activate()
-    root.after(10, lambda: AbrirJanela())
-
-    frame_barra_de_titulo = tk.Frame(root, bg="#1f1f1f", height=30)
-    frame_barra_de_titulo.pack()
-    frame_barra_de_titulo.pack_propagate(0)
-    frame_barra_de_titulo.place(x=0)
+    root.after(10, AbrirJanela)
 
     icone = Image.open("Images/icon.ico")
     icone = icone.resize((16, 16))
-    foto = ImageTk.PhotoImage(icone)
-    label_icone = tk.Label(frame_barra_de_titulo, image=foto, bg=frame_barra_de_titulo.cget("background"))
-    label_icone.place(x=6, y=4)
+    icone = ImageTk.PhotoImage(icone)
 
-    label_titulo = tk.Label(frame_barra_de_titulo, text=root.title(), bg=frame_barra_de_titulo.cget("background"), fg=cor)
-    label_titulo.place(x=26, y=4)
+    frame_barra_de_titulo, label_icone, label_titulo = Criar_Barra_de_Titulo(icone)
 
     global botao_fechar
-    botao_fechar = tk.Label(frame_barra_de_titulo, text="X", font=("Arial", 14), bg=frame_barra_de_titulo.cget("background"), fg="#f1f1f1", relief="flat")
-    botao_fechar.place(width=45, height=frame_barra_de_titulo.winfo_reqheight())
-
-    global botao_fechar_pressionado
-    botao_fechar_pressionado = False
-
-    def MouseSobreBotaoFechar():
-        global mouse_sobre_botao_fechar
-        mouse_sobre_botao_fechar = True
-        if not botao_fechar_pressionado:
-            botao_fechar.config(bg="#c42b1c")
-    
-    def MouseForaBotaoFechar():
-        global mouse_sobre_botao_fechar
-        mouse_sobre_botao_fechar = False
-        if not botao_fechar_pressionado:
-            botao_fechar.config(bg=frame_barra_de_titulo.cget("background"))
-
-    def BotaoFecharPressionado():
-        global botao_fechar_pressionado
-        botao_fechar_pressionado = True
-        botao_fechar.config(bg="#d8534e")
-
-    def BotaoFecharSolto():
-        global botao_fechar_pressionado
-        botao_fechar_pressionado = False
-        if mouse_sobre_botao_fechar:
-            fechar_janela(root)
-        botao_fechar.config(bg=frame_barra_de_titulo.cget("background"))
-
-    botao_fechar.bind("<Enter>", lambda event: MouseSobreBotaoFechar())
-    botao_fechar.bind("<Leave>", lambda event: MouseForaBotaoFechar())
-    botao_fechar.bind("<ButtonPress-1>", lambda event: BotaoFecharPressionado())
-    botao_fechar.bind("<ButtonRelease-1>", lambda event: BotaoFecharSolto())
+    botao_fechar = BotaoFechar()    
 
     global botao_minimizar
-    botao_minimizar = tk.Label(frame_barra_de_titulo, text="—", font=("Arial", 12), bg=frame_barra_de_titulo.cget("background"), fg="#f1f1f1")
-    botao_minimizar.place(width=45, height=frame_barra_de_titulo.winfo_reqheight())
+    botao_minimizar = BotaoMinimizar()
 
-    global botao_minimizar_pressionado
-    botao_minimizar_pressionado = False
-
-    def MouseSobreBotaoMinimizar():
-        global mouse_sobre_botao_minimizar
-        mouse_sobre_botao_minimizar = True
-        if not botao_minimizar_pressionado:
-            botao_minimizar.config(bg="#2a2a2a")
-    
-    def MouseForaBotaoMinimizar():
-        global mouse_sobre_botao_minimizar
-        mouse_sobre_botao_minimizar = False
-        if not botao_minimizar_pressionado:
-            botao_minimizar.config(bg=frame_barra_de_titulo.cget("background"))
-    
-    def BotaoMinimizarPressionado():
-        global botao_minimizar_pressionado
-        botao_minimizar_pressionado = True
-        botao_minimizar.config(bg="#2f2f2f")
-    
-    def BotaoMinimizarSolto():
-        global botao_minimizar_pressionado
-        botao_minimizar_pressionado = False
-        if mouse_sobre_botao_minimizar:
-            [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].minimize()
-        botao_minimizar.config(bg=frame_barra_de_titulo.cget("background"))
-
-    botao_minimizar.bind("<Enter>", lambda event: MouseSobreBotaoMinimizar())
-    botao_minimizar.bind("<Leave>", lambda event: MouseForaBotaoMinimizar())
-    botao_minimizar.bind("<ButtonPress-1>", lambda event: BotaoMinimizarPressionado())
-    botao_minimizar.bind("<ButtonRelease-1>", lambda event: BotaoMinimizarSolto())
-
+    global botao_doacao, imagem_doacao
     imagem_doacao = ImageTk.PhotoImage(Alterar_Cor("Images/Doacao.png", "#ef9ba0", "#f1f1f1"))
-    global botao_doacao
-    botao_doacao = tk.Label(frame_barra_de_titulo, image=imagem_doacao, bg=frame_barra_de_titulo.cget("background"), fg="#f1f1f1")
-    botao_doacao.place(width=45,height=frame_barra_de_titulo.winfo_reqheight(), x=0, y=1)
-
-    global botao_doacao_pressionado
-    botao_doacao_pressionado = False
-
-    def MouseSobreBotaoDoacao():
-        global mouse_sobre_botao_doacao
-        mouse_sobre_botao_doacao = True
-        if not botao_doacao_pressionado:
-            botao_doacao.config(bg="#2a2a2a")
+    botao_doacao = BotaoDoacao()
     
-    def MouseForaBotaoDoacao():
-        global mouse_sobre_botao_doacao
-        mouse_sobre_botao_doacao = False
-        if not botao_doacao_pressionado:
-            botao_doacao.config(bg=frame_barra_de_titulo.cget("background"))
-    
-    def BotaoDoacaoPressionado():
-        global botao_doacao_pressionado
-        botao_doacao_pressionado = True
-        botao_doacao.config(bg="#2f2f2f")
-    
-    def BotaoDoacaoSolto():
-        global botao_doacao_pressionado
-        botao_doacao_pressionado = False
-        if mouse_sobre_botao_doacao:
-            print("COMANDO DE DOAÇÃO AINDA NÃO CONFIGURADO")
-            label_titulo.config(text="COMANDO DE DOAÇÃO AINDA NÃO CONFIGURADO")
-        botao_doacao.config(bg=frame_barra_de_titulo.cget("background"))
-
-    botao_doacao.bind("<Enter>", lambda event: MouseSobreBotaoDoacao())
-    botao_doacao.bind("<Leave>", lambda event: MouseForaBotaoDoacao())
-    botao_doacao.bind("<ButtonPress-1>", lambda event: BotaoDoacaoPressionado())
-    botao_doacao.bind("<ButtonRelease-1>", lambda event: BotaoDoacaoSolto())
-
-    def PosicaoCliqueBarraDeTitulo(event):
-        global posicao_clique_barra_de_titulo_x, posicao_clique_barra_de_titulo_y
-        posicao_clique_barra_de_titulo_x = event.x_root
-        posicao_clique_barra_de_titulo_y = event.y_root
-
-    def MoverJanela(event):
-        global posicao_clique_barra_de_titulo_x, posicao_clique_barra_de_titulo_y
-        nova_posicao_x = root.winfo_x() + (event.x_root - posicao_clique_barra_de_titulo_x)
-        nova_posicao_y = root.winfo_y() + (event.y_root - posicao_clique_barra_de_titulo_y)
-        
-        root.geometry(f'+{nova_posicao_x}+{nova_posicao_y}')
-        posicao_clique_barra_de_titulo_x = event.x_root
-        posicao_clique_barra_de_titulo_y = event.y_root
-
-    frame_barra_de_titulo.bind('<Button-1>', PosicaoCliqueBarraDeTitulo)
-    frame_barra_de_titulo.bind('<B1-Motion>', MoverJanela)
-    label_titulo.bind('<Button-1>', PosicaoCliqueBarraDeTitulo)
-    label_titulo.bind('<B1-Motion>', MoverJanela)
-    label_icone.bind('<Button-1>', PosicaoCliqueBarraDeTitulo)
-    label_icone.bind('<B1-Motion>', MoverJanela)
-
-    frame_topo_janela = tk.Frame(root, bg="#404040", height=1)
-    frame_topo_janela.place(x=0, y=0)
-
-    frame_esquerda_janela = tk.Frame(root, bg="#404040", width=1)
-    frame_esquerda_janela.place(x=0, y=0)
-
-    frame_direita_janela = tk.Frame(root, bg="#404040", width=1)
-    frame_direita_janela.place(y=0)
-
-    frame_base_janela = tk.Frame(root, bg="#404040", height=1)
-    frame_base_janela.place(x=0)
+    MoverJanela()
+    frame_topo_janela, frame_esquerda_janela, frame_direita_janela, frame_base_janela = BordaJanela()
 
     tela_selecao_de_modo(jogo_está_aberto)
     root.mainloop()

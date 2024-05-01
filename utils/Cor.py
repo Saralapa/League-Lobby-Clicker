@@ -46,8 +46,9 @@ def Alterar_Cor(image, cor_original, cor_nova):
     imagem_modificada.putdata(pixel_data)
     return imagem_modificada
 
-def Botoes_Cores(root, botoes_cores):
-    from utils.Fechar_Janela import fechar_janela
+def Botoes_Cores(imagem_cor):
+    from utils.Janela import tk, root, tela_selecao_de_cor, cor, Atualizar_Cor
+    from tkinter import colorchooser
     global botao_cor_pressionado
     botao_cor_pressionado = False
 
@@ -73,8 +74,30 @@ def Botoes_Cores(root, botoes_cores):
             Atualizar_Cor(botao_cor[i].cget("text"))
         botao_cor[i].config(bg=cor_atual, fg=cor_atual, relief="raised")
 
+    botao_icone_cor = tk.Button(root, image=imagem_cor, command=tela_selecao_de_cor, bd=0, bg="#191919", width=31, height=31)
+    botao_icone_cor.pack()
+    
+    cores_padrao = ["#ff0000", "#00ff00",
+                    "#00ffff", "#ffff00",
+                    "#ff7f00", "#ff00ff",
+                    "#9044ff", "#ffffff"]
+    botoes_cores = [tk.Label(root, text=texto4, relief="raised") for texto4 in cores_padrao]
+
     for i in range(len(botoes_cores)):
         botoes_cores[i].bind("<Enter>", lambda event, i=i: MouseSobreBotaoCor(event, botoes_cores, i))
         botoes_cores[i].bind("<Leave>", lambda event, i=i: MouseForaBotaoCor(event, botoes_cores, i))
         botoes_cores[i].bind("<ButtonPress-1>", lambda event, i=i: BotaoCorPressionado(event, botoes_cores, i))
         botoes_cores[i].bind("<ButtonRelease-1>", lambda event, i=i: BotaoCorSolto(event, botoes_cores, i))
+    
+    frame_botao_cor_personalizada = tk.Frame(root, bg=cor, bd=2)
+    frame_botao_cor_personalizada.pack()
+    botao_cor_personalizada = tk.Button(frame_botao_cor_personalizada, text="Cor personalizada", command=lambda: Atualizar_Cor(colorchooser.askcolor()[1]), bg="#1f1f1f", fg=cor)
+    botao_cor_personalizada.pack()
+
+    i=0
+    for botao in botoes_cores:
+        botao.config(bg=cores_padrao[i], fg=cores_padrao[i])
+        botao.pack()
+        i+=1
+    
+    return botao_icone_cor, botoes_cores, frame_botao_cor_personalizada, botao_cor_personalizada
