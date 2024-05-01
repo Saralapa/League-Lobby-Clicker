@@ -47,7 +47,7 @@ def Alterar_Cor(image, cor_original, cor_nova):
     return imagem_modificada
 
 def Botoes_Cores(imagem_cor):
-    from utils.Janela import tk, root, tela_selecao_de_cor, cor, Atualizar_Cor
+    from utils.Janela.Janela import tk, root, tela_selecao_de_cor, cor, Atualizar_Cor
     from tkinter import colorchooser
     global botao_cor_pressionado
     botao_cor_pressionado = False
@@ -70,7 +70,7 @@ def Botoes_Cores(imagem_cor):
         global botao_cor_pressionado
         botao_cor_pressionado = False
         if mouse_sobre_botao_cor:
-            from utils.Janela import Atualizar_Cor
+            from utils.Janela.Janela import Atualizar_Cor
             Atualizar_Cor(botao_cor[i].cget("text"))
         botao_cor[i].config(bg=cor_atual, fg=cor_atual, relief="raised")
 

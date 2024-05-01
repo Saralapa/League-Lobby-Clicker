@@ -6,13 +6,13 @@ import threading
 from utils.Encontrar_Pasta import chamar_funcao_encontrar_pasta_LOL
 
 def KeepSearchingImageAndClickWhenFound(image):
-    from utils.Janela import idioma, tela
+    from utils.Janela.Janela import idioma, tela
     if not tela=="auto aceitar":
         return
     print("Procurando:", image)
     
     while True:
-        from utils.Janela import tela
+        from utils.Janela.Janela import tela
         if not tela=="auto aceitar":
             return
         if [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"]:
@@ -43,14 +43,14 @@ def KeepSearchingImageAndClickWhenFound(image):
         except: None
 
 def SearchImageForXSecondsAndClickWhenFound(image, seconds):
-    from utils.Janela import idioma, tela
+    from utils.Janela.Janela import idioma, tela
     if not tela=="auto aceitar":
         return
     print("Procurando:", image)
     start_time = time.time()
     
     while (time.time() - start_time) < seconds:
-        from utils.Janela import tela
+        from utils.Janela.Janela import tela
         if not tela=="auto aceitar":
             return
         try:
@@ -69,13 +69,13 @@ def SearchImageForXSecondsAndClickWhenFound(image, seconds):
         except: None
 
 def Role1(image):
-    from utils.Janela import idioma, root, tela
+    from utils.Janela.Janela import idioma, root, tela
     if not tela=="auto aceitar":
         return
     print("Procurando seleção de role 1")
     
     while True:
-        from utils.Janela import tela
+        from utils.Janela.Janela import tela
         if not tela=="auto aceitar":
             return
         
@@ -110,7 +110,7 @@ def Role1(image):
     print("Procurando:", image)
 
     while True:
-        from utils.Janela import tela
+        from utils.Janela.Janela import tela
         if not tela=="auto aceitar":
             return
         if [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"]:
@@ -137,13 +137,13 @@ def Role1(image):
         return 23
 
 def Role2(image):
-    from utils.Janela import idioma, root, tela
+    from utils.Janela.Janela import idioma, root, tela
     if not tela=="auto aceitar":
         return
     print("Procurando seleção de role 2")
     
     while True:
-        from utils.Janela import tela
+        from utils.Janela.Janela import tela
         if not tela=="auto aceitar":
             return
         if [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"]:
@@ -177,7 +177,7 @@ def Role2(image):
     print("Procurando:", image)
 
     while True:
-        from utils.Janela import tela
+        from utils.Janela.Janela import tela
         if not tela=="auto aceitar":
             return
         if [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"]:
@@ -202,7 +202,7 @@ def Role2(image):
     time.sleep(0.5)
 
 def WhereToClick():
-    from utils.Janela import modo_de_jogo, tela, tela_selecao_de_modo, Role_1, Role_2, jogo_está_aberto
+    from utils.Janela.Janela import modo_de_jogo, tela, tela_selecao_de_modo, Role_1, Role_2, jogo_está_aberto
     if not tela == "auto aceitar":
         return
     try:
@@ -252,13 +252,13 @@ def WhereToClick():
                         tela_selecao_de_modo(jogo_está_aberto)
                         return Exception("tela seleção de modo")
                 KeepSearchingImageAndClickWhenFound("Encontrar partida.png")
-                from utils.Janela import tela
+                from utils.Janela.Janela import tela
                 if tela == "auto aceitar":
                     time.sleep(2)
                     print("Eu vou ativar", janela_ativa)
                     janela_ativa.activate()
         while True:
-            from utils.Janela import tela, jogo_está_aberto
+            from utils.Janela.Janela import tela, jogo_está_aberto
             if not tela=="auto aceitar":
                 jogo_está_aberto = False
                 tela_selecao_de_modo(jogo_está_aberto)

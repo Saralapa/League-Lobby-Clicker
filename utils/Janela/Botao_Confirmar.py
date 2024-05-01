@@ -1,5 +1,5 @@
 def confirmar():
-    from utils.Janela import idioma, tela, modo_de_jogo, root, tela_auto_aceitar, texto_inferior, tela_selecao_de_role, Role_1, Role_2
+    from utils.Janela.Janela import idioma, tela, modo_de_jogo, root, tela_auto_aceitar, texto_inferior, tela_selecao_de_role, Role_1, Role_2
     if idioma=="Portugues":
         if tela == "seleção de modo de jogo":
             if modo_de_jogo == "Apenas auto aceitar":

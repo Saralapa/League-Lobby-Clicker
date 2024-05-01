@@ -1,33 +1,33 @@
 def BotaoFechar():
     def MouseSobreBotaoFechar():
-        from utils.Janela import botao_fechar
+        from utils.Janela.Janela import botao_fechar
         global mouse_sobre_botao_fechar
         mouse_sobre_botao_fechar = True
         if not botao_fechar_pressionado:
             botao_fechar.config(bg="#c42b1c")
 
     def MouseForaBotaoFechar():
-        from utils.Janela import botao_fechar, frame_barra_de_titulo
+        from utils.Janela.Janela import botao_fechar, frame_barra_de_titulo
         global mouse_sobre_botao_fechar
         mouse_sobre_botao_fechar = False
         if not botao_fechar_pressionado:
             botao_fechar.config(bg=frame_barra_de_titulo.cget("background"))
 
     def BotaoFecharPressionado():
-        from utils.Janela import botao_fechar
+        from utils.Janela.Janela import botao_fechar
         global botao_fechar_pressionado
         botao_fechar_pressionado = True
         botao_fechar.config(bg="#d8534e")
 
     def BotaoFecharSolto():
-        from utils.Janela import fechar_janela, root, botao_fechar, frame_barra_de_titulo
+        from utils.Janela.Janela import fechar_janela, root, botao_fechar, frame_barra_de_titulo
         global botao_fechar_pressionado
         botao_fechar_pressionado = False
         if mouse_sobre_botao_fechar:
             fechar_janela(root)
         botao_fechar.config(bg=frame_barra_de_titulo.cget("background"))
 
-    from utils.Janela import tk, frame_barra_de_titulo
+    from utils.Janela.Janela import tk, frame_barra_de_titulo
     global botao_fechar, botao_fechar_pressionado
     botao_fechar_pressionado = False
     botao_fechar = tk.Label(frame_barra_de_titulo, text="X", font=("Arial", 14), bg=frame_barra_de_titulo.cget("background"), fg="#f1f1f1", relief="flat")
@@ -59,14 +59,14 @@ def BotaoMinimizar():
         botao_minimizar.config(bg="#2f2f2f")
 
     def BotaoMinimizarSolto():
-        from utils.Janela import gw, root
+        from utils.Janela.Janela import gw, root
         global botao_minimizar_pressionado
         botao_minimizar_pressionado = False
         if mouse_sobre_botao_minimizar:
             [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].minimize()
         botao_minimizar.config(bg=frame_barra_de_titulo.cget("background"))
 
-    from utils.Janela import tk, frame_barra_de_titulo
+    from utils.Janela.Janela import tk, frame_barra_de_titulo
     global botao_minimizar_pressionado, botao_minimizar
     botao_minimizar_pressionado = False
     botao_minimizar = tk.Label(frame_barra_de_titulo, text="—", font=("Arial", 12), bg=frame_barra_de_titulo.cget("background"), fg="#f1f1f1")
@@ -98,14 +98,14 @@ def BotaoDoacao():
         botao_doacao.config(bg="#2f2f2f")
 
     def BotaoDoacaoSolto():
-        from utils.Janela import webbrowser
+        from utils.Janela.Janela import webbrowser
         global botao_doacao_pressionado
         botao_doacao_pressionado = False
         if mouse_sobre_botao_doacao:
             webbrowser.open("https://linktr.ee/Saralapa")
         botao_doacao.config(bg=frame_barra_de_titulo.cget("background"))
 
-    from utils.Janela import frame_barra_de_titulo, imagem_doacao, tk
+    from utils.Janela.Janela import frame_barra_de_titulo, imagem_doacao, tk
     global botao_doacao, botao_doacao_pressionado
     botao_doacao_pressionado = False
     botao_doacao = tk.Label(frame_barra_de_titulo, image=imagem_doacao, bg=frame_barra_de_titulo.cget("background"))
@@ -133,7 +133,7 @@ def MoverJanela():
         posicao_clique_barra_de_titulo_x = event.x_root
         posicao_clique_barra_de_titulo_y = event.y_root
 
-    from utils.Janela import frame_barra_de_titulo, label_titulo, root, label_icone
+    from utils.Janela.Janela import frame_barra_de_titulo, label_titulo, root, label_icone
     frame_barra_de_titulo.bind('<Button-1>', PosicaoCliqueBarraDeTitulo)
     frame_barra_de_titulo.bind('<B1-Motion>', AlterarPosicaoJanela)
     label_titulo.bind('<Button-1>', PosicaoCliqueBarraDeTitulo)
@@ -142,7 +142,7 @@ def MoverJanela():
     label_icone.bind('<B1-Motion>', AlterarPosicaoJanela)
 
 def BordaJanela():
-    from utils.Janela import tk, root
+    from utils.Janela.Janela import tk, root
     frame_topo_janela = tk.Frame(root, bg="#404040", height=1)
     frame_topo_janela.place(x=0, y=0)
 
@@ -158,7 +158,7 @@ def BordaJanela():
     return frame_topo_janela, frame_esquerda_janela, frame_direita_janela, frame_base_janela
 
 def Criar_Barra_de_Titulo(icone):
-    from utils.Janela import tk, root, cor
+    from utils.Janela.Janela import tk, root, cor
     frame_barra_de_titulo = tk.Frame(root, bg="#1f1f1f", height=30)
     frame_barra_de_titulo.pack()
     frame_barra_de_titulo.pack_propagate(0)

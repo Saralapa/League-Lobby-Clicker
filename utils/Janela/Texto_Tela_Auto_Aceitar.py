@@ -1,5 +1,5 @@
 def atualizar_mensagem():
-    from utils.Janela import idioma
+    from utils.Janela.Janela import idioma
     if idioma=="Portugues":
         mensagens = ["Encontrando partida"]
         for i in range(1,4):
@@ -10,7 +10,7 @@ def atualizar_mensagem():
             mensagens.append(mensagens[0] + "." * i)
     i = 0
     while True:
-        from utils.Janela import tela, label_auto_aceitar, time
+        from utils.Janela.Janela import tela, label_auto_aceitar, time
         if not tela=="auto aceitar":
             return
         try:

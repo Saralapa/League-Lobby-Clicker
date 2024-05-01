@@ -6,14 +6,14 @@ import os
 import time
 from ctypes import windll
 from PIL import ImageTk, Image
-from utils.Centralizar_Janela import centralizar_janela
-from utils.Fechar_Janela import fechar_janela
+from utils.Janela.Centralizar_Janela import centralizar_janela
+from utils.Janela.Fechar_Janela import fechar_janela
 from utils.Idioma import definir_idioma
 from utils.Cliques import WhereToClick
-from utils.Cor import Alterar_Cor, Definir_Cor, Botoes_Cores
-from utils.Texto_Tela_Auto_Aceitar import atualizar_mensagem
-from utils.Botao_Confirmar import confirmar
-from utils.Barra_de_Titulo import *
+from utils.Janela.Cor import Alterar_Cor, Definir_Cor, Botoes_Cores
+from utils.Janela.Texto_Tela_Auto_Aceitar import atualizar_mensagem
+from utils.Janela.Botao_Confirmar import confirmar
+from utils.Janela.Barra_de_Titulo import *
 
 def tela_selecao_de_modo(jogo_está_aberto):
     global tela, Role_1, Role_2, modo_de_jogo, roles
