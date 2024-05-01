@@ -1,122 +1,125 @@
-def BotaoFechar():
-    def MouseSobreBotaoFechar():
-        from utils.Janela.Janela import botao_fechar
-        global mouse_sobre_botao_fechar
-        mouse_sobre_botao_fechar = True
-        if not botao_fechar_pressionado:
-            botao_fechar.config(bg="#c42b1c")
+import webbrowser
 
-    def MouseForaBotaoFechar():
-        from utils.Janela.Janela import botao_fechar, frame_barra_de_titulo
-        global mouse_sobre_botao_fechar
-        mouse_sobre_botao_fechar = False
-        if not botao_fechar_pressionado:
+class BotoesBarraDeTitulo():
+    def BotaoFechar():
+        def MouseSobreBotaoFechar():
+            from utils.Janela.Janela import botao_fechar
+            global mouse_sobre_botao_fechar
+            mouse_sobre_botao_fechar = True
+            if not botao_fechar_pressionado:
+                botao_fechar.config(bg="#c42b1c", fg="#f1f1f1")
+
+        def MouseForaBotaoFechar():
+            from utils.Janela.Janela import botao_fechar, frame_barra_de_titulo, cor
+            global mouse_sobre_botao_fechar
+            mouse_sobre_botao_fechar = False
+            if not botao_fechar_pressionado:
+                botao_fechar.config(bg=frame_barra_de_titulo.cget("background"), fg=cor)
+
+        def BotaoFecharPressionado():
+            from utils.Janela.Janela import botao_fechar
+            global botao_fechar_pressionado
+            botao_fechar_pressionado = True
+            botao_fechar.config(bg="#d8534e")
+
+        def BotaoFecharSolto():
+            from utils.Janela.Janela import root, botao_fechar, frame_barra_de_titulo
+            from utils.Janela.Fechar_Janela import fechar_janela
+            global botao_fechar_pressionado
+            botao_fechar_pressionado = False
+            if mouse_sobre_botao_fechar:
+                fechar_janela(root)
             botao_fechar.config(bg=frame_barra_de_titulo.cget("background"))
 
-    def BotaoFecharPressionado():
-        from utils.Janela.Janela import botao_fechar
-        global botao_fechar_pressionado
-        botao_fechar_pressionado = True
-        botao_fechar.config(bg="#d8534e")
-
-    def BotaoFecharSolto():
-        from utils.Janela.Janela import fechar_janela, root, botao_fechar, frame_barra_de_titulo
-        global botao_fechar_pressionado
+        from utils.Janela.Janela import tk, frame_barra_de_titulo, cor
+        global botao_fechar, botao_fechar_pressionado
         botao_fechar_pressionado = False
-        if mouse_sobre_botao_fechar:
-            fechar_janela(root)
-        botao_fechar.config(bg=frame_barra_de_titulo.cget("background"))
+        botao_fechar = tk.Label(frame_barra_de_titulo, text="X", font=("Arial", 14), bg=frame_barra_de_titulo.cget("background"), fg=cor, relief="flat")
+        botao_fechar.place(width=45, height=frame_barra_de_titulo.winfo_reqheight())
 
-    from utils.Janela.Janela import tk, frame_barra_de_titulo
-    global botao_fechar, botao_fechar_pressionado
-    botao_fechar_pressionado = False
-    botao_fechar = tk.Label(frame_barra_de_titulo, text="X", font=("Arial", 14), bg=frame_barra_de_titulo.cget("background"), fg="#f1f1f1", relief="flat")
-    botao_fechar.place(width=45, height=frame_barra_de_titulo.winfo_reqheight())
+        botao_fechar.bind("<Enter>", lambda event: MouseSobreBotaoFechar())
+        botao_fechar.bind("<Leave>", lambda event: MouseForaBotaoFechar())
+        botao_fechar.bind("<ButtonPress-1>", lambda event: BotaoFecharPressionado())
+        botao_fechar.bind("<ButtonRelease-1>", lambda event: BotaoFecharSolto())
 
-    botao_fechar.bind("<Enter>", lambda event: MouseSobreBotaoFechar())
-    botao_fechar.bind("<Leave>", lambda event: MouseForaBotaoFechar())
-    botao_fechar.bind("<ButtonPress-1>", lambda event: BotaoFecharPressionado())
-    botao_fechar.bind("<ButtonRelease-1>", lambda event: BotaoFecharSolto())
+        return botao_fechar
 
-    return botao_fechar
+    def BotaoMinimizar():
+        def MouseSobreBotaoMinimizar():
+            global mouse_sobre_botao_minimizar
+            mouse_sobre_botao_minimizar = True
+            if not botao_minimizar_pressionado:
+                botao_minimizar.config(bg="#2a2a2a")
 
-def BotaoMinimizar():
-    def MouseSobreBotaoMinimizar():
-        global mouse_sobre_botao_minimizar
-        mouse_sobre_botao_minimizar = True
-        if not botao_minimizar_pressionado:
-            botao_minimizar.config(bg="#2a2a2a")
+        def MouseForaBotaoMinimizar():
+            global mouse_sobre_botao_minimizar
+            mouse_sobre_botao_minimizar = False
+            if not botao_minimizar_pressionado:
+                botao_minimizar.config(bg=frame_barra_de_titulo.cget("background"))
 
-    def MouseForaBotaoMinimizar():
-        global mouse_sobre_botao_minimizar
-        mouse_sobre_botao_minimizar = False
-        if not botao_minimizar_pressionado:
+        def BotaoMinimizarPressionado():
+            global botao_minimizar_pressionado
+            botao_minimizar_pressionado = True
+            botao_minimizar.config(bg="#2f2f2f")
+
+        def BotaoMinimizarSolto():
+            from utils.Janela.Janela import gw, root
+            global botao_minimizar_pressionado
+            botao_minimizar_pressionado = False
+            if mouse_sobre_botao_minimizar:
+                [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].minimize()
             botao_minimizar.config(bg=frame_barra_de_titulo.cget("background"))
 
-    def BotaoMinimizarPressionado():
-        global botao_minimizar_pressionado
-        botao_minimizar_pressionado = True
-        botao_minimizar.config(bg="#2f2f2f")
-
-    def BotaoMinimizarSolto():
-        from utils.Janela.Janela import gw, root
-        global botao_minimizar_pressionado
+        from utils.Janela.Janela import tk, frame_barra_de_titulo, cor
+        global botao_minimizar_pressionado, botao_minimizar
         botao_minimizar_pressionado = False
-        if mouse_sobre_botao_minimizar:
-            [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].minimize()
-        botao_minimizar.config(bg=frame_barra_de_titulo.cget("background"))
+        botao_minimizar = tk.Label(frame_barra_de_titulo, text="—", font=("Arial", 12), bg=frame_barra_de_titulo.cget("background"), fg=cor)
+        botao_minimizar.place(width=45, height=frame_barra_de_titulo.winfo_reqheight())
 
-    from utils.Janela.Janela import tk, frame_barra_de_titulo
-    global botao_minimizar_pressionado, botao_minimizar
-    botao_minimizar_pressionado = False
-    botao_minimizar = tk.Label(frame_barra_de_titulo, text="—", font=("Arial", 12), bg=frame_barra_de_titulo.cget("background"), fg="#f1f1f1")
-    botao_minimizar.place(width=45, height=frame_barra_de_titulo.winfo_reqheight())
+        botao_minimizar.bind("<Enter>", lambda event: MouseSobreBotaoMinimizar())
+        botao_minimizar.bind("<Leave>", lambda event: MouseForaBotaoMinimizar())
+        botao_minimizar.bind("<ButtonPress-1>", lambda event: BotaoMinimizarPressionado())
+        botao_minimizar.bind("<ButtonRelease-1>", lambda event: BotaoMinimizarSolto())
 
-    botao_minimizar.bind("<Enter>", lambda event: MouseSobreBotaoMinimizar())
-    botao_minimizar.bind("<Leave>", lambda event: MouseForaBotaoMinimizar())
-    botao_minimizar.bind("<ButtonPress-1>", lambda event: BotaoMinimizarPressionado())
-    botao_minimizar.bind("<ButtonRelease-1>", lambda event: BotaoMinimizarSolto())
+        return botao_minimizar
 
-    return botao_minimizar
+    def BotaoDoacao():
+        def MouseSobreBotaoDoacao():
+            global mouse_sobre_botao_doacao
+            mouse_sobre_botao_doacao = True
+            if not botao_doacao_pressionado:
+                botao_doacao.config(bg="#2a2a2a")
 
-def BotaoDoacao():
-    def MouseSobreBotaoDoacao():
-        global mouse_sobre_botao_doacao
-        mouse_sobre_botao_doacao = True
-        if not botao_doacao_pressionado:
-            botao_doacao.config(bg="#2a2a2a")
+        def MouseForaBotaoDoacao():
+            global mouse_sobre_botao_doacao
+            mouse_sobre_botao_doacao = False
+            if not botao_doacao_pressionado:
+                botao_doacao.config(bg=frame_barra_de_titulo.cget("background"))
 
-    def MouseForaBotaoDoacao():
-        global mouse_sobre_botao_doacao
-        mouse_sobre_botao_doacao = False
-        if not botao_doacao_pressionado:
+        def BotaoDoacaoPressionado():
+            global botao_doacao_pressionado
+            botao_doacao_pressionado = True
+            botao_doacao.config(bg="#2f2f2f")
+
+        def BotaoDoacaoSolto():
+            global botao_doacao_pressionado
+            botao_doacao_pressionado = False
+            if mouse_sobre_botao_doacao:
+                webbrowser.open("https://linktr.ee/Saralapa")
             botao_doacao.config(bg=frame_barra_de_titulo.cget("background"))
 
-    def BotaoDoacaoPressionado():
-        global botao_doacao_pressionado
-        botao_doacao_pressionado = True
-        botao_doacao.config(bg="#2f2f2f")
-
-    def BotaoDoacaoSolto():
-        from utils.Janela.Janela import webbrowser
-        global botao_doacao_pressionado
+        from utils.Janela.Janela import frame_barra_de_titulo, imagem_doacao, tk
+        global botao_doacao, botao_doacao_pressionado
         botao_doacao_pressionado = False
-        if mouse_sobre_botao_doacao:
-            webbrowser.open("https://linktr.ee/Saralapa")
-        botao_doacao.config(bg=frame_barra_de_titulo.cget("background"))
+        botao_doacao = tk.Label(frame_barra_de_titulo, image=imagem_doacao, bg=frame_barra_de_titulo.cget("background"))
+        botao_doacao.place(width=45,height=frame_barra_de_titulo.winfo_reqheight(), x=0, y=1)
 
-    from utils.Janela.Janela import frame_barra_de_titulo, imagem_doacao, tk
-    global botao_doacao, botao_doacao_pressionado
-    botao_doacao_pressionado = False
-    botao_doacao = tk.Label(frame_barra_de_titulo, image=imagem_doacao, bg=frame_barra_de_titulo.cget("background"))
-    botao_doacao.place(width=45,height=frame_barra_de_titulo.winfo_reqheight(), x=0, y=1)
+        botao_doacao.bind("<Enter>", lambda event: MouseSobreBotaoDoacao())
+        botao_doacao.bind("<Leave>", lambda event: MouseForaBotaoDoacao())
+        botao_doacao.bind("<ButtonPress-1>", lambda event: BotaoDoacaoPressionado())
+        botao_doacao.bind("<ButtonRelease-1>", lambda event: BotaoDoacaoSolto())
 
-    botao_doacao.bind("<Enter>", lambda event: MouseSobreBotaoDoacao())
-    botao_doacao.bind("<Leave>", lambda event: MouseForaBotaoDoacao())
-    botao_doacao.bind("<ButtonPress-1>", lambda event: BotaoDoacaoPressionado())
-    botao_doacao.bind("<ButtonRelease-1>", lambda event: BotaoDoacaoSolto())
-
-    return botao_doacao
+        return botao_doacao
 
 def MoverJanela():
     def PosicaoCliqueBarraDeTitulo(event):

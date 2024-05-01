@@ -59,3 +59,12 @@ def confirmar():
                 root.after(2000, lambda: texto_inferior.set("Selected role:") if tela=="seleção de role" and Role_1 == None else None)
             else:
                 root.after(500, lambda: tela_auto_aceitar())
+
+def CriarBotaoConfirmar():
+    from utils.Janela.Janela import tk, root, cor
+    frame_botao_confirmar = tk.Frame(root, bg=cor, width=65, height=24, bd=1)
+    frame_botao_confirmar.pack()
+
+    botao_confirmar = tk.Button(frame_botao_confirmar, text="Confirmar", command=lambda: confirmar(), bg="#1f1f1f", fg=cor, bd=1)
+    botao_confirmar.pack()
+    return frame_botao_confirmar, botao_confirmar

@@ -70,7 +70,6 @@ def Botoes_Cores(imagem_cor):
         global botao_cor_pressionado
         botao_cor_pressionado = False
         if mouse_sobre_botao_cor:
-            from utils.Janela.Janela import Atualizar_Cor
             Atualizar_Cor(botao_cor[i].cget("text"))
         botao_cor[i].config(bg=cor_atual, fg=cor_atual, relief="raised")
 

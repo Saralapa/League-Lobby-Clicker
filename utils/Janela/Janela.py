@@ -1,19 +1,17 @@
 import threading
 import pygetwindow as gw
 import tkinter as tk
-from tkinter import colorchooser
 import os
 import time
-from ctypes import windll
 from PIL import ImageTk, Image
 from utils.Janela.Centralizar_Janela import centralizar_janela
-from utils.Janela.Fechar_Janela import fechar_janela
 from utils.Idioma import definir_idioma
 from utils.Cliques import WhereToClick
 from utils.Janela.Cor import Alterar_Cor, Definir_Cor, Botoes_Cores
 from utils.Janela.Texto_Tela_Auto_Aceitar import atualizar_mensagem
-from utils.Janela.Botao_Confirmar import confirmar
-from utils.Janela.Barra_de_Titulo import *
+from utils.Janela.Botao_Confirmar import CriarBotaoConfirmar
+from utils.Janela.Barra_de_Titulo import BotoesBarraDeTitulo, MoverJanela, Criar_Barra_de_Titulo, BordaJanela
+from utils.Janela.Configuracoes_da_Janela import ConfiguracoesJanela
 
 def tela_selecao_de_modo(jogo_está_aberto):
     global tela, Role_1, Role_2, modo_de_jogo, roles
@@ -506,21 +504,8 @@ def Atualizar_Roles(valor):
                 root.after(2000, lambda: texto_inferior.set(f"First role: {Role_1}\nSecond role:") if tela=="seleção de role" and Role_2==None and Role_1 != None else None)
                 root.after(2000, lambda: texto_inferior.set(f"First role: {Role_1}\nSecond role: {Role_2}") if tela=="seleção de role" and Role_1 != None and Role_2!=None else None)
     
-def Atualizar_Idioma(valor):
-    global idioma
-    idioma = valor.replace("ê", "e")
-    caminho_idioma = os.path.join(os.path.expanduser("~"),"League Lobby Clicker - Saralapa", "League_Lobby_Clicker_idioma-Saralapa.txt")
-    with open(caminho_idioma, "w") as file:
-        file.write(idioma)
-    if idioma == "Portugues":
-        botao_desfazer.config(text="Confirmar")
-        texto_inferior.set(f"Idioma selecionado: {valor}")
-    elif idioma == "English":
-        botao_desfazer.config(text="Confirm")
-        texto_inferior.set(f"Selected language: {valor}")
-
 def Atualizar_Cor(valor):
-    global cor, botao_icone_cor, botao_icone_idioma, imagem_cor, imagem_idioma
+    global cor, imagem_cor, imagem_idioma, imagem_doacao
     if valor != None:
         cor = valor
         caminho_cor = os.path.join(os.path.expanduser("~"),"League Lobby Clicker - Saralapa", "League_Lobby_Clicker_cor-Saralapa.txt")
@@ -551,12 +536,30 @@ def Atualizar_Cor(valor):
         frame_botao_cor_personalizada.config(bg=cor)
         botao_cor_personalizada.config(fg=cor)
         label_titulo.config(fg=cor)
+        botao_minimizar.config(fg=cor)
+        botao_fechar.config(fg=cor)
 
         imagem_cor = ImageTk.PhotoImage(Alterar_Cor("Images/Color-change.png", "#000000", cor))
         botao_icone_cor.config(image=imagem_cor)
 
         imagem_idioma = ImageTk.PhotoImage(Alterar_Cor("Images/Language.png", "#ffffff", cor))
         botao_icone_idioma.config(image=imagem_idioma)
+
+        imagem_doacao = ImageTk.PhotoImage(Alterar_Cor("Images/Doacao.png", "#ef9ba0", cor))
+        botao_doacao.config(image=imagem_doacao)
+
+def Atualizar_Idioma(valor):
+    global idioma
+    idioma = valor.replace("ê", "e")
+    caminho_idioma = os.path.join(os.path.expanduser("~"),"League Lobby Clicker - Saralapa", "League_Lobby_Clicker_idioma-Saralapa.txt")
+    with open(caminho_idioma, "w") as file:
+        file.write(idioma)
+    if idioma == "Portugues":
+        botao_desfazer.config(text="Confirmar")
+        texto_inferior.set(f"Idioma selecionado: {valor}")
+    elif idioma == "English":
+        botao_desfazer.config(text="Confirm")
+        texto_inferior.set(f"Selected language: {valor}")
 
 def Criar_Janela():
     global frame_botoes_roles, label_auto_aceitar, frame_botoes_idiomas, botoes_modos_de_jogo, botao_icone_idioma, frame_borda_topo, label_borda_topo, frame_borda_inferior, frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, botoes_roles, botoes_idiomas, botao_icone_cor, cor, botoes_cores, label_borda_inferior, botao_icone_cor, imagem_cor, imagem_idioma, botao_cor_personalizada, modo_de_jogo, frame_botao_cor_personalizada, frame_barra_de_titulo, frame_topo_janela, frame_esquerda_janela, label_titulo, frame_direita_janela, frame_base_janela, label_icone
@@ -566,17 +569,7 @@ def Criar_Janela():
     jogo_está_aberto = False
     root = tk.Tk()
 
-    root.title("League Lobby Clicker - Saralapa")
-    root.iconbitmap('Images/icon.ico')
-    root.config(bg="#191919")
-    root.overrideredirect(True)
-    root.resizable(False, False)
-    root.protocol("WM_DELETE_WINDOW", lambda: fechar_janela(root))
-    HWND = windll.user32.GetParent(root.winfo_id())
-    
-    windll.user32.SetWindowLongW(HWND, -20, windll.user32.GetWindowLongW(HWND, -20) & ~0x00000080 | 0x00040000)
-    root.wm_withdraw()
-    root.after(10, lambda: root.wm_deiconify())
+    ConfiguracoesJanela(root)
 
     frame_borda_topo = tk.LabelFrame(root, bg="#191919", width=210, height=30, bd=0)
     frame_borda_topo.pack(side="top", anchor="center", pady=5)
@@ -637,17 +630,12 @@ def Criar_Janela():
     botao_desfazer = tk.Button(frame_botao_desfazer, text="Desfazer", command=lambda: desfazer(), bg="#1f1f1f", fg=cor, bd=1)
     botao_desfazer.pack()
 
-    frame_botao_confirmar = tk.Frame(root, bg=cor, width=65, height=24, bd=1)
-    frame_botao_confirmar.pack()
-
-    botao_confirmar = tk.Button(frame_botao_confirmar, text="Confirmar", command=lambda: confirmar(), bg="#1f1f1f", fg=cor, bd=1)
-    botao_confirmar.pack()
+    frame_botao_confirmar, botao_confirmar = CriarBotaoConfirmar()
     
     imagem_idioma = ImageTk.PhotoImage(Alterar_Cor("Images/Language.png", "#ffffff", cor))
-    try:
-        botao_icone_idioma = tk.Button(root, image=imagem_idioma, command=tela_alterar_idioma, bd=0, bg="#191919", width=31, height=31)
-        botao_icone_idioma.pack()
-    except: None
+    
+    botao_icone_idioma = tk.Button(root, image=imagem_idioma, command=tela_alterar_idioma, bd=0, bg="#191919", width=31, height=31)
+    botao_icone_idioma.pack()
 
     imagem_cor = ImageTk.PhotoImage(Alterar_Cor("Images/Color-change.png", "#000000", cor))
 
@@ -662,21 +650,19 @@ def Criar_Janela():
         [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].activate()
     root.after(10, AbrirJanela)
 
-    icone = Image.open("Images/icon.ico")
-    icone = icone.resize((16, 16))
+    icone = Image.open("Images/icon.ico").resize((16, 16))
     icone = ImageTk.PhotoImage(icone)
-
     frame_barra_de_titulo, label_icone, label_titulo = Criar_Barra_de_Titulo(icone)
 
     global botao_fechar
-    botao_fechar = BotaoFechar()    
+    botao_fechar = BotoesBarraDeTitulo.BotaoFechar()
 
     global botao_minimizar
-    botao_minimizar = BotaoMinimizar()
+    botao_minimizar = BotoesBarraDeTitulo.BotaoMinimizar()
 
     global botao_doacao, imagem_doacao
-    imagem_doacao = ImageTk.PhotoImage(Alterar_Cor("Images/Doacao.png", "#ef9ba0", "#f1f1f1"))
-    botao_doacao = BotaoDoacao()
+    imagem_doacao = ImageTk.PhotoImage(Alterar_Cor("Images/Doacao.png", "#ef9ba0", cor))
+    botao_doacao = BotoesBarraDeTitulo.BotaoDoacao()
     
     MoverJanela()
     frame_topo_janela, frame_esquerda_janela, frame_direita_janela, frame_base_janela = BordaJanela()
