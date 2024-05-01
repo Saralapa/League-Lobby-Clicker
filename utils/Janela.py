@@ -107,7 +107,7 @@ def tela_selecao_de_modo(jogo_está_aberto):
         while True:
             if jogo_está_aberto == False:
                 return
-            time.sleep(1)
+            time.sleep(30)
             if not [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"] and jogo_está_aberto == True:
                 if idioma == "Portugues":
                     modo_de_jogo = "Apenas auto aceitar"
