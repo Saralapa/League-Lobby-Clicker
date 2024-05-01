@@ -9,7 +9,7 @@ from utils.Idioma import definir_idioma
 from utils.Cliques import WhereToClick
 from utils.Janela.Cor import Alterar_Cor, Definir_Cor, Botoes_Cores
 from utils.Janela.Texto_Tela_Auto_Aceitar import atualizar_mensagem
-from utils.Janela.Botao_Confirmar import CriarBotaoConfirmar
+from utils.Janela.Botoes import *
 from utils.Janela.Barra_de_Titulo import BotoesBarraDeTitulo, MoverJanela, Criar_Barra_de_Titulo, BordaJanela
 from utils.Janela.Configuracoes_da_Janela import ConfiguracoesJanela
 
@@ -577,31 +577,8 @@ def Criar_Janela():
     label_borda_topo = tk.Label(frame_borda_topo, font=("Arial", 14), text="Escolha o modo de jogo", bg="#191919", fg=cor, height=0)
     label_borda_topo.pack()
 
-    modos_de_jogo = ["Escolha alternada", "Ranqueada solo duo", "ARAM", "Blitz do Nexus", "Arena", "URF", "Todos por um", "Apenas auto aceitar"]
-
-    frame_botoes_modos_de_jogo = [tk.Frame(root, bg=cor) for _ in modos_de_jogo]
-
-    botoes_modos_de_jogo = [tk.Button(root, text=texto1, command=lambda t=texto1: Atualizar_Modo_de_Jogo(t)) for texto1 in modos_de_jogo]
-
-    for botao in botoes_modos_de_jogo:
-        botao.config(width=50, height=2, bg="#1f1f1f", fg=cor, bd=1)
-        botao.pack(pady=5)
-
-    for frame in frame_botoes_modos_de_jogo:
-        frame.config(width=360, height=41, bd=0)
-
-    roles = ["Top", "Jungle", "Mid", "ADC", "Suporte", "Preencher"]
-
-    frame_botoes_roles = [tk.Frame(root, bg=cor) for _ in roles]
-
-    botoes_roles = [tk.Button(root, text=texto2, command=lambda t=texto2: Atualizar_Roles(t)) for texto2 in roles]
-
-    for botao in botoes_roles:
-        botao.config(width=50, height=2, bg="#1f1f1f", fg=cor, bd=1)
-        botao.pack(pady=5)
-
-    for frame in frame_botoes_roles:
-        frame.config(width=360, height=41, bd=0)
+    frame_botoes_modos_de_jogo, botoes_modos_de_jogo = CriarBotoesModosDeJogo()
+    frame_botoes_roles, botoes_roles = CriarBotoesRoles()
 
     lista_idiomas = ["Português", "English"]
 
@@ -624,12 +601,7 @@ def Criar_Janela():
     label_borda_inferior = tk.Label(frame_borda_inferior, textvariable=texto_inferior, bg="#191919", fg=cor)
     label_borda_inferior.pack()
 
-    frame_botao_desfazer = tk.Frame(root, bg=cor, width=85, height=24, bd=1)
-    frame_botao_desfazer.pack()
-
-    botao_desfazer = tk.Button(frame_botao_desfazer, text="Desfazer", command=lambda: desfazer(), bg="#1f1f1f", fg=cor, bd=1)
-    botao_desfazer.pack()
-
+    frame_botao_desfazer, botao_desfazer = CriarBotaoDesfazer()
     frame_botao_confirmar, botao_confirmar = CriarBotaoConfirmar()
     
     imagem_idioma = ImageTk.PhotoImage(Alterar_Cor("Images/Language.png", "#ffffff", cor))
