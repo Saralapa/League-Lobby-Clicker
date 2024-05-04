@@ -24,7 +24,7 @@ class BotoesBarraDeTitulo():
 
         def BotaoFecharSolto():
             from utils.Janela.Janela import root, botao_fechar, frame_barra_de_titulo
-            from utils.Janela.Fechar_Janela import fechar_janela
+            from utils.Janela.Abrir_Janela_Fechar_Janela import fechar_janela
             global botao_fechar_pressionado
             botao_fechar_pressionado = False
             if mouse_sobre_botao_fechar:
@@ -137,12 +137,9 @@ def MoverJanela():
         posicao_clique_barra_de_titulo_y = event.y_root
 
     from utils.Janela.Janela import frame_barra_de_titulo, label_titulo, root, label_icone
-    frame_barra_de_titulo.bind('<Button-1>', PosicaoCliqueBarraDeTitulo)
-    frame_barra_de_titulo.bind('<B1-Motion>', AlterarPosicaoJanela)
-    label_titulo.bind('<Button-1>', PosicaoCliqueBarraDeTitulo)
-    label_titulo.bind('<B1-Motion>', AlterarPosicaoJanela)
-    label_icone.bind('<Button-1>', PosicaoCliqueBarraDeTitulo)
-    label_icone.bind('<B1-Motion>', AlterarPosicaoJanela)
+    for move in [frame_barra_de_titulo, label_titulo, label_icone]:
+        move.bind('<Button-1>', PosicaoCliqueBarraDeTitulo)
+        move.bind('<B1-Motion>', AlterarPosicaoJanela)
 
 def BordaJanela():
     from utils.Janela.Janela import tk, root

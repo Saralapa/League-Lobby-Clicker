@@ -4,18 +4,12 @@ import tkinter as tk
 import os
 import time
 from PIL import ImageTk, Image
-from utils.Janela.Centralizar_Janela import centralizar_janela
-from utils.Idioma import definir_idioma
-from utils.Cliques import WhereToClick
-from utils.Janela.Cor import Alterar_Cor, Definir_Cor, Botoes_Cores
-from utils.Janela.Texto_Tela_Auto_Aceitar import atualizar_mensagem
-from utils.Janela.Botoes import *
-from utils.Janela.Barra_de_Titulo import BotoesBarraDeTitulo, MoverJanela, Criar_Barra_de_Titulo, BordaJanela
-from utils.Janela.Configuracoes_da_Janela import ConfiguracoesJanela
+from utils.Janela import Texto_Tela_Auto_Aceitar, Cor, Botoes, Barra_de_Titulo, Configuracoes_da_Janela, Abrir_Janela_Fechar_Janela
+from utils import Cliques, Idioma
 
 def tela_selecao_de_modo(jogo_está_aberto):
     global tela, Role_1, Role_2, modo_de_jogo, roles
-    centralizar_janela(root, 378, 506)
+    Configuracoes_da_Janela.centralizar_janela(root, 378, 506)
     root.title("League Lobby Clicker - Saralapa")
     label_titulo.config(text=root.title())
     frame_barra_de_titulo.config(width=root.winfo_width())
@@ -148,7 +142,7 @@ def tela_selecao_de_role():
             botao_desfazer.config(text="Undo")
 
     if modo_de_jogo == "Blitz do Nexus" or modo_de_jogo== "Nexus Blitz":
-        centralizar_janela(root, 378, 265)
+        Configuracoes_da_Janela.centralizar_janela(root, 378, 265)
         frame_barra_de_titulo.config(width=root.winfo_width())
         frame_topo_janela.config(width=root.winfo_width())
         frame_esquerda_janela.config(height=root.winfo_height())
@@ -185,7 +179,7 @@ def tela_selecao_de_role():
             i+=1
 
     else:   
-        centralizar_janela(root, 378, 410)
+        Configuracoes_da_Janela.centralizar_janela(root, 378, 410)
         frame_barra_de_titulo.config(width=root.winfo_width())
         frame_topo_janela.config(width=root.winfo_width())
         frame_esquerda_janela.config(height=root.winfo_height())
@@ -224,7 +218,7 @@ def tela_selecao_de_role():
 def tela_alterar_idioma():
     global tela
     altura_janela_idioma = 108 + len(lista_idiomas) * 49
-    centralizar_janela(root, 378, altura_janela_idioma)
+    Configuracoes_da_Janela.centralizar_janela(root, 378, altura_janela_idioma)
     frame_barra_de_titulo.config(width=root.winfo_width())
     frame_topo_janela.config(width=root.winfo_width())
     frame_esquerda_janela.config(height=root.winfo_height())
@@ -273,7 +267,7 @@ def tela_alterar_idioma():
 
 def tela_selecao_de_cor():
     global tela
-    centralizar_janela(root, 303, 388)
+    Configuracoes_da_Janela.centralizar_janela(root, 303, 388)
     root.title("League Lobby Clicker - S...")
     label_titulo.config(text=root.title())
     frame_barra_de_titulo.config(width=root.winfo_width())
@@ -334,7 +328,7 @@ def tela_selecao_de_cor():
 
 def tela_auto_aceitar():
     global tela, jogo_está_aberto
-    centralizar_janela(root, 375, 130)
+    Configuracoes_da_Janela.centralizar_janela(root, 375, 130)
     frame_barra_de_titulo.config(width=root.winfo_width())
     botao_fechar.place(x=root.winfo_width()-45)
     botao_minimizar.place(x=root.winfo_width()-45*2)
@@ -382,11 +376,11 @@ def tela_auto_aceitar():
         botao_desfazer.config(text="Main menu")
     frame_botao_desfazer.place(relx=0.4988888888888888, y=-24, anchor="center")
 
-    thread_imagem = threading.Thread(target=WhereToClick)
+    thread_imagem = threading.Thread(target=Cliques.WhereToClick)
     thread_imagem.daemon = True
     thread_imagem.start()
 
-    thread_mensagem = threading.Thread(target=atualizar_mensagem)
+    thread_mensagem = threading.Thread(target=Texto_Tela_Auto_Aceitar.atualizar_mensagem)
     thread_mensagem.daemon = True
     thread_mensagem.start()
 
@@ -539,13 +533,13 @@ def Atualizar_Cor(valor):
         botao_minimizar.config(fg=cor)
         botao_fechar.config(fg=cor)
 
-        imagem_cor = ImageTk.PhotoImage(Alterar_Cor("Images/Color-change.png", "#000000", cor))
+        imagem_cor = ImageTk.PhotoImage(Cor.Alterar_Cor("Images/Color-change.png", "#000000", cor))
         botao_icone_cor.config(image=imagem_cor)
 
-        imagem_idioma = ImageTk.PhotoImage(Alterar_Cor("Images/Language.png", "#ffffff", cor))
+        imagem_idioma = ImageTk.PhotoImage(Cor.Alterar_Cor("Images/Language.png", "#ffffff", cor))
         botao_icone_idioma.config(image=imagem_idioma)
 
-        imagem_doacao = ImageTk.PhotoImage(Alterar_Cor("Images/Doacao.png", "#ef9ba0", cor))
+        imagem_doacao = ImageTk.PhotoImage(Cor.Alterar_Cor("Images/Doacao.png", "#ef9ba0", cor))
         botao_doacao.config(image=imagem_doacao)
 
 def Atualizar_Idioma(valor):
@@ -563,81 +557,57 @@ def Atualizar_Idioma(valor):
 
 def Criar_Janela():
     global frame_botoes_roles, label_auto_aceitar, frame_botoes_idiomas, botoes_modos_de_jogo, botao_icone_idioma, frame_borda_topo, label_borda_topo, frame_borda_inferior, frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, botoes_roles, botoes_idiomas, botao_icone_cor, cor, botoes_cores, label_borda_inferior, botao_icone_cor, imagem_cor, imagem_idioma, botao_cor_personalizada, modo_de_jogo, frame_botao_cor_personalizada, frame_barra_de_titulo, frame_topo_janela, frame_esquerda_janela, label_titulo, frame_direita_janela, frame_base_janela, label_icone
-    idioma = definir_idioma()
-    cor = Definir_Cor()
+    idioma = Idioma.definir_idioma()
+    cor = Cor.Definir_Cor()
     modo_de_jogo = None
     jogo_está_aberto = False
     root = tk.Tk()
 
-    ConfiguracoesJanela(root)
+    Configuracoes_da_Janela.ConfiguracoesJanela(root)
 
     frame_borda_topo = tk.LabelFrame(root, bg="#191919", width=210, height=30, bd=0)
     frame_borda_topo.pack(side="top", anchor="center", pady=5)
-
     label_borda_topo = tk.Label(frame_borda_topo, font=("Arial", 14), text="Escolha o modo de jogo", bg="#191919", fg=cor, height=0)
     label_borda_topo.pack()
 
-    frame_botoes_modos_de_jogo, botoes_modos_de_jogo = CriarBotoesModosDeJogo()
-    frame_botoes_roles, botoes_roles = CriarBotoesRoles()
-
-    lista_idiomas = ["Português", "English"]
-
-    frame_botoes_idiomas = [tk.Frame(root, bg=cor) for _ in lista_idiomas]
-
-    botoes_idiomas = [tk.Button(root,text=texto3, command=lambda t=texto3: Atualizar_Idioma(t)) for texto3 in lista_idiomas]
-
-    for botao in botoes_idiomas:
-        botao.config(width=50, height=2, bg="#1f1f1f", fg=cor, bd=1)
-        botao.pack(pady=5)
-
-    for frame in frame_botoes_idiomas:
-        frame.config(width=360, height=41, bd=0)
-
     frame_borda_inferior = tk.LabelFrame(root, bg="#191919", width=210, height=30, bd=0)
-
     texto_inferior = tk.StringVar(frame_borda_inferior)
     texto_inferior.set("Modo de jogo\nescolhido:")
-
     label_borda_inferior = tk.Label(frame_borda_inferior, textvariable=texto_inferior, bg="#191919", fg=cor)
     label_borda_inferior.pack()
 
-    frame_botao_desfazer, botao_desfazer = CriarBotaoDesfazer()
-    frame_botao_confirmar, botao_confirmar = CriarBotaoConfirmar()
-    
-    imagem_idioma = ImageTk.PhotoImage(Alterar_Cor("Images/Language.png", "#ffffff", cor))
-    
-    botao_icone_idioma = tk.Button(root, image=imagem_idioma, command=tela_alterar_idioma, bd=0, bg="#191919", width=31, height=31)
-    botao_icone_idioma.pack()
-
-    imagem_cor = ImageTk.PhotoImage(Alterar_Cor("Images/Color-change.png", "#000000", cor))
-
-    botao_icone_cor, botoes_cores, frame_botao_cor_personalizada, botao_cor_personalizada = Botoes_Cores(imagem_cor)
-
     label_auto_aceitar = tk.Label(root, font=("Arial", 18), bg="#191919", fg=cor)
-    label_auto_aceitar.pack()
 
-    def AbrirJanela():
-        [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].minimize()
-        [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].restore()
-        [window for window in gw.getWindowsWithTitle(root.title()) if window.title == root.title()][0].activate()
-    root.after(10, AbrirJanela)
+    frame_botoes_modos_de_jogo, botoes_modos_de_jogo = Botoes.CriarBotoesModosDeJogo()
+    frame_botoes_roles, botoes_roles = Botoes.CriarBotoesRoles()
 
-    icone = Image.open("Images/icon.ico").resize((16, 16))
-    icone = ImageTk.PhotoImage(icone)
-    frame_barra_de_titulo, label_icone, label_titulo = Criar_Barra_de_Titulo(icone)
+    imagem_idioma = ImageTk.PhotoImage(Cor.Alterar_Cor("Images/Language.png", "#ffffff", cor))
+    botao_icone_idioma, lista_idiomas, frame_botoes_idiomas, botoes_idiomas = Botoes.CriarBotoesIdiomas(imagem_idioma)
+
+    imagem_cor = ImageTk.PhotoImage(Cor.Alterar_Cor("Images/Color-change.png", "#000000", cor))
+    botao_icone_cor, botoes_cores, frame_botao_cor_personalizada, botao_cor_personalizada = Botoes.CriarBotoesCores(imagem_cor)
+
+    frame_botao_desfazer, botao_desfazer = Botoes.CriarBotaoDesfazer()
+    frame_botao_confirmar, botao_confirmar = Botoes.Confirmar.CriarBotaoConfirmar()
+
+    icone = ImageTk.PhotoImage(Image.open("Images/icon.ico").resize((16, 16)))
+
+    frame_barra_de_titulo, label_icone, label_titulo = Barra_de_Titulo.Criar_Barra_de_Titulo(icone)
+    frame_topo_janela, frame_esquerda_janela, frame_direita_janela, frame_base_janela = Barra_de_Titulo.BordaJanela()
 
     global botao_fechar
-    botao_fechar = BotoesBarraDeTitulo.BotaoFechar()
+    botao_fechar = Barra_de_Titulo.BotoesBarraDeTitulo.BotaoFechar()
 
     global botao_minimizar
-    botao_minimizar = BotoesBarraDeTitulo.BotaoMinimizar()
+    botao_minimizar = Barra_de_Titulo.BotoesBarraDeTitulo.BotaoMinimizar()
 
     global botao_doacao, imagem_doacao
-    imagem_doacao = ImageTk.PhotoImage(Alterar_Cor("Images/Doacao.png", "#ef9ba0", cor))
-    botao_doacao = BotoesBarraDeTitulo.BotaoDoacao()
+    imagem_doacao = ImageTk.PhotoImage(Cor.Alterar_Cor("Images/Doacao.png", "#ef9ba0", cor))
+    botao_doacao = Barra_de_Titulo.BotoesBarraDeTitulo.BotaoDoacao()
+
+    Barra_de_Titulo.MoverJanela()
     
-    MoverJanela()
-    frame_topo_janela, frame_esquerda_janela, frame_direita_janela, frame_base_janela = BordaJanela()
+    root.after(10, Abrir_Janela_Fechar_Janela.AbrirJanela)
 
     tela_selecao_de_modo(jogo_está_aberto)
     root.mainloop()
