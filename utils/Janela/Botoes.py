@@ -70,119 +70,166 @@ class Confirmar():
         botao_confirmar.pack()
         return frame_botao_confirmar, botao_confirmar
 
-def CriarBotaoDesfazer():
-    from utils.Janela.Janela import tk, root, cor, desfazer
-    frame_botao_desfazer = tk.Frame(root, bg=cor, width=85, height=24, bd=1)
-    frame_botao_desfazer.pack()
+class Desfazer():
+    def desfazer():
+        from utils.Janela.Janela import idioma, tela, modo_de_jogo, texto_inferior, Role_1, Role_2, botao_desfazer, tela_selecao_de_modo, jogo_está_aberto
+        if idioma=="Portugues":
+            if tela == "seleção de modo de jogo":
+                modo_de_jogo = None
+                texto_inferior.set("Modo de jogo\nescolhido:")
+            elif tela == "seleção de role":
+                if Role_2 != None:
+                    Role_2 = None
+                    if modo_de_jogo!="Blitz do Nexus":
+                        texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role:")
+                    else: texto_inferior.set("Posição escolhida:")
+                elif Role_1 != None:
+                    Role_1 = None
+                    botao_desfazer.config(text="Menu anterior")
+                    if modo_de_jogo!="Blitz do Nexus":
+                        texto_inferior.set(f"Primeira role:\nSegunda role:")
+                    else: texto_inferior.set("Posição escolhida:")
+                else:
+                    jogo_está_aberto = False
+                    tela_selecao_de_modo(jogo_está_aberto)
+            elif tela=="auto aceitar":
+                modo_de_jogo=None
+                Role_1=None
+                Role_2=None
+                jogo_está_aberto = False
+                tela_selecao_de_modo(jogo_está_aberto)
+            elif tela=="alterar idioma":
+                tela_selecao_de_modo(jogo_está_aberto)
+            elif tela == "seleção de cor":
+                tela_selecao_de_modo(jogo_está_aberto)
+        elif idioma=="English":
+            if tela == "seleção de modo de jogo":
+                modo_de_jogo = None
+                texto_inferior.set("Selected game\nmode:")
+            elif tela == "seleção de role":
+                if Role_2 != None:
+                    Role_2 = None
+                    if modo_de_jogo!="Nexus Blitz":
+                        texto_inferior.set(f"First role: {Role_1}\nSecond role:")
+                    else: texto_inferior.set("Selected role:")
+                elif Role_1 != None:
+                    Role_1 = None
+                    botao_desfazer.config(text="Previous menu")
+                    if modo_de_jogo!="Nexus Blitz":
+                        texto_inferior.set(f"First role:\nSecond role:")
+                    else: texto_inferior.set("Selected role:")
+                else:
+                    jogo_está_aberto = False
+                    tela_selecao_de_modo(jogo_está_aberto)
+            elif tela=="auto aceitar":
+                modo_de_jogo=None
+                Role_1=None
+                Role_2=None
+                jogo_está_aberto = False
+                tela_selecao_de_modo(jogo_está_aberto)
+            elif tela=="alterar idioma":
+                tela_selecao_de_modo(jogo_está_aberto)
+            elif tela == "seleção de cor":
+                tela_selecao_de_modo(jogo_está_aberto)
 
-    botao_desfazer = tk.Button(frame_botao_desfazer, text="Desfazer", command=lambda: desfazer(), bg="#1f1f1f", fg=cor, bd=1)
-    botao_desfazer.pack()
-    return frame_botao_desfazer, botao_desfazer
-
-def CriarBotoesModosDeJogo():
-    from utils.Janela.Janela import tk, root, cor, Atualizar_Modo_de_Jogo
-    modos_de_jogo = ["Escolha alternada", "Ranqueada solo duo", "ARAM", "Blitz do Nexus", "Arena", "URF", "Todos por um", "Apenas auto aceitar"]
-
-    frame_botoes_modos_de_jogo = [tk.Frame(root, bg=cor) for _ in modos_de_jogo]
-
-    botoes_modos_de_jogo = [tk.Button(root, text=texto1, command=lambda t=texto1: Atualizar_Modo_de_Jogo(t)) for texto1 in modos_de_jogo]
-
-    for botao in botoes_modos_de_jogo:
-        botao.config(width=50, height=2, bg="#1f1f1f", fg=cor, bd=1)
-        botao.pack(pady=5)
-
-    for frame in frame_botoes_modos_de_jogo:
-        frame.config(width=360, height=41, bd=0)
-
-    return frame_botoes_modos_de_jogo, botoes_modos_de_jogo
-
-def CriarBotoesRoles():
-    from utils.Janela.Janela import tk, root, cor, Atualizar_Roles
-    roles = ["Top", "Jungle", "Mid", "ADC", "Suporte", "Preencher"]
-
-    frame_botoes_roles = [tk.Frame(root, bg=cor) for _ in roles]
-
-    botoes_roles = [tk.Button(root, text=texto2, command=lambda t=texto2: Atualizar_Roles(t)) for texto2 in roles]
-
-    for botao in botoes_roles:
-        botao.config(width=50, height=2, bg="#1f1f1f", fg=cor, bd=1)
-        botao.pack(pady=5)
-
-    for frame in frame_botoes_roles:
-        frame.config(width=360, height=41, bd=0)
-
-    return frame_botoes_roles, botoes_roles
-
-def CriarBotoesIdiomas(imagem_idioma):
-    from utils.Janela.Janela import tk, root, cor, Atualizar_Idioma, ImageTk, tela_alterar_idioma
-    lista_idiomas = ["Português", "English"]
-
-    botao_icone_idioma = tk.Button(root, image=imagem_idioma, command=tela_alterar_idioma, bd=0, bg="#191919", width=31, height=31)
-
-    frame_botoes_idiomas = [tk.Frame(root, bg=cor) for _ in lista_idiomas]
-
-    botoes_idiomas = [tk.Button(root,text=texto3, command=lambda t=texto3: Atualizar_Idioma(t)) for texto3 in lista_idiomas]
-
-    for botao in botoes_idiomas:
-        botao.config(width=50, height=2, bg="#1f1f1f", fg=cor, bd=1)
-        botao.pack(pady=5)
-
-    for frame in frame_botoes_idiomas:
-        frame.config(width=360, height=41, bd=0)
-
-    return botao_icone_idioma, lista_idiomas, frame_botoes_idiomas, botoes_idiomas
-
-def CriarBotoesCores(imagem_cor):
-    from utils.Janela.Janela import tk, root, tela_selecao_de_cor, cor, Atualizar_Cor
-    from tkinter import colorchooser
-    global botao_cor_pressionado
-    botao_cor_pressionado = False
-
-    def MouseSobreBotaoCor(event, botao_cor, i):
-        global mouse_sobre_botao_cor
-        mouse_sobre_botao_cor = True
+        return modo_de_jogo, Role_1, Role_2, jogo_está_aberto
     
-    def MouseForaBotaoCor(event, botao_cor, i):
-        global mouse_sobre_botao_cor
-        mouse_sobre_botao_cor = False
+    def CriarBotaoDesfazer():
+        from utils.Janela.Janela import tk, root, cor, func_Desfazer
+        frame_botao_desfazer = tk.Frame(root, bg=cor, width=85, height=24, bd=1)
+        frame_botao_desfazer.pack()
 
-    def BotaoCorPressionado(event, botao_cor, i):
-        global botao_cor_pressionado, cor_atual
-        cor_atual = botao_cor[i].cget("text")
-        botao_cor_pressionado = True
-        botao_cor[i].config(bg="#f0f0f0", fg="#f0f0f0", relief="sunken")
+        botao_desfazer = tk.Button(frame_botao_desfazer, text="Desfazer", command=lambda: func_Desfazer(), bg="#1f1f1f", fg=cor, bd=1)
+        botao_desfazer.pack()
+        return frame_botao_desfazer, botao_desfazer
 
-    def BotaoCorSolto(event, botao_cor, i):
-        global botao_cor_pressionado
-        botao_cor_pressionado = False
-        if mouse_sobre_botao_cor:
-            Atualizar_Cor(botao_cor[i].cget("text"))
-        botao_cor[i].config(bg=cor_atual, fg=cor_atual, relief="raised")
+class ModoDeJogo():
+    def Atualizar_Modo_de_Jogo(valor):
+        from utils.Janela.Janela import modo_de_jogo, idioma, texto_inferior
+        modo_de_jogo = valor
+        if idioma=="Portugues":
+            texto_inferior.set(f"Modo de jogo\nescolhido: {modo_de_jogo}")
+        elif idioma=="English":
+            texto_inferior.set(f"Selected game\nmode: {modo_de_jogo}")
 
-    botao_icone_cor = tk.Button(root, image=imagem_cor, command=tela_selecao_de_cor, bd=0, bg="#191919", width=31, height=31)
-    botao_icone_cor.pack()
-    
-    cores_padrao = ["#ff0000", "#00ff00",
-                    "#00ffff", "#ffff00",
-                    "#ff7f00", "#ff00ff",
-                    "#9044ff", "#ffffff"]
-    botoes_cores = [tk.Label(root, text=texto4, relief="raised") for texto4 in cores_padrao]
+        return modo_de_jogo
 
-    for i in range(len(botoes_cores)):
-        botoes_cores[i].bind("<Enter>", lambda event, i=i: MouseSobreBotaoCor(event, botoes_cores, i))
-        botoes_cores[i].bind("<Leave>", lambda event, i=i: MouseForaBotaoCor(event, botoes_cores, i))
-        botoes_cores[i].bind("<ButtonPress-1>", lambda event, i=i: BotaoCorPressionado(event, botoes_cores, i))
-        botoes_cores[i].bind("<ButtonRelease-1>", lambda event, i=i: BotaoCorSolto(event, botoes_cores, i))
-    
-    frame_botao_cor_personalizada = tk.Frame(root, bg=cor, bd=2)
-    frame_botao_cor_personalizada.pack()
-    botao_cor_personalizada = tk.Button(frame_botao_cor_personalizada, text="Cor personalizada", command=lambda: Atualizar_Cor(colorchooser.askcolor()[1]), bg="#1f1f1f", fg=cor)
-    botao_cor_personalizada.pack()
+    def CriarBotoesModosDeJogo():
+        from utils.Janela.Janela import tk, root, cor, func_ModoDeJogo
+        modos_de_jogo = ["Escolha alternada", "Ranqueada solo duo", "ARAM", "Blitz do Nexus", "Arena", "URF", "Todos por um", "Apenas auto aceitar"]
 
-    i=0
-    for botao in botoes_cores:
-        botao.config(bg=cores_padrao[i], fg=cores_padrao[i])
-        botao.pack()
-        i+=1
-    
-    return botao_icone_cor, botoes_cores, frame_botao_cor_personalizada, botao_cor_personalizada
+        frame_botoes_modos_de_jogo = [tk.Frame(root, bg=cor) for _ in modos_de_jogo]
+
+        botoes_modos_de_jogo = [tk.Button(root, text=texto1, command=lambda t=texto1: func_ModoDeJogo(t)) for texto1 in modos_de_jogo]
+
+        for botao in botoes_modos_de_jogo:
+            botao.config(width=50, height=2, bg="#1f1f1f", fg=cor, bd=1)
+
+        for frame in frame_botoes_modos_de_jogo:
+            frame.config(width=360, height=41, bd=0)
+
+        return frame_botoes_modos_de_jogo, botoes_modos_de_jogo
+
+class Roles():
+    def Atualizar_Roles(valor):
+        from utils.Janela.Janela import idioma, Role_1, Role_2, modo_de_jogo, botao_desfazer, texto_inferior, root, tela
+        if idioma=="Portugues":
+            if Role_1 == None or modo_de_jogo == "Blitz do Nexus":
+                Role_1 = valor
+                botao_desfazer.config(text="Desfazer")
+                if modo_de_jogo != "Blitz do Nexus":
+                    if Role_1!="Preencher":
+                        texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role:")
+                    else:
+                        texto_inferior.set(f"Posição escolhida: {Role_1}")
+                else:
+                    texto_inferior.set(f"Posição escolhida: {Role_1}")
+                    if Role_1!="Preencher":
+                        Role_2="Preencher"
+            elif Role_2 == None and Role_1 != "Preencher" and modo_de_jogo != "Blitz do Nexus":
+                Role_2 = valor
+                texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role: {Role_2}")
+                if Role_1 == Role_2:
+                    Role_2 = None
+                    texto_inferior.set(f"A primeira e a segunda\nposição não podem ser iguais!")
+                    root.after(2000, lambda: texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role:") if tela=="seleção de role" and Role_2==None and Role_1 != None else None)
+                    root.after(2000, lambda: texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role: {Role_2}") if tela=="seleção de role" and Role_1 != None and Role_2!=None else None)
+        elif idioma=="English":
+            if Role_1 == None or modo_de_jogo == "Nexus Blitz":
+                Role_1 = valor
+                botao_desfazer.config(text="Undo")
+                if modo_de_jogo != "Nexus Blitz":
+                    if Role_1!="Fill":
+                        texto_inferior.set(f"First role: {Role_1}\nSecond role:")
+                    else:
+                        texto_inferior.set(f"Selected role: {Role_1}")
+                else:
+                    texto_inferior.set(f"Selected role: {Role_1}")
+                    if Role_1!="Fill":
+                        Role_2="Fill"
+            elif Role_2 == None and Role_1 != "Fill" and modo_de_jogo != "Nexus Blitz":
+                Role_2 = valor
+                texto_inferior.set(f"First role: {Role_1}\nSecond role: {Role_2}")
+                if Role_1 == Role_2:
+                    Role_2 = None
+                    texto_inferior.set(f"The first and second\nroles cannot be the same!")
+                    root.after(2000, lambda: texto_inferior.set(f"First role: {Role_1}\nSecond role:") if tela=="seleção de role" and Role_2==None and Role_1 != None else None)
+                    root.after(2000, lambda: texto_inferior.set(f"First role: {Role_1}\nSecond role: {Role_2}") if tela=="seleção de role" and Role_1 != None and Role_2!=None else None)
+
+        return Role_1, Role_2
+
+    def CriarBotoesRoles():
+        from utils.Janela.Janela import tk, root, cor, func_Roles
+        roles = ["Top", "Jungle", "Mid", "ADC", "Suporte", "Preencher"]
+
+        frame_botoes_roles = [tk.Frame(root, bg=cor) for _ in roles]
+
+        botoes_roles = [tk.Button(root, text=texto2, command=lambda t=texto2: Roles.func_Roles(t)) for texto2 in roles]
+
+        for botao in botoes_roles:
+            botao.config(width=50, height=2, bg="#1f1f1f", fg=cor, bd=1)
+
+        for frame in frame_botoes_roles:
+            frame.config(width=360, height=41, bd=0)
+
+        return frame_botoes_roles, botoes_roles
