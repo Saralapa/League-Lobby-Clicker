@@ -1,6 +1,7 @@
 class Confirmar():
     def confirmar():
         from utils.Janela.Janela import idioma, tela, modo_de_jogo, root, tela_auto_aceitar, texto_inferior, tela_selecao_de_role, Role_1, Role_2
+        import utils.Janela.Janela
         if idioma=="Portugues":
             if tela == "seleção de modo de jogo":
                 if modo_de_jogo == "Apenas auto aceitar":
@@ -10,24 +11,24 @@ class Confirmar():
 
                 if modo_de_jogo == None:
                     texto_inferior.set("Selecione um modo de jogo!")
-                    root.after(2000, lambda: texto_inferior.set("Modo de jogo\nescolhido:") if modo_de_jogo == None else None)
+                    root.after(2000, lambda: texto_inferior.set("Modo de jogo\nescolhido:") if utils.Janela.Janela.modo_de_jogo == None else None)
                 root.after(0, lambda: tela_auto_aceitar()
                             if modo_de_jogo == "ARAM"
                             or modo_de_jogo == "Arena"
                             or modo_de_jogo == "URF"
                             or modo_de_jogo == "Todos por um"
-                            else tela_selecao_de_role() if modo_de_jogo is not None else None)
+                            else tela_selecao_de_role() if modo_de_jogo != None else None)
             elif tela == "seleção de role":
                 if (modo_de_jogo != "Blitz do Nexus" and (Role_1 != "Preencher" and Role_2 == None)):
                     texto_inferior.set("As duas roles devem\nser preenchidas!")
-                    if modo_de_jogo!="Blitz do Nexus":
-                        root.after(2000, lambda: texto_inferior.set("Primeira role:\nSegunda role:") if tela=="seleção de role" and Role_1 == None else None)
-                        root.after(2000, lambda: texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role:") if tela=="seleção de role" and Role_2==None and Role_1 != None and Role_1 != "Preencher" else None)
-                        root.after(2000, lambda: texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role: {Role_2}") if tela=="seleção de role" and Role_1 != None and Role_2!=None else None)
-                    else: root.after(2000, lambda: texto_inferior.set("Posição escolhida:") if tela=="seleção de role" and Role_1 == None else None)
-                elif modo_de_jogo== "Blitz do Nexus" and Role_1==None:
+                    if modo_de_jogo != "Blitz do Nexus":
+                        root.after(2000, lambda: texto_inferior.set("Primeira role:\nSegunda role:") if utils.Janela.Janela.tela == "seleção de role" and utils.Janela.Janela.Role_1 == None else None)
+                        root.after(2000, lambda: texto_inferior.set(f"Primeira role: {utils.Janela.Janela.Role_1}\nSegunda role:") if utils.Janela.Janela.tela == "seleção de role" and utils.Janela.Janela.Role_2 == None and utils.Janela.Janela.Role_1 != None and utils.Janela.Janela.Role_1 != "Preencher" else None)
+                        root.after(2000, lambda: texto_inferior.set(f"Primeira role: {utils.Janela.Janela.Role_1}\nSegunda role: {utils.Janela.Janela.Role_2}") if utils.Janela.Janela.tela == "seleção de role" and utils.Janela.Janela.Role_1 != None and utils.Janela.Janela.Role_2 != None else None)
+                    else: root.after(2000, lambda: texto_inferior.set("Posição escolhida:") if utils.Janela.Janela.tela=="seleção de role" and utils.Janela.Janela.Role_1 == None else None)
+                elif modo_de_jogo == "Blitz do Nexus" and Role_1==None:
                     texto_inferior.set("A role deve\nser preenchida!")
-                    root.after(2000, lambda: texto_inferior.set("Posição escolhida:") if tela=="seleção de role" and Role_1 == None else None)
+                    root.after(2000, lambda: texto_inferior.set("Posição escolhida:") if utils.Janela.Janela.tela == "seleção de role" and utils.Janela.Janela.Role_1 == None else None)
                 else:
                     root.after(500, lambda: tela_auto_aceitar())
 
@@ -40,24 +41,24 @@ class Confirmar():
 
                 if modo_de_jogo == None:
                     texto_inferior.set("Select a game mode!")
-                    root.after(2000, lambda: texto_inferior.set("Selected game\nmode:") if modo_de_jogo == None else None)
+                    root.after(2000, lambda: texto_inferior.set("Selected game\nmode:") if utils.Janela.Janela.modo_de_jogo == None else None)
                 root.after(0, lambda: tela_auto_aceitar()
                             if modo_de_jogo == "ARAM"
                             or modo_de_jogo == "Arena"
                             or modo_de_jogo == "URF"
                             or modo_de_jogo == "One for all"
-                            else tela_selecao_de_role() if modo_de_jogo is not None else None)
+                            else tela_selecao_de_role() if modo_de_jogo != None else None)
             elif tela == "seleção de role":
                 if (modo_de_jogo != "Nexus Blitz" and (Role_1 != "Fill" and Role_2 == None)):
                     texto_inferior.set("Both roles must\nbe selected!")
-                    if modo_de_jogo!="Nexus Blitz":
-                        root.after(2000, lambda: texto_inferior.set("First role:\nSecond role:") if tela=="seleção de role" and Role_1 == None else None)
-                        root.after(2000, lambda: texto_inferior.set(f"First role: {Role_1}\nSecond role:") if tela=="seleção de role" and Role_2==None and Role_1 != None and Role_1 != "Fill" else None)
-                        root.after(2000, lambda: texto_inferior.set(f"First role: {Role_1}\nSecond role: {Role_2}") if tela=="seleção de role" and Role_1 != None and Role_2!=None else None)
-                    else: root.after(2000, lambda: texto_inferior.set("Selected role:") if tela=="seleção de role" and Role_1 == None else None)
-                elif modo_de_jogo== "Nexus Blitz" and Role_1==None:
+                    if modo_de_jogo != "Nexus Blitz":
+                        root.after(2000, lambda: texto_inferior.set("First role:\nSecond role:") if utils.Janela.Janela.tela == "seleção de role" and utils.Janela.Janela.Role_1 == None else None)
+                        root.after(2000, lambda: texto_inferior.set(f"First role: {utils.Janela.Janela.Role_1}\nSecond role:") if utils.Janela.Janela.tela=="seleção de role" and utils.Janela.Janela.Role_2==None and utils.Janela.Janela.Role_1 != None and utils.Janela.Janela.Role_1 != "Fill" else None)
+                        root.after(2000, lambda: texto_inferior.set(f"First role: {utils.Janela.Janela.Role_1}\nSecond role: {utils.Janela.Janela.Role_2}") if utils.Janela.Janela.tela=="seleção de role" and utils.Janela.Janela.Role_1 != None and utils.Janela.Janela.Role_2!=None else None)
+                    else: root.after(2000, lambda: texto_inferior.set("Selected role:") if utils.Janela.Janela.tela=="seleção de role" and utils.Janela.Janela.Role_1 == None else None)
+                elif modo_de_jogo == "Nexus Blitz" and Role_1 == None:
                     texto_inferior.set("The role must\nbe selected!")
-                    root.after(2000, lambda: texto_inferior.set("Selected role:") if tela=="seleção de role" and Role_1 == None else None)
+                    root.after(2000, lambda: texto_inferior.set("Selected role:") if utils.Janela.Janela.tela == "seleção de role" and utils.Janela.Janela.Role_1 == None else None)
                 else:
                     root.after(500, lambda: tela_auto_aceitar())
 
@@ -80,42 +81,42 @@ class Desfazer():
             elif tela == "seleção de role":
                 if Role_2 != None:
                     Role_2 = None
-                    if modo_de_jogo!="Blitz do Nexus":
+                    if modo_de_jogo != "Blitz do Nexus":
                         texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role:")
                     else: texto_inferior.set("Posição escolhida:")
                 elif Role_1 != None:
                     Role_1 = None
                     botao_desfazer.config(text="Menu anterior")
-                    if modo_de_jogo!="Blitz do Nexus":
+                    if modo_de_jogo != "Blitz do Nexus":
                         texto_inferior.set(f"Primeira role:\nSegunda role:")
                     else: texto_inferior.set("Posição escolhida:")
                 else:
                     jogo_está_aberto = False
                     tela_selecao_de_modo(jogo_está_aberto)
-            elif tela=="auto aceitar":
-                modo_de_jogo=None
-                Role_1=None
-                Role_2=None
+            elif tela == "auto aceitar":
+                modo_de_jogo = None
+                Role_1 = None
+                Role_2 = None
                 jogo_está_aberto = False
                 tela_selecao_de_modo(jogo_está_aberto)
-            elif tela=="alterar idioma":
+            elif tela == "alterar idioma":
                 tela_selecao_de_modo(jogo_está_aberto)
             elif tela == "seleção de cor":
                 tela_selecao_de_modo(jogo_está_aberto)
-        elif idioma=="English":
+        elif idioma == "English":
             if tela == "seleção de modo de jogo":
                 modo_de_jogo = None
                 texto_inferior.set("Selected game\nmode:")
             elif tela == "seleção de role":
                 if Role_2 != None:
                     Role_2 = None
-                    if modo_de_jogo!="Nexus Blitz":
+                    if modo_de_jogo != "Nexus Blitz":
                         texto_inferior.set(f"First role: {Role_1}\nSecond role:")
                     else: texto_inferior.set("Selected role:")
                 elif Role_1 != None:
                     Role_1 = None
                     botao_desfazer.config(text="Previous menu")
-                    if modo_de_jogo!="Nexus Blitz":
+                    if modo_de_jogo != "Nexus Blitz":
                         texto_inferior.set(f"First role:\nSecond role:")
                     else: texto_inferior.set("Selected role:")
                 else:
@@ -173,48 +174,49 @@ class ModoDeJogo():
 class Roles():
     def Atualizar_Roles(valor):
         from utils.Janela.Janela import idioma, Role_1, Role_2, modo_de_jogo, botao_desfazer, texto_inferior, root, tela
-        if idioma=="Portugues":
+        import utils.Janela.Janela
+        if idioma == "Portugues":
             if Role_1 == None or modo_de_jogo == "Blitz do Nexus":
                 Role_1 = valor
                 botao_desfazer.config(text="Desfazer")
                 if modo_de_jogo != "Blitz do Nexus":
-                    if Role_1!="Preencher":
+                    if Role_1 != "Preencher":
                         texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role:")
                     else:
                         texto_inferior.set(f"Posição escolhida: {Role_1}")
                 else:
                     texto_inferior.set(f"Posição escolhida: {Role_1}")
-                    if Role_1!="Preencher":
-                        Role_2="Preencher"
+                    if Role_1 != "Preencher":
+                        Role_2 = "Preencher"
             elif Role_2 == None and Role_1 != "Preencher" and modo_de_jogo != "Blitz do Nexus":
                 Role_2 = valor
                 texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role: {Role_2}")
                 if Role_1 == Role_2:
                     Role_2 = None
                     texto_inferior.set(f"A primeira e a segunda\nposição não podem ser iguais!")
-                    root.after(2000, lambda: texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role:") if tela=="seleção de role" and Role_2==None and Role_1 != None else None)
-                    root.after(2000, lambda: texto_inferior.set(f"Primeira role: {Role_1}\nSegunda role: {Role_2}") if tela=="seleção de role" and Role_1 != None and Role_2!=None else None)
-        elif idioma=="English":
+                    root.after(2000, lambda: texto_inferior.set(f"Primeira role: {utils.Janela.Janela.Role_1}\nSegunda role:") if utils.Janela.Janela.tela == "seleção de role" and utils.Janela.Janela.Role_2 == None and utils.Janela.Janela.Role_1 != None else None)
+                    root.after(2000, lambda: texto_inferior.set(f"Primeira role: {utils.Janela.Janela.Role_1}\nSegunda role: {utils.Janela.Janela.Role_2}") if utils.Janela.Janela.tela=="seleção de role" and utils.Janela.Janela.Role_1 != None and utils.Janela.Janela.Role_2 != None else None)
+        elif idioma == "English":
             if Role_1 == None or modo_de_jogo == "Nexus Blitz":
                 Role_1 = valor
                 botao_desfazer.config(text="Undo")
                 if modo_de_jogo != "Nexus Blitz":
-                    if Role_1!="Fill":
+                    if Role_1 != "Fill":
                         texto_inferior.set(f"First role: {Role_1}\nSecond role:")
                     else:
                         texto_inferior.set(f"Selected role: {Role_1}")
                 else:
                     texto_inferior.set(f"Selected role: {Role_1}")
-                    if Role_1!="Fill":
-                        Role_2="Fill"
+                    if Role_1 != "Fill":
+                        Role_2 = "Fill"
             elif Role_2 == None and Role_1 != "Fill" and modo_de_jogo != "Nexus Blitz":
                 Role_2 = valor
                 texto_inferior.set(f"First role: {Role_1}\nSecond role: {Role_2}")
                 if Role_1 == Role_2:
                     Role_2 = None
                     texto_inferior.set(f"The first and second\nroles cannot be the same!")
-                    root.after(2000, lambda: texto_inferior.set(f"First role: {Role_1}\nSecond role:") if tela=="seleção de role" and Role_2==None and Role_1 != None else None)
-                    root.after(2000, lambda: texto_inferior.set(f"First role: {Role_1}\nSecond role: {Role_2}") if tela=="seleção de role" and Role_1 != None and Role_2!=None else None)
+                    root.after(2000, lambda: texto_inferior.set(f"First role: {utils.Janela.Janela.Role_1}\nSecond role:") if utils.Janela.Janela.tela=="seleção de role" and utils.Janela.Janela.Role_2==None and utils.Janela.Janela.Role_1 != None else None)
+                    root.after(2000, lambda: texto_inferior.set(f"First role: {utils.Janela.Janela.Role_1}\nSecond role: {utils.Janela.Janela.Role_2}") if utils.Janela.Janela.tela=="seleção de role" and utils.Janela.Janela.Role_1 != None and utils.Janela.Janela.Role_2!=None else None)
 
         return Role_1, Role_2
 

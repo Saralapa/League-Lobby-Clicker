@@ -3,11 +3,11 @@ import pygetwindow as gw
 import tkinter as tk
 import time
 from PIL import ImageTk, Image
-from utils.Janela import Texto_Tela_Auto_Aceitar, Cor, Botoes, Barra_de_Titulo, Configuracoes_da_Janela, Abrir_Janela_Fechar_Janela
+from utils.Janela import Texto_Tela_Auto_Aceitar, Cor, Botoes, Barra_de_Titulo, Configuracoes_da_Janela, Abrir_Janela_Fechar_Janela, Argumentos
 from utils import Cliques, Idioma
 
 def tela_selecao_de_modo(jogo_está_aberto):
-    global tela, Role_1, Role_2, modo_de_jogo, roles
+    global tela, Role_1, Role_2, modo_de_jogo, roles, possui_argumentos
     Configuracoes_da_Janela.centralizar_janela(root, 378, 506)
     root.title("League Lobby Clicker - Saralapa")
     label_titulo.config(text=root.title())
@@ -24,8 +24,6 @@ def tela_selecao_de_modo(jogo_está_aberto):
     frame_base_janela.place(y=root.winfo_height()-1)
 
     tela = "seleção de modo de jogo"
-    Role_1=None
-    Role_2=None
     for frame in frame_botoes_roles:
         frame.place_forget()
     for botao in botoes_roles:
@@ -57,14 +55,14 @@ def tela_selecao_de_modo(jogo_está_aberto):
     frame_botao_confirmar.pack()
     frame_botao_confirmar.place(relx=0.975, rely=0.9815, anchor="se")
 
-    i=0
+    i = 0
     for botao in botoes_modos_de_jogo:
         frame_botoes_modos_de_jogo[i].place(relx=0.0245, rely=0.1565 + i * 0.09675)
         botao.config(text=modos_de_jogo[i], command=lambda t=modos_de_jogo[i]: func_ModoDeJogo(t))
         botao.place(relx=0.0275, rely=0.158 + i * 0.0968)
         i+=1
     
-    if idioma=="Portugues":
+    if idioma == "Portugues":
         label_borda_topo.config(text="Escolha o modo de jogo")
         if modo_de_jogo == None:
             texto_inferior.set("Modo de jogo\nescolhido:")
@@ -72,7 +70,7 @@ def tela_selecao_de_modo(jogo_está_aberto):
             texto_inferior.set(f"Modo de jogo\nescolhido: {modo_de_jogo}")
         botao_desfazer.config(text="Desfazer")
         botao_confirmar.config(text="Confirmar")
-    elif idioma=="English":
+    elif idioma == "English":
         label_borda_topo.config(text="Select game mode")
         if modo_de_jogo == None:
             texto_inferior.set("Selected game\nmode:")
@@ -101,6 +99,12 @@ def tela_selecao_de_modo(jogo_está_aberto):
                     tela_auto_aceitar() 
                 return
 
+    if possui_argumentos:
+        possui_argumentos = False
+        tela_auto_aceitar()
+    else:
+        Role_1 = None
+        Role_2 = None
     if jogo_está_aberto == True:
         thread_jogo_aberto = threading.Thread(target=Jogo_Aberto(jogo_está_aberto))
         thread_jogo_aberto.daemon = True
@@ -116,20 +120,20 @@ def tela_selecao_de_role():
     botao_icone_idioma.place_forget()
     botao_icone_cor.place_forget()
 
-    if idioma=="Portugues":
+    if idioma == "Portugues":
         label_borda_topo.config(text="Escolha em que posição você vai jogar")
         if Role_1 == None:
             botao_desfazer.config(text="Menu anterior")
         else:
             botao_desfazer.config(text="Desfazer")
-    elif idioma=="English":
+    elif idioma == "English":
         label_borda_topo.config(text="Choose which position you will play")
         if Role_1 == None:
             botao_desfazer.config(text="Previous menu")
         else:
             botao_desfazer.config(text="Undo")
 
-    if modo_de_jogo == "Blitz do Nexus" or modo_de_jogo== "Nexus Blitz":
+    if modo_de_jogo == "Blitz do Nexus" or modo_de_jogo == "Nexus Blitz":
         Configuracoes_da_Janela.centralizar_janela(root, 378, 265)
         frame_barra_de_titulo.config(width=root.winfo_width())
         frame_topo_janela.config(width=root.winfo_width())
@@ -143,9 +147,9 @@ def tela_selecao_de_role():
         frame_botao_confirmar.place(rely=0.966)
         frame_borda_topo.place(relx=0.4988888888888888, y=28, anchor="center")
         frame_borda_inferior.place(relx=0.4988888888888888, rely=0.914, anchor="center")
-        if idioma=="Portugues":
+        if idioma == "Portugues":
             texto_inferior.set("Posição escolhida:")
-        elif idioma=="English":
+        elif idioma == "English":
             texto_inferior.set("Selected role:")
 
         for botao in botoes_roles:
@@ -157,7 +161,7 @@ def tela_selecao_de_role():
             roles = ["Jungle", "Lane", "Fill"]
 
         botoes_roles = [tk.Button(root, text=texto2, command=lambda t=texto2: func_Roles(t)) for texto2 in roles]
-        i=0
+        i = 0
         for botao in botoes_roles:
             frame_botoes_roles[i].place(relx=0.0245, y=83 + i * 49)
             botao.config(width=50, height=2, bg="#1f1f1f", fg=cor, bd=1)
@@ -178,21 +182,21 @@ def tela_selecao_de_role():
         frame_botao_confirmar.place(rely=0.9775)
         frame_borda_inferior.place(relx=0.4988888888888888, rely=0.946, anchor="center")
         frame_borda_topo.place(relx=0.4988888888888888, y=11, anchor="center")
-        if idioma=="Portugues":
+        if idioma == "Portugues":
             texto_inferior.set(f"Primeira role:\nSegunda role:")
-        elif idioma=="English":
+        elif idioma == "English":
             texto_inferior.set(f"First role:\nSecond role:")
 
         for botao in botoes_roles:
             botao.destroy()
         
-        if idioma=="Portugues":
+        if idioma == "Portugues":
             roles = ["Top", "Jungle", "Mid", "ADC", "Suporte", "Preencher"]
-        elif idioma=="English":
+        elif idioma == "English":
             roles = ["Top", "Jungle", "Mid", "ADC", "Support", "Fill"]
         botoes_roles = [tk.Button(root, text=texto2, command=lambda t=texto2: func_Roles(t)) for texto2 in roles]
 
-        i=0
+        i = 0
         for botao in botoes_roles:
             frame_botoes_roles[i].place(relx=0.0245, y=81 + i * 49)
             botao.config(width=50, height=2, bg="#1f1f1f", fg=cor, bd=1)
@@ -372,7 +376,7 @@ def Criar_Janela():
     frame_botao_desfazer, frame_botao_confirmar, frame_botoes_modos_de_jogo, texto_inferior, botao_desfazer, botao_confirmar, root, lista_idiomas, idioma, jogo_está_aberto, \
     botoes_roles, botoes_idiomas, botao_icone_cor, cor, botoes_cores, label_borda_inferior, imagem_cor, imagem_idioma, botao_cor_personalizada, modo_de_jogo, \
     frame_botao_cor_personalizada, frame_barra_de_titulo, frame_topo_janela, frame_esquerda_janela, label_titulo, frame_direita_janela, frame_base_janela, label_icone, \
-    botao_fechar, botao_minimizar, imagem_doacao, botao_doacao
+    botao_fechar, botao_minimizar, imagem_doacao, botao_doacao, Role_1, Role_2, possui_argumentos
 
     idioma = Idioma.definir_idioma()
     cor = Cor.Definir_Cor()
@@ -421,5 +425,6 @@ def Criar_Janela():
     
     root.after(10, Abrir_Janela_Fechar_Janela.AbrirJanela)
 
+    modo_de_jogo, Role_1, Role_2, possui_argumentos = Argumentos.Argumentos()
     tela_selecao_de_modo(jogo_está_aberto)
     root.mainloop()

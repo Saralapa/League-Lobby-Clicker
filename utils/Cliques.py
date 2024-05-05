@@ -7,13 +7,13 @@ from utils.Encontrar_Pasta import chamar_funcao_encontrar_pasta_LOL
 
 def KeepSearchingImageAndClickWhenFound(image):
     from utils.Janela.Janela import idioma, tela
-    if not tela=="auto aceitar":
+    if tela != "auto aceitar":
         return
     print("Procurando:", image)
     
     while True:
         from utils.Janela.Janela import tela
-        if not tela=="auto aceitar":
+        if tela != "auto aceitar":
             return
         if [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"]:
             raise Exception("tela seleção de modo")
@@ -26,7 +26,7 @@ def KeepSearchingImageAndClickWhenFound(image):
 
             if image_position_image:
                 print("Clicou em:", image)
-                if image=="Aceitar.png":
+                if image == "Aceitar.png":
                     janela_ativa=gw.getActiveWindow()               
                     mouse_position=pyautogui.position()
                     image_center = pyautogui.center(image_position_image)
@@ -44,14 +44,14 @@ def KeepSearchingImageAndClickWhenFound(image):
 
 def SearchImageForXSecondsAndClickWhenFound(image, seconds):
     from utils.Janela.Janela import idioma, tela
-    if not tela=="auto aceitar":
+    if tela != "auto aceitar":
         return
     print("Procurando:", image)
     start_time = time.time()
     
     while (time.time() - start_time) < seconds:
         from utils.Janela.Janela import tela
-        if not tela=="auto aceitar":
+        if tela != "auto aceitar":
             return
         try:
             lol_window = gw.getWindowsWithTitle('League of Legends')[0]
@@ -70,13 +70,13 @@ def SearchImageForXSecondsAndClickWhenFound(image, seconds):
 
 def Role1(image):
     from utils.Janela.Janela import idioma, root, tela
-    if not tela=="auto aceitar":
+    if tela != "auto aceitar":
         return
     print("Procurando seleção de role 1")
     
     while True:
         from utils.Janela.Janela import tela
-        if not tela=="auto aceitar":
+        if tela != "auto aceitar":
             return
         
         if [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"]:
@@ -96,10 +96,7 @@ def Role1(image):
                 elif lol_window.width==1280:
                     x_adjusted = image_center.x + 124  
                 elif lol_window.width==1024:
-                    x_adjusted = image_center.x + 99   
-                else:
-                    root.destroy()
-                    exit()
+                    x_adjusted = image_center.x + 99
                 pyautogui.click(x_adjusted, image_center.y)
                 break
 
@@ -111,7 +108,7 @@ def Role1(image):
 
     while True:
         from utils.Janela.Janela import tela
-        if not tela=="auto aceitar":
+        if tela != "auto aceitar":
             return
         if [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"]:
             raise Exception("tela seleção de modo")
@@ -138,13 +135,13 @@ def Role1(image):
 
 def Role2(image):
     from utils.Janela.Janela import idioma, root, tela
-    if not tela=="auto aceitar":
+    if tela != "auto aceitar":
         return
     print("Procurando seleção de role 2")
     
     while True:
         from utils.Janela.Janela import tela
-        if not tela=="auto aceitar":
+        if tela != "auto aceitar":
             return
         if [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"]:
             raise Exception("tela seleção de modo")
@@ -163,10 +160,7 @@ def Role2(image):
                 elif lol_window.width==1280:
                     x_adjusted = image_center.x + 160  
                 elif lol_window.width==1024:
-                    x_adjusted = image_center.x + 128  
-                else:
-                    root.destroy()
-                    exit()
+                    x_adjusted = image_center.x + 128
                 pyautogui.click(x_adjusted, image_center.y)
                 break
 
@@ -178,7 +172,7 @@ def Role2(image):
 
     while True:
         from utils.Janela.Janela import tela
-        if not tela=="auto aceitar":
+        if tela != "auto aceitar":
             return
         if [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"]:
             raise Exception("tela seleção de modo")
@@ -203,7 +197,7 @@ def Role2(image):
 
 def WhereToClick():
     from utils.Janela.Janela import modo_de_jogo, tela, tela_selecao_de_modo, Role_1, Role_2, jogo_está_aberto
-    if not tela == "auto aceitar":
+    if tela != "auto aceitar":
         return
     try:
         for _ in range (3):
@@ -237,20 +231,18 @@ def WhereToClick():
                 KeepSearchingImageAndClickWhenFound("PVP.png")
                 if modo_de_jogo=="Escolha alternada" or modo_de_jogo=="Ranqueada solo duo":
                     KeepSearchingImageAndClickWhenFound("Summoner's Rift.png")
-                if not modo_de_jogo==None:
-                    KeepSearchingImageAndClickWhenFound(modo_de_jogo+".png")
-                else:
+                if modo_de_jogo == None:
                     tela_selecao_de_modo(jogo_está_aberto)
-                    return Exception("tela seleção de modo")
+                    return
+                KeepSearchingImageAndClickWhenFound(modo_de_jogo+".png")
                 time.sleep(0.5)
                 KeepSearchingImageAndClickWhenFound("Confirmar.png")
                 if modo_de_jogo!="ARAM" and modo_de_jogo!="Arena" and modo_de_jogo!="URF" and modo_de_jogo!="One for all" and modo_de_jogo !="Todos por um":
-                    if not Role_1==None:
-                        if not Role1(Role_1)==23:
-                            Role2(Role_2)
-                    else:
+                    if Role_1 == None:
                         tela_selecao_de_modo(jogo_está_aberto)
-                        return Exception("tela seleção de modo")
+                        return
+                    if Role1(Role_1) != 23:
+                        Role2(Role_2)
                 KeepSearchingImageAndClickWhenFound("Encontrar partida.png")
                 from utils.Janela.Janela import tela
                 if tela == "auto aceitar":
@@ -259,19 +251,18 @@ def WhereToClick():
                     janela_ativa.activate()
         while True:
             from utils.Janela.Janela import tela, jogo_está_aberto
-            if not tela=="auto aceitar":
+            if tela != "auto aceitar":
                 jogo_está_aberto = False
                 tela_selecao_de_modo(jogo_está_aberto)
                 return
-            if not [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"]:
-                KeepSearchingImageAndClickWhenFound("Aceitar.png")
-                time.sleep(5)
-            else:
+            if [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"]:
                 jogo_está_aberto = True
                 thread_tela_selecao_de_modo = threading.Thread(target=lambda: tela_selecao_de_modo(jogo_está_aberto))
                 thread_tela_selecao_de_modo.daemon = True
                 thread_tela_selecao_de_modo.start()
                 return
+            KeepSearchingImageAndClickWhenFound("Aceitar.png")
+            time.sleep(5)
     except Exception as e:
         if e.args[0] == "tela seleção de modo":
             jogo_está_aberto = True
@@ -279,9 +270,9 @@ def WhereToClick():
             thread_tela_selecao_de_modo.daemon = True
             thread_tela_selecao_de_modo.start()
             return
-        else:
-            print("Cliente fechado. Reinciando...")
-            thread_Cliques = threading.Thread(target=WhereToClick)
-            thread_Cliques.daemon = True
-            thread_Cliques.start()
-            return
+        
+        print("Cliente fechado. Reinciando...")
+        thread_Cliques = threading.Thread(target=WhereToClick)
+        thread_Cliques.daemon = True
+        thread_Cliques.start()
+        return

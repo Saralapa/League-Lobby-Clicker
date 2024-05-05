@@ -82,10 +82,7 @@ def chamar_funcao_encontrar_pasta_LOL():
         LOL_path = os.path.join(os.path.expanduser("~"), "League Lobby Clicker - Saralapa", "League_Lobby_Clicker_LOL_path-Saralapa.txt")
         LOL_path = LOL_path.replace("\\\\", "\\")
 
-        if os.path.exists(LOL_path):
-            None
-            
-        else:
+        if not os.path.exists(LOL_path):
             for unidade in unidades:
                 if encontrar_e_salvar_pasta_instalacao_lol(unidade, 1) == 23:
                     break

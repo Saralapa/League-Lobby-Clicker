@@ -11,7 +11,7 @@ def atualizar_mensagem():
     i = 0
     while True:
         from utils.Janela.Janela import tela, label_auto_aceitar, time
-        if not tela=="auto aceitar":
+        if tela != "auto aceitar":
             return
         try:
             label_auto_aceitar.config(text=mensagens[i])
