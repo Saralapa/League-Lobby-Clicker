@@ -1,24 +1,38 @@
 import sys
+from utils.Idioma import definir_idioma, Atualizar_Idioma
 
 def Argumentos():
-    modo_de_jogo = None
-    Role_1 = None
-    Role_2 = None
+    Argumentos_Disponiveis = {
+    "modo_de_jogo" : [None, "--gamemode"],
+    "Role_1" : [None, "--role1"],
+    "Role_2" : [None, "--role2"],
+    "idioma" : [definir_idioma(), "--language"]
+    }
     possui_argumentos = False
-    if len(sys.argv) > 1:
-        possui_argumentos = True
-        args = sys.argv[1:]
-        for i in range(len(args)):
-            if args[i].lower() == "--gamemode":
-                modo_de_jogo = args[i+1]
-                print(modo_de_jogo)
-            elif args[i].lower() == "--role1":
-                Role_1 = args[i+1]
-                print(Role_1)
-            elif args[i].lower() == "--role2":
-                Role_2 = args[i+1]
-                print(Role_2)
-                
-        return modo_de_jogo, Role_1, Role_2, possui_argumentos
+        
+    def AtribuirArgumentos(variavel, string):
+        nonlocal possui_argumentos
+        if len(sys.argv) > 1:
+            possui_argumentos = True
+            args = sys.argv[1:]
+            for i in range(len(args)):
+                if args[i].lower() == string:
+                    variavel = args[i+1]
+                    try:
+                        j = i
+                        while not args[j+2].startswith("--"):
+                            variavel += " " + args[j+2]
+                            j+=1
+                    except:
+                        pass
+                    print(variavel)
+        return variavel
+                    
+    for chave, valor in Argumentos_Disponiveis.items():
+        globals()[f"{chave}"] = valor[0]
+        globals()[f"{chave}"] = AtribuirArgumentos(globals()[f"{chave}"], valor[1])
     
-    return modo_de_jogo, Role_1, Role_2, possui_argumentos
+    if Argumentos_Disponiveis["idioma"][1] in sys.argv:
+        Atualizar_Idioma(idioma) #type: ignore
+                
+    return modo_de_jogo, Role_1, Role_2, possui_argumentos, idioma #type: ignore

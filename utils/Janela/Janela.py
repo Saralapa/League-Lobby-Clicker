@@ -85,7 +85,7 @@ def tela_selecao_de_modo(jogo_está_aberto):
         while True:
             if jogo_está_aberto == False:
                 return
-            for i in range(10):
+            for i in range(30):
                 time.sleep(1)
                 print(i+1)
             
@@ -425,6 +425,6 @@ def Criar_Janela():
     
     root.after(10, Abrir_Janela_Fechar_Janela.AbrirJanela)
 
-    modo_de_jogo, Role_1, Role_2, possui_argumentos = Argumentos.Argumentos()
+    modo_de_jogo, Role_1, Role_2, possui_argumentos, idioma = Argumentos.Argumentos()
     tela_selecao_de_modo(jogo_está_aberto)
     root.mainloop()

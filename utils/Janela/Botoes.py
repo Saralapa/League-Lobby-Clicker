@@ -12,12 +12,7 @@ class Confirmar():
                 if modo_de_jogo == None:
                     texto_inferior.set("Selecione um modo de jogo!")
                     root.after(2000, lambda: texto_inferior.set("Modo de jogo\nescolhido:") if utils.Janela.Janela.modo_de_jogo == None else None)
-                root.after(0, lambda: tela_auto_aceitar()
-                            if modo_de_jogo == "ARAM"
-                            or modo_de_jogo == "Arena"
-                            or modo_de_jogo == "URF"
-                            or modo_de_jogo == "Todos por um"
-                            else tela_selecao_de_role() if modo_de_jogo != None else None)
+                root.after(0, lambda: tela_auto_aceitar() if modo_de_jogo in ["ARAM", "Arena", "URF", "Todos por um"] else tela_selecao_de_role() if modo_de_jogo != None else None)
             elif tela == "seleção de role":
                 if (modo_de_jogo != "Blitz do Nexus" and (Role_1 != "Preencher" and Role_2 == None)):
                     texto_inferior.set("As duas roles devem\nser preenchidas!")
@@ -42,12 +37,7 @@ class Confirmar():
                 if modo_de_jogo == None:
                     texto_inferior.set("Select a game mode!")
                     root.after(2000, lambda: texto_inferior.set("Selected game\nmode:") if utils.Janela.Janela.modo_de_jogo == None else None)
-                root.after(0, lambda: tela_auto_aceitar()
-                            if modo_de_jogo == "ARAM"
-                            or modo_de_jogo == "Arena"
-                            or modo_de_jogo == "URF"
-                            or modo_de_jogo == "One for all"
-                            else tela_selecao_de_role() if modo_de_jogo != None else None)
+                root.after(0, lambda: tela_auto_aceitar() if modo_de_jogo in ["ARAM", "Arena", "URF", "One for all"] else tela_selecao_de_role() if modo_de_jogo != None else None)
             elif tela == "seleção de role":
                 if (modo_de_jogo != "Nexus Blitz" and (Role_1 != "Fill" and Role_2 == None)):
                     texto_inferior.set("Both roles must\nbe selected!")

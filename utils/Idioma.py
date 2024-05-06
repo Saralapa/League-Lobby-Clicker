@@ -6,17 +6,17 @@ def definir_idioma():
         try:
             with open(caminho_idioma, "r") as file:
                 idioma = file.read()
+            return idioma
         except:
             None
-    else:
-        try:
-            with open(caminho_idioma, "w") as file:
-                file.write("Portugues")
-            with open(caminho_idioma, "r") as file:
-                idioma = file.read()
-        except:
-            None
-    return idioma
+    try:
+        with open(caminho_idioma, "w") as file:
+            file.write("Portugues")
+        with open(caminho_idioma, "r") as file:
+            idioma = file.read()
+        return idioma
+    except:
+        None
 
 def Atualizar_Idioma(valor):
     from utils.Janela.Janela import idioma, botao_desfazer, texto_inferior

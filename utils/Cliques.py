@@ -69,7 +69,7 @@ def SearchImageForXSecondsAndClickWhenFound(image, seconds):
         except: None
 
 def Role1(image):
-    from utils.Janela.Janela import idioma, root, tela
+    from utils.Janela.Janela import idioma, tela
     if tela != "auto aceitar":
         return
     print("Procurando seleção de role 1")
@@ -130,11 +130,11 @@ def Role1(image):
         except: None
 
     time.sleep(0.5)
-    if image_path_image == os.path.join("Images/languages", idioma, "Images"+f" {lol_window.width}x{lol_window.height}", "Preencher" + ".png") or image_path_image == os.path.join("languages", idioma, "Images"+f" {lol_window.width}x{lol_window.height}", "Fill" + ".png") :
+    if image in ["Preencher", "Fill"]:
         return 23
 
 def Role2(image):
-    from utils.Janela.Janela import idioma, root, tela
+    from utils.Janela.Janela import idioma, tela
     if tela != "auto aceitar":
         return
     print("Procurando seleção de role 2")
@@ -205,7 +205,7 @@ def WhereToClick():
                 break
             chamar_funcao_encontrar_pasta_LOL()
             time.sleep(5)
-        if modo_de_jogo != "Apenas auto aceitar" and modo_de_jogo != "Just auto accept":
+        if modo_de_jogo.lower() not in ["Apenas auto aceitar", "Just auto accept"]:
             pyautogui.hotkey('alt', 'tab')
             janela_ativa = gw.getActiveWindow()
             pyautogui.hotkey('alt', 'tab')
@@ -229,7 +229,7 @@ def WhereToClick():
                     KeepSearchingImageAndClickWhenFound("inicio.png")
                 KeepSearchingImageAndClickWhenFound("Jogar.png")
                 KeepSearchingImageAndClickWhenFound("PVP.png")
-                if modo_de_jogo=="Escolha alternada" or modo_de_jogo=="Ranqueada solo duo":
+                if modo_de_jogo.lower() in ["escolha alternada", "ranqueada solo duo", "draft pick", "ranked solo duo"]:
                     KeepSearchingImageAndClickWhenFound("Summoner's Rift.png")
                 if modo_de_jogo == None:
                     tela_selecao_de_modo(jogo_está_aberto)
@@ -237,7 +237,7 @@ def WhereToClick():
                 KeepSearchingImageAndClickWhenFound(modo_de_jogo+".png")
                 time.sleep(0.5)
                 KeepSearchingImageAndClickWhenFound("Confirmar.png")
-                if modo_de_jogo!="ARAM" and modo_de_jogo!="Arena" and modo_de_jogo!="URF" and modo_de_jogo!="One for all" and modo_de_jogo !="Todos por um":
+                if not modo_de_jogo.lower() in ["aram", "arena", "urf", "one for all", "todos por um"]:
                     if Role_1 == None:
                         tela_selecao_de_modo(jogo_está_aberto)
                         return
