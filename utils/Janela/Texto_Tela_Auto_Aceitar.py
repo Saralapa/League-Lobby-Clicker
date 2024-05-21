@@ -1,10 +1,10 @@
 def atualizar_mensagem():
     from utils.Janela.Janela import idioma
-    if idioma=="Portugues":
+    if idioma.lower()=="portugues":
         mensagens = ["Encontrando partida"]
         for i in range(1,4):
             mensagens.append(mensagens[0] + "." * i)
-    elif idioma=="English":
+    elif idioma.lower()=="english":
         mensagens = ["Finding match"]
         for i in range(1,4):
             mensagens.append(mensagens[0] + "." * i)

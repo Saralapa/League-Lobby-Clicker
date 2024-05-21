@@ -130,7 +130,7 @@ def Role1(image):
         except: None
 
     time.sleep(0.5)
-    if image in ["Preencher", "Fill"]:
+    if image.lower() in ["preencher", "fill"]:
         return 23
 
 def Role2(image):

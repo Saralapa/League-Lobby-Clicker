@@ -13,9 +13,9 @@ def Verificar_Atualizacoes():
         versao = versao.json()
 
         if versao["tag_name"].replace("v","") != versao_atual:
-            if idioma=="Portugues":
+            if idioma.lower()=="portugues":
                 resposta = messagebox.askquestion("Atualização Disponível", f"Versão atual: {versao_atual}\nVersão mais recente: {versao['tag_name'].replace("v","")}\n\n\nDeseja baixar agora?")
-            elif idioma=="English":
+            elif idioma.lower()=="english":
                 resposta = messagebox.askquestion("Update Available", f"Current version: {versao_atual}\nLatest Version: {versao['tag_name'].replace("v","")}\n\n\nDownload now?")
             if resposta == "yes":
                 webbrowser.open("https://github.com/Saralapa/League-Lobby-Clicker/releases/latest")

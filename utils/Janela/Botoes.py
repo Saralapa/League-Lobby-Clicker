@@ -2,7 +2,7 @@ class Confirmar():
     def confirmar():
         from utils.Janela.Janela import idioma, tela, modo_de_jogo, root, tela_auto_aceitar, texto_inferior, tela_selecao_de_role, Role_1, Role_2
         import utils.Janela.Janela
-        if idioma=="Portugues":
+        if idioma.lower()=="portugues":
             if tela == "seleção de modo de jogo":
                 if modo_de_jogo == "Apenas auto aceitar":
                     root.after(500, lambda: tela_auto_aceitar() if modo_de_jogo == "Apenas auto aceitar" else None)
@@ -27,7 +27,7 @@ class Confirmar():
                 else:
                     root.after(500, lambda: tela_auto_aceitar())
 
-        elif idioma=="English":
+        elif idioma.lower()=="english":
             if tela == "seleção de modo de jogo":
                 if modo_de_jogo == "Just auto accept":
                     root.after(500, lambda: tela_auto_aceitar() if modo_de_jogo == "Just auto accept" else None)
@@ -64,7 +64,7 @@ class Confirmar():
 class Desfazer():
     def desfazer():
         from utils.Janela.Janela import idioma, tela, modo_de_jogo, texto_inferior, Role_1, Role_2, botao_desfazer, tela_selecao_de_modo, jogo_está_aberto
-        if idioma=="Portugues":
+        if idioma.lower()=="portugues":
             if tela == "seleção de modo de jogo":
                 modo_de_jogo = None
                 texto_inferior.set("Modo de jogo\nescolhido:")
@@ -93,7 +93,7 @@ class Desfazer():
                 tela_selecao_de_modo(jogo_está_aberto)
             elif tela == "seleção de cor":
                 tela_selecao_de_modo(jogo_está_aberto)
-        elif idioma == "English":
+        elif idioma.lower() == "english":
             if tela == "seleção de modo de jogo":
                 modo_de_jogo = None
                 texto_inferior.set("Selected game\nmode:")
@@ -138,9 +138,9 @@ class ModoDeJogo():
     def Atualizar_Modo_de_Jogo(valor):
         from utils.Janela.Janela import modo_de_jogo, idioma, texto_inferior
         modo_de_jogo = valor
-        if idioma=="Portugues":
+        if idioma.lower()=="portugues":
             texto_inferior.set(f"Modo de jogo\nescolhido: {modo_de_jogo}")
-        elif idioma=="English":
+        elif idioma.lower()=="english":
             texto_inferior.set(f"Selected game\nmode: {modo_de_jogo}")
 
         return modo_de_jogo
@@ -165,7 +165,7 @@ class Roles():
     def Atualizar_Roles(valor):
         from utils.Janela.Janela import idioma, Role_1, Role_2, modo_de_jogo, botao_desfazer, texto_inferior, root, tela
         import utils.Janela.Janela
-        if idioma == "Portugues":
+        if idioma.lower() == "portugues":
             if Role_1 == None or modo_de_jogo == "Blitz do Nexus":
                 Role_1 = valor
                 botao_desfazer.config(text="Desfazer")
@@ -186,7 +186,7 @@ class Roles():
                     texto_inferior.set(f"A primeira e a segunda\nposição não podem ser iguais!")
                     root.after(2000, lambda: texto_inferior.set(f"Primeira role: {utils.Janela.Janela.Role_1}\nSegunda role:") if utils.Janela.Janela.tela == "seleção de role" and utils.Janela.Janela.Role_2 == None and utils.Janela.Janela.Role_1 != None else None)
                     root.after(2000, lambda: texto_inferior.set(f"Primeira role: {utils.Janela.Janela.Role_1}\nSegunda role: {utils.Janela.Janela.Role_2}") if utils.Janela.Janela.tela=="seleção de role" and utils.Janela.Janela.Role_1 != None and utils.Janela.Janela.Role_2 != None else None)
-        elif idioma == "English":
+        elif idioma.lower() == "english":
             if Role_1 == None or modo_de_jogo == "Nexus Blitz":
                 Role_1 = valor
                 botao_desfazer.config(text="Undo")

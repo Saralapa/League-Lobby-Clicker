@@ -37,9 +37,9 @@ def tela_selecao_de_modo(jogo_está_aberto):
         botao.place_forget()
     frame_botao_cor_personalizada.place_forget()
 
-    if idioma=="Portugues":
+    if idioma.lower()=="portugues":
         modos_de_jogo=["Escolha alternada", "Ranqueada solo duo", "ARAM", "Blitz do Nexus", "Arena", "URF", "Todos por um", "Apenas auto aceitar"]
-    elif idioma=="English":
+    elif idioma.lower()=="english":
         modos_de_jogo=["Draft pick", "Ranked solo duo", "ARAM", "Nexus Blitz", "Arena", "URF", "One for all", "Just auto accept"]
 
     botao_icone_idioma.place(relx=0.8915, rely=0.075375)
@@ -62,7 +62,7 @@ def tela_selecao_de_modo(jogo_está_aberto):
         botao.place(relx=0.0275, rely=0.158 + i * 0.0968)
         i+=1
     
-    if idioma == "Portugues":
+    if idioma.lower() == "portugues":
         label_borda_topo.config(text="Escolha o modo de jogo")
         if modo_de_jogo == None:
             texto_inferior.set("Modo de jogo\nescolhido:")
@@ -70,7 +70,7 @@ def tela_selecao_de_modo(jogo_está_aberto):
             texto_inferior.set(f"Modo de jogo\nescolhido: {modo_de_jogo}")
         botao_desfazer.config(text="Desfazer")
         botao_confirmar.config(text="Confirmar")
-    elif idioma == "English":
+    elif idioma.lower() == "english":
         label_borda_topo.config(text="Select game mode")
         if modo_de_jogo == None:
             texto_inferior.set("Selected game\nmode:")
@@ -91,9 +91,9 @@ def tela_selecao_de_modo(jogo_está_aberto):
             
             if not [window for window in gw.getWindowsWithTitle("League of Legends (TM) Client") if window.title == "League of Legends (TM) Client"] and jogo_está_aberto == True:
                 if tela == "seleção de modo de jogo":
-                    if idioma == "Portugues":
+                    if idioma.lower() == "portugues":
                         modo_de_jogo = "Apenas auto aceitar"
-                    elif idioma == "English":
+                    elif idioma.lower() == "english":
                         modo_de_jogo = "Just auto accept"
                     jogo_está_aberto = False
                     tela_auto_aceitar() 
@@ -120,13 +120,13 @@ def tela_selecao_de_role():
     botao_icone_idioma.place_forget()
     botao_icone_cor.place_forget()
 
-    if idioma == "Portugues":
+    if idioma.lower() == "portugues":
         label_borda_topo.config(text="Escolha em que posição você vai jogar")
         if Role_1 == None:
             botao_desfazer.config(text="Menu anterior")
         else:
             botao_desfazer.config(text="Desfazer")
-    elif idioma == "English":
+    elif idioma.lower() == "english":
         label_borda_topo.config(text="Choose which position you will play")
         if Role_1 == None:
             botao_desfazer.config(text="Previous menu")
@@ -147,17 +147,17 @@ def tela_selecao_de_role():
         frame_botao_confirmar.place(rely=0.966)
         frame_borda_topo.place(relx=0.4988888888888888, y=28, anchor="center")
         frame_borda_inferior.place(relx=0.4988888888888888, rely=0.914, anchor="center")
-        if idioma == "Portugues":
+        if idioma.lower() == "portugues":
             texto_inferior.set("Posição escolhida:")
-        elif idioma == "English":
+        elif idioma.lower() == "english":
             texto_inferior.set("Selected role:")
 
         for botao in botoes_roles:
             botao.destroy()
 
-        if idioma == "Portugues":
+        if idioma.lower() == "portugues":
             roles = ["Jungle", "Rota", "Preencher"]
-        elif idioma == "English":
+        elif idioma.lower() == "english":
             roles = ["Jungle", "Lane", "Fill"]
 
         botoes_roles = [tk.Button(root, text=texto2, command=lambda t=texto2: func_Roles(t)) for texto2 in roles]
@@ -182,17 +182,17 @@ def tela_selecao_de_role():
         frame_botao_confirmar.place(rely=0.9775)
         frame_borda_inferior.place(relx=0.4988888888888888, rely=0.946, anchor="center")
         frame_borda_topo.place(relx=0.4988888888888888, y=11, anchor="center")
-        if idioma == "Portugues":
+        if idioma.lower() == "portugues":
             texto_inferior.set(f"Primeira role:\nSegunda role:")
-        elif idioma == "English":
+        elif idioma.lower() == "english":
             texto_inferior.set(f"First role:\nSecond role:")
 
         for botao in botoes_roles:
             botao.destroy()
         
-        if idioma == "Portugues":
+        if idioma.lower() == "portugues":
             roles = ["Top", "Jungle", "Mid", "ADC", "Suporte", "Preencher"]
-        elif idioma == "English":
+        elif idioma.lower() == "english":
             roles = ["Top", "Jungle", "Mid", "ADC", "Support", "Fill"]
         botoes_roles = [tk.Button(root, text=texto2, command=lambda t=texto2: func_Roles(t)) for texto2 in roles]
 
@@ -237,11 +237,11 @@ def tela_alterar_idioma():
 
     frame_borda_inferior.pack()
     frame_borda_inferior.place(relx=0.4988888888888888, y=149, anchor="center")
-    if idioma=="Portugues":
+    if idioma.lower()=="portugues":
         texto_inferior.set("Idioma selecionado: Português")
         botao_desfazer.config(text="Confirmar")
-    elif idioma=="English":
-        texto_inferior.set(f"Selected language: {idioma}")
+    elif idioma.lower()=="english":
+        texto_inferior.set(f"Selected language: {idioma.capitalize()}")
         botao_desfazer.config(text="Confirm")
 
     frame_botao_desfazer.place(relx=0.4988888888888888, y=-19, anchor="center")
@@ -278,10 +278,10 @@ def tela_selecao_de_cor():
     frame_borda_inferior.pack_forget()
     frame_borda_inferior.place_forget()
 
-    if idioma == "Portugues":
+    if idioma.lower() == "portugues":
         botao_desfazer.config(text="Confirmar")
         botao_cor_personalizada.config(text="Cor personalizada")
-    elif idioma == "English":
+    elif idioma.lower() == "english":
         botao_desfazer.config(text="Confirm")
         botao_cor_personalizada.config(text="Custom color")
     botao_desfazer.config(height=2)
@@ -337,9 +337,9 @@ def tela_auto_aceitar():
 
     label_auto_aceitar.place(relx=0.4988888888888888, y=62, anchor="center")
     
-    if idioma=="Portugues":
+    if idioma.lower()=="portugues":
         botao_desfazer.config(text="Menu principal")
-    elif idioma=="English":
+    elif idioma.lower()=="english":
         botao_desfazer.config(text="Main menu")
     frame_botao_desfazer.place(relx=0.4988888888888888, y=-24, anchor="center")
 

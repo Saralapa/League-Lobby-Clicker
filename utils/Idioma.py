@@ -6,7 +6,7 @@ def definir_idioma():
         try:
             with open(caminho_idioma, "r") as file:
                 idioma = file.read()
-            return idioma
+            return idioma.lower()
         except:
             None
     try:
@@ -14,7 +14,7 @@ def definir_idioma():
             file.write("Portugues")
         with open(caminho_idioma, "r") as file:
             idioma = file.read()
-        return idioma
+        return idioma.lower()
     except:
         None
 
@@ -24,14 +24,14 @@ def Atualizar_Idioma(valor):
     caminho_idioma = os.path.join(os.path.expanduser("~"),"League Lobby Clicker - Saralapa", "League_Lobby_Clicker_idioma-Saralapa.txt")
     with open(caminho_idioma, "w") as file:
         file.write(idioma)
-    if idioma == "Portugues":
+    if idioma.lower() == "portugues":
         botao_desfazer.config(text="Confirmar")
         texto_inferior.set(f"Idioma selecionado: {valor}")
-    elif idioma == "English":
+    elif idioma.lower() == "english":
         botao_desfazer.config(text="Confirm")
         texto_inferior.set(f"Selected language: {valor}")
 
-    return idioma
+    return idioma.lower()
 
 def CriarBotoesIdiomas(imagem_idioma):
     from utils.Janela.Janela import tk, root, cor, func_Idioma, tela_alterar_idioma
