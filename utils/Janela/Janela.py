@@ -96,7 +96,7 @@ def tela_selecao_de_modo(jogo_está_aberto):
         if modo_de_jogo == None:
             texto_inferior.set("Modo de jogo\nescolhido:")
         else:
-            texto_inferior.set(f"Modo de jogo\nescolhido: {modo_de_jogo}")
+            texto_inferior.set(f"Modo de jogo\nescolhido: {modo_de_jogo.capitalize()}")
         botao_desfazer.config(text="Desfazer")
         botao_confirmar.config(text="Confirmar")
     elif idioma.lower() == "english":
@@ -104,7 +104,7 @@ def tela_selecao_de_modo(jogo_está_aberto):
         if modo_de_jogo == None:
             texto_inferior.set("Selected game\nmode:")
         else:
-            texto_inferior.set(f"Selected game\nmode: {modo_de_jogo}")
+            texto_inferior.set(f"Selected game\nmode: {modo_de_jogo.capitalize()}")
         botao_desfazer.config(text="Undo")
         botao_confirmar.config(text="Confirm")
     botao_desfazer.config(height=0)
