@@ -1,16 +1,18 @@
 def atualizar_mensagem():
     from utils.Janela.Janela import idioma
-    if idioma.lower()=="portugues":
+
+    if idioma.lower() == "portugues":
         mensagens = ["Encontrando partida"]
-        for i in range(1,4):
+        for i in range(1, 4):
             mensagens.append(mensagens[0] + "." * i)
-    elif idioma.lower()=="english":
+    elif idioma.lower() == "english":
         mensagens = ["Finding match"]
-        for i in range(1,4):
+        for i in range(1, 4):
             mensagens.append(mensagens[0] + "." * i)
     i = 0
     while True:
         from utils.Janela.Janela import tela, label_auto_aceitar, time
+
         if tela != "auto aceitar":
             return
         try:

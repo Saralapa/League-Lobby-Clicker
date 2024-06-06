@@ -1,38 +1,39 @@
 import sys
 from utils.Idioma import definir_idioma, Atualizar_Idioma
 
+
 def Argumentos():
     """
-    Processa os argumentos de linha de comando fornecidos ao script.
-    
-    Esta função analisa os argumentos de linha de comando para configurar o modo de jogo,
-    as roles e o idioma. Os argumentos são especificados através de flags como --gamemode,
-    --role1, --role2 e --language. Se um idioma é especificado, a função também atualiza
-    o idioma do sistema.
-    
+    Parses command line arguments and assigns values to corresponding variables.
+
     Returns:
-        tuple: Retorna uma tupla contendo o modo de jogo, Role_1, Role_2, um booleano indicando
-               se algum argumento foi fornecido, e o idioma configurado, todos como strings.
-               O booleano possui_argumentos é True se algum argumento foi fornecido; caso contrário, False.
+    tuple: A tuple containing the assigned values of the command line arguments, a flag indicating the presence of command line arguments, and the selected language.
+
+    This function iterates through the command line arguments, identifies the specified strings, and assigns the subsequent argument values to the corresponding variables.
+    If the subsequent argument is part of a multi-word value, it concatenates the words to form the complete value.
+    The function also sets the 'possui_argumentos' flag to True if command line arguments are present.
     """
     Argumentos_Disponiveis = {
-    "modo_de_jogo" : [None, "--gamemode"],
-    "Role_1" : [None, "--role1"],
-    "Role_2" : [None, "--role2"],
-    "idioma" : [definir_idioma(), "--language"]
+        "modo_de_jogo": [None, "--gamemode"],
+        "Role_1": [None, "--role1"],
+        "Role_2": [None, "--role2"],
+        "idioma": [definir_idioma(), "--language"],
     }
+
     possui_argumentos = False
-        
-    def AtribuirArgumentos(variavel, string):
+
+    def AtribuirArgumentos(variavel: str, string: str) -> str:
         """
-        Atribui valores aos argumentos com base nos parâmetros de linha de comando.
-        
-        Args:
-            variavel (str): A variável que será atribuída com o valor do argumento.
-            string (str): A string que identifica o argumento na linha de comando.
-        
+        Assigns command line arguments to a variable based on a specified string.
+
+        Parameters:
+        variavel (str): The variable to which the command line argument will be assigned.
+        string (str): The specified string used to identify the command line argument.
+
         Returns:
-            str: O valor do argumento após ser processado.
+        str: The assigned value of the command line argument.
+
+        This function iterates through the command line arguments, identifies the specified string, and assigns the subsequent argument value to the variable. If the subsequent argument is part of a multi-word value, it concatenates the words to form the complete value. The function also sets the 'possui_argumentos' flag to True if command line arguments are present.
         """
         nonlocal possui_argumentos
         if len(sys.argv) > 1:
@@ -40,22 +41,22 @@ def Argumentos():
             args = sys.argv[1:]
             for i in range(len(args)):
                 if args[i].lower() == string:
-                    variavel = args[i+1]
+                    variavel = args[i + 1]
                     try:
                         j = i
-                        while not args[j+2].startswith("--"):
-                            variavel += " " + args[j+2]
-                            j+=1
+                        while not args[j + 2].startswith("--"):
+                            variavel += " " + args[j + 2]
+                            j += 1
                     except:
                         pass
                     print(variavel)
         return variavel
-                    
+
     for chave, valor in Argumentos_Disponiveis.items():
         globals()[f"{chave}"] = valor[0]
         globals()[f"{chave}"] = AtribuirArgumentos(globals()[f"{chave}"], valor[1])
-    
+
     if Argumentos_Disponiveis["idioma"][1] in sys.argv:
-        Atualizar_Idioma(idioma) #type: ignore
-                
-    return modo_de_jogo, Role_1, Role_2, possui_argumentos, idioma.lower() #type: ignore #type: ignore
+        Atualizar_Idioma(idioma)  # type: ignore
+
+    return modo_de_jogo, Role_1, Role_2, possui_argumentos, idioma.lower()  # type: ignore
