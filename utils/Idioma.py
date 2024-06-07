@@ -11,6 +11,10 @@ def definir_idioma():
         try:
             with open(caminho_idioma, "r") as file:
                 idioma = file.read()
+                if not idioma.lower() in ["portugues", "english"]:
+                    with open(caminho_idioma, "w") as file:
+                        file.write("Portugues")
+                    idioma = file.read()
             return idioma.lower()
         except:
             None

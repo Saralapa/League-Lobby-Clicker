@@ -56,6 +56,50 @@ def Argumentos():
         globals()[f"{chave}"] = valor[0]
         globals()[f"{chave}"] = AtribuirArgumentos(globals()[f"{chave}"], valor[1])
 
+    if modo_de_jogo != None and modo_de_jogo.lower() not in [  # type: ignore
+        "escolha alternada",
+        "ranqueada solo duo",
+        "aram",
+        "blitz do nexus",
+        "arena",
+        "urf",
+        "todos por um",
+        "apenas auto aceitar",
+        "draft pick",
+        "ranked solo duo",
+        "nexus blitz",
+        "one for all",
+        "just auto accept",
+    ]:
+        raise ValueError("Game mode not supported yet")
+
+    roles = [
+        "jungle",
+        "rota",
+        "preencher",
+        "lane",
+        "fill",
+        "top",
+        "mid",
+        "adc",
+        "suporte",
+        "support",
+    ]
+
+    if Role_1 != None and Role_1.lower() not in roles:  # type: ignore
+        print(Role_1, "role 1 aqui ó") # type: ignore
+        raise ValueError("Role 1 not supported yet")
+
+    if Role_2 != None and Role_2.lower() not in roles:  # type: ignore
+        raise ValueError("Role 2 not supported yet")
+
+    if not idioma.lower() in [  # type: ignore
+        "portugues",
+        "english",
+        None,
+    ]:
+        raise ValueError("Language not implemented yet")
+
     if Argumentos_Disponiveis["idioma"][1] in sys.argv:
         Atualizar_Idioma(idioma)  # type: ignore
 
