@@ -22,13 +22,13 @@ def Argumentos():
 
     possui_argumentos = False
 
-    def AtribuirArgumentos(variavel: str, string: str) -> str:
+    def AtribuirArgumentos(variable: str, string: str) -> str:
         """
         Assigns command line arguments to a variable based on a specified string.
 
         Parameters:
-        variavel (str): The variable to which the command line argument will be assigned.
-        string (str): The specified string used to identify the command line argument.
+        variable (str): The variable to which the command line argument will be assigned. Eg. ("modo_de_jogo")
+        string (str): The specified string used to identify the command line argument. Eg. ("--gamemode")
 
         Returns:
         str: The assigned value of the command line argument.
@@ -40,17 +40,22 @@ def Argumentos():
             possui_argumentos = True
             args = sys.argv[1:]
             for i in range(len(args)):
+                if args[i].lower().startswith("--") and not any(
+                    args[i].lower() in values
+                    for values in Argumentos_Disponiveis.values()
+                ):
+                    raise ValueError(f'Argument "{args[i]}" not supported yet.')
                 if args[i].lower() == string:
-                    variavel = args[i + 1]
+                    variable = args[i + 1].lower().replace("ê", "e")
                     try:
                         j = i
                         while not args[j + 2].startswith("--"):
-                            variavel += " " + args[j + 2]
+                            variable += " " + args[j + 2].lower().replace("ê", "e")
                             j += 1
                     except:
                         pass
-                    print(variavel)
-        return variavel
+                    print(variable)
+        return variable
 
     for chave, valor in Argumentos_Disponiveis.items():
         globals()[f"{chave}"] = valor[0]
@@ -71,7 +76,7 @@ def Argumentos():
         "one for all",
         "just auto accept",
     ]:
-        raise ValueError("Game mode not supported yet")
+        raise ValueError("Game mode not supported yet.")
 
     roles = [
         "jungle",
@@ -98,7 +103,7 @@ def Argumentos():
         "english",
         None,
     ]:
-        raise ValueError("Language not implemented yet")
+        raise ValueError("Language not implemented yet.")
 
     if Argumentos_Disponiveis["idioma"][1] in sys.argv:
         Atualizar_Idioma(idioma)  # type: ignore
