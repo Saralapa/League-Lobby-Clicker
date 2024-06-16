@@ -87,7 +87,7 @@ def Argumentos():
     ]
 
     if Role_1 != None and Role_1.lower() not in roles:  # type: ignore
-        print(Role_1, "role 1 aqui ó") # type: ignore
+        print(Role_1, "role 1 aqui ó")  # type: ignore
         raise ValueError("Role 1 not supported yet")
 
     if Role_2 != None and Role_2.lower() not in roles:  # type: ignore
