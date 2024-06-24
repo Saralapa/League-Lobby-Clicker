@@ -521,5 +521,6 @@ def Criar_Janela():
     root.after(10, lambda: Abrir_Janela_Fechar_Janela.AbrirJanela(root.title()))
 
     modo_de_jogo, Role_1, Role_2, possui_argumentos, idioma = Argumentos.Argumentos()
+    Configuracoes_da_Janela.centralizar_janela(root, 378, 506, centralize=True)
     tela_selecao_de_modo(jogo_está_aberto)
     root.mainloop()

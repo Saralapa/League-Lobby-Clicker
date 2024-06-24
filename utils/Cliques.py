@@ -5,6 +5,9 @@ import time
 import threading
 from utils.Encontrar_Pasta import chamar_funcao_encontrar_pasta_LOL
 
+GAME_TITLE = "League of Legends (TM) Client"
+CLIENT_TITLE = "League of Legends"
+
 
 def KeepSearchingImageAndClickWhenFound(image):
     from utils.Janela.Janela import idioma, tela
@@ -18,18 +21,18 @@ def KeepSearchingImageAndClickWhenFound(image):
 
         if tela != "auto aceitar":
             return
-        if [
-            window for window in gw.getWindowsWithTitle("League of Legends (TM) Client")
-        ]:
+        if [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
             raise Exception("tela seleção de modo")
         elif not [
             window
-            for window in gw.getWindowsWithTitle("League of Legends")
-            if window.title == "League of Legends"
-        ]:
-            raise
+            for window in gw.getWindowsWithTitle(CLIENT_TITLE)
+            if window.title == CLIENT_TITLE
+        ] and not [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
+            time.sleep(2)
+            if not [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
+                raise
         try:
-            lol_window = gw.getWindowsWithTitle("League of Legends")[0]
+            lol_window = gw.getWindowsWithTitle(CLIENT_TITLE)[0]
             image_path_image = os.path.join(
                 "Images/languages",
                 idioma,
@@ -74,7 +77,7 @@ def SearchImageForXSecondsAndClickWhenFound(image, seconds):
         if tela != "auto aceitar":
             return
         try:
-            lol_window = gw.getWindowsWithTitle("League of Legends")[0]
+            lol_window = gw.getWindowsWithTitle(CLIENT_TITLE)[0]
             image_path_image = os.path.join(
                 "Images/languages",
                 idioma,
@@ -110,18 +113,18 @@ def Role1(image):
         if tela != "auto aceitar":
             return
 
-        if [
-            window for window in gw.getWindowsWithTitle("League of Legends (TM) Client")
-        ]:
+        if [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
             raise Exception("tela seleção de modo")
         elif not [
             window
-            for window in gw.getWindowsWithTitle("League of Legends")
-            if window.title == "League of Legends"
-        ]:
-            raise
+            for window in gw.getWindowsWithTitle(CLIENT_TITLE)
+            if window.title == CLIENT_TITLE
+        ] and not [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
+            time.sleep(2)
+            if not [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
+                raise
         try:
-            lol_window = gw.getWindowsWithTitle("League of Legends")[0]
+            lol_window = gw.getWindowsWithTitle(CLIENT_TITLE)[0]
             image_path_Encontrar_partida = os.path.join(
                 "Images/languages",
                 idioma,
@@ -156,18 +159,18 @@ def Role1(image):
 
         if tela != "auto aceitar":
             return
-        if [
-            window for window in gw.getWindowsWithTitle("League of Legends (TM) Client")
-        ]:
+        if [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
             raise Exception("tela seleção de modo")
         elif not [
             window
-            for window in gw.getWindowsWithTitle("League of Legends")
-            if window.title == "League of Legends"
-        ]:
-            raise
+            for window in gw.getWindowsWithTitle(CLIENT_TITLE)
+            if window.title == CLIENT_TITLE
+        ] and not [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
+            time.sleep(2)
+            if not [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
+                raise
         try:
-            lol_window = gw.getWindowsWithTitle("League of Legends")[0]
+            lol_window = gw.getWindowsWithTitle(CLIENT_TITLE)[0]
             image_path_image = os.path.join(
                 "Images/languages",
                 idioma,
@@ -206,18 +209,18 @@ def Role2(image):
 
         if tela != "auto aceitar":
             return
-        if [
-            window for window in gw.getWindowsWithTitle("League of Legends (TM) Client")
-        ]:
+        if [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
             raise Exception("tela seleção de modo")
         elif not [
             window
-            for window in gw.getWindowsWithTitle("League of Legends")
-            if window.title == "League of Legends"
-        ]:
-            raise
+            for window in gw.getWindowsWithTitle(CLIENT_TITLE)
+            if window.title == CLIENT_TITLE
+        ] and not [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
+            time.sleep(2)
+            if not [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
+                raise
         try:
-            lol_window = gw.getWindowsWithTitle("League of Legends")[0]
+            lol_window = gw.getWindowsWithTitle(CLIENT_TITLE)[0]
             image_path_Encontrar_partida = os.path.join(
                 "Images/languages",
                 idioma,
@@ -252,18 +255,18 @@ def Role2(image):
 
         if tela != "auto aceitar":
             return
-        if [
-            window for window in gw.getWindowsWithTitle("League of Legends (TM) Client")
-        ]:
+        if [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
             raise Exception("tela seleção de modo")
         elif not [
             window
-            for window in gw.getWindowsWithTitle("League of Legends")
-            if window.title == "League of Legends"
-        ]:
-            raise
+            for window in gw.getWindowsWithTitle(CLIENT_TITLE)
+            if window.title == CLIENT_TITLE
+        ] and not [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
+            time.sleep(2)
+            if not [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
+                raise
         try:
-            lol_window = gw.getWindowsWithTitle("League of Legends")[0]
+            lol_window = gw.getWindowsWithTitle(CLIENT_TITLE)[0]
             image_path_image = os.path.join(
                 "Images/Languages",
                 idioma,
@@ -304,8 +307,8 @@ def WhereToClick():
         for _ in range(3):
             if [
                 window
-                for window in gw.getWindowsWithTitle("League of Legends")
-                if window.title == "League of Legends"
+                for window in gw.getWindowsWithTitle(CLIENT_TITLE)
+                if window.title == CLIENT_TITLE
             ]:
                 break
             chamar_funcao_encontrar_pasta_LOL()
@@ -316,30 +319,27 @@ def WhereToClick():
             pyautogui.hotkey("alt", "tab")
             while not [
                 window
-                for window in gw.getWindowsWithTitle("League of Legends")
-                if window.title == "League of Legends"
+                for window in gw.getWindowsWithTitle(CLIENT_TITLE)
+                if window.title == CLIENT_TITLE
             ]:
                 time.sleep(1)
                 if tela != "auto aceitar":
                     return
-            if not [
-                window
-                for window in gw.getWindowsWithTitle("League of Legends (TM) Client")
-            ]:
+            if not [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
                 [
                     window
-                    for window in gw.getWindowsWithTitle("League of Legends")
-                    if window.title == "League of Legends"
+                    for window in gw.getWindowsWithTitle(CLIENT_TITLE)
+                    if window.title == CLIENT_TITLE
                 ][0].minimize()
                 [
                     window
-                    for window in gw.getWindowsWithTitle("League of Legends")
-                    if window.title == "League of Legends"
+                    for window in gw.getWindowsWithTitle(CLIENT_TITLE)
+                    if window.title == CLIENT_TITLE
                 ][0].restore()
                 [
                     window
-                    for window in gw.getWindowsWithTitle("League of Legends")
-                    if window.title == "League of Legends"
+                    for window in gw.getWindowsWithTitle(CLIENT_TITLE)
+                    if window.title == CLIENT_TITLE
                 ][0].activate()
                 KeepSearchingImageAndClickWhenFound("inicio.png")
                 if SearchImageForXSecondsAndClickWhenFound("OK.png", 1) == 23:
@@ -392,10 +392,7 @@ def WhereToClick():
                 jogo_está_aberto = False
                 tela_selecao_de_modo(jogo_está_aberto)
                 return
-            if [
-                window
-                for window in gw.getWindowsWithTitle("League of Legends (TM) Client")
-            ]:
+            if [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
                 jogo_está_aberto = True
                 thread_tela_selecao_de_modo = threading.Thread(
                     target=lambda: tela_selecao_de_modo(jogo_está_aberto)
@@ -407,7 +404,6 @@ def WhereToClick():
             time.sleep(5)
     except Exception as e:
         if e.args[0] == "tela seleção de modo":
-            print("arroz")
             jogo_está_aberto = True
             thread_tela_selecao_de_modo = threading.Thread(
                 target=lambda: tela_selecao_de_modo(jogo_está_aberto)
