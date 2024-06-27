@@ -46,6 +46,7 @@ O aplicativo é uma ferramenta simples que cria uma interface para solicitar ao 
 ## Requisitos
 
 - Sistema operacional compatível com o League of Legends.
+- League of Legends instalado.
 - Conta ativa no League of Legends.
 
 ## Observações
