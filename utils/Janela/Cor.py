@@ -203,8 +203,8 @@ def CriarBotoesCores(imagem_cor):
         "#00ffff",
         "#ffff00",
         "#ff7f00",
-        "#ff00ff",
         "#9044ff",
+        "#000000",
         "#ffffff",
     ]
     botoes_cores = [

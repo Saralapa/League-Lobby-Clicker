@@ -325,6 +325,9 @@ def WhereToClick():
                 time.sleep(1)
                 if tela != "auto aceitar":
                     return
+                if [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
+                    print("o problema foi aqui")
+                    raise Exception("tela seleção de modo")
             if not [window for window in gw.getWindowsWithTitle(GAME_TITLE)]:
                 [
                     window
